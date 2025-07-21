@@ -1,14 +1,14 @@
 ---
 title: C++学习记录
 date: 2025-07-10
-updated: 2025-07-19
+updated: 2025-07-21
 categories: 笔记
 tags:
   - 学习
   - 编程
   - C++
 cover: 'https://pic.akorin.icu/c++cover.jpg'
-codeHeightLimit: 550
+codeHeightLimit: 500
 toc: true
 time_warning: false
 end: false
@@ -494,4 +494,226 @@ char str[] = "hello world!";
 char str[] = {'a', 'b', 'c'};
 ```
 虽然这里的 `str` 也是字符串数组，但是内部没有 `/0` ，这就会导致使用查询字符串长度函数 `strlen` 时，会一致沿着 `str` 在内存的位置直到找到 `/0` 才停下来，这也是C风格字符串的漏洞。
+
+### **类**
+
+类就像一个汽车图纸，而对象就是图纸造出来的汽车。实际上类和结构体差不多，类有的结构体也有，它们唯一的区别只有对成员默认访问权限不同：
+- 类：默认是 `private`
+- 结构体：默认是 `piblic`
+
+#### 类的定义
+
+类有三种成员，分别是
+- 公有成员(public)：可以被所有代码访问。
+- 私有成员(private)：只能被类的成员函数和友元访问。
+- 受保护成员(protected)：只能被类的成员函数、友元和派生类访问。
+
+:::tip 友元
+友元的关键词为 `friend` ，能够让一个函数或者类去访问另一个类的私有成员或受保护成员。友元一般定义在类里，在 `public` `private` `protected` 之外。
+:::
+
+#### 构造函数
+
+构造函数是与类名相同的特殊成员函数，**没有返回类型**，在创建对象时自动执行，主要负责对象的初始化。  
+一般是**公有成员**，这样外部才能创建该类的对象。若构造函数是私有的，那么只能在类的内部（比如通过静态成员函数）创建对象。  
+构造函数的具体实现可以放在类外也可以放在类里。  
+成员变量一般以下划线结尾（如： `name_` ），以此区分局部变量。
+
+#### 初始化列表
+
+是一种用于在构造函数中初始化类成员变量的语法，写在构造函数的参数列表和函数体之间，用冒号 `:` 引导。  
+
+某些情况下必须使用初始化列表来初始化变量，比如：
+1. `const` 成员。
+2. 引用成员。
+3. 对象成员没有默认构造函数。
+4. 基类构造函数。
+5. `explicit`成员对象初始化。
+
+因此用初始化列表能解决 99% 的问题。
+```C++
+class Student {
+private:
+    std::string name_;
+    int age_;
+
+public:
+    Student(const std::string& name, int age)
+        : name_(name), age_(age) { // 初始化列表
+        // 构造函数体（通常可以为空）
+    }
+};
+```
+等价于：
+```C++
+Student(const std::string& name, int age) {
+    name_ = name;
+    age_ = age;
+}
+```
+同时构造函数也可以在外部实现：
+```C++
+    Student :: Student(const std::string& name, int age)
+    : name_(name), age_(age) {
+    }
+```
+
+复杂一点的例子：
+```C++
+#include <iostream>
+#include <string>
+
+class Date {
+public:
+    int year, month, day;
+    Date(int y, int m, int d) : year(y), month(m), day(d) {}
+};
+
+class Student {
+private:
+    const int id_;         // const 成员变量（必须初始化）
+    std::string& school_;  // 引用类型成员（必须初始化）
+    std::string name_;     // 普通变量（可以在构造函数体赋值，但最好初始化）
+    Date birthday_;        // 对象成员（必须调用构造函数初始化）
+
+public:
+    // 构造函数使用初始化列表
+    Student(int id, std::string& school, const std::string& name, const Date& birthday)
+        : id_(id),         // const：必须在初始化列表中初始化
+          school_(school), // 引用：也必须在初始化列表中初始化
+          name_(name),
+          birthday_(birthday) {
+        std::cout << "Student constructed.\n";
+    }
+
+    void print() {
+        std::cout << "ID: " << id_ << ", Name: " << name_
+                  << ", School: " << school_
+                  << ", Birthday: " << birthday_.year << "-" << birthday_.month << "-" << birthday_.day << "\n";
+    }
+};
+```
+
+:::info
+这里构造函数传递 `name` 时，是引用传递，可以使得 `name` 变量直接传递给 `name_` 成员，仅一次拷贝。若只是普通传参，则：
+- 传参时会**复制一份字符串**（从实参到形参）。
+- 构造函数体内又复制一份字符串（从形参到变量）。
+**发生了两次拷贝操作**，性能损耗较大。
+:::
+
+#### 拷贝构造函数和移动构造函数
+上述的构造函数是**参数化构造函数**，除此之外还有：
+- 拷贝构造函数：用一个对象去创建另一个对象时。
+  ```C++
+  ClassName(const ClassName& other);
+  Student s1("Alice", 20);
+  Student s2 = s1;  // 触发拷贝构造函数
+  ```
+- 移动构造函数：使用一个临时对象（右值）初始化另一个对象时（避免不必要的深拷贝）。
+  ```C++
+  ClassName(ClassName&& other);
+  Student s3 = Student("Bob", 21);  // 触发移动构造函数
+  ```
+  临时对象（右值）优先调用移动构造函数初始化 `s3` ，避免深度拷贝，提高性能。如果类没有定义移动构造函数，则会退而使用拷贝构造，降低效率。  
+  理论上移动构造函数和直接赋值性能上差不多，在C++17之后，编译器在开启优化的前提下，会**强制执行拷贝省略**（也称返回值优化 RVO）。  
+
+涉及到移动构造函数，这不得不提C++的**Rule of Five（五法则）**，或  
+**Special Member Functions Generation Rules（特殊成员函数生成规则）**：
+
+如果在类中定义了以下五个函数：
+1. 拷贝构造函数（Copy Constructor）
+2. 拷贝赋值运算符（Copy Assignment）
+3. 移动构造函数（Move Constructor）
+4. 移动赋值运算符（Move Assignment）
+5. 析构函数（Destructor）
+则编译器不会自动生成移动构造函数。若需要支持移动语义，除了显式写出移动构造函数，还可以写：
+```C++
+// 放在public区域才能给外界使用
+B(B&& other) = default;
+```
+或
+```C++
+B(B&&) = default; // other可以不用显式
+B& operator=(B&&) = default; // 一般还要写全移动赋值运算符
+```
+
+#### 拷贝赋值运算符和移动赋值运算符
+赋值运算符（ `operator=` ）是给已存在的对象赋值，**不是创建新的对象**，与构造函数不同，因此不能用初始化列表。  
+
+这里涉及到**运算符重载**：
+:::tip
+在C++中， `operator` 关键字用于重载运算符。可以重新定义使用运算符时( `+`, `-`, `=`, `==`, `[]`等)该怎么运行。本节涉及到赋值运算符重载( `operator=` )。
+:::
+
+- 拷贝赋值运算符：将一个已有对象的内容拷贝到当前对象。
+  ```C++
+  T& operator=(const T& other);
+  ```
+- 移动赋值运算符：把一个右值对象的资源移动到当前对象，避免不必要的拷贝。
+  ```C++
+  T& operator=(T&& other);
+  ```
+
+逐字分解：
+- `T&`：返回当前对象本身的引用。
+- `operator=`：赋值运算符重载。
+- `const T& other`：参数是另一个 `T` 类对象的常量引用。
+- `T&& other`：参数是另一个 `T` 类对象的右值引用。
+
+声明赋值运算符时又与声明构造函数不同，由于是对已有的对象进行操作，因此多了一些防止内存泄漏、二次释放以及自我赋值检查的操作。  
+示例代码：
+```C++
+class MyClass {
+public:
+    MyClass(int val) {
+        data = new int(val);
+    }
+    // 拷贝赋值运算符
+    MyClass& operator=(const MyClass& other) {
+        if (this == &other) return *this; // 自我赋值检查
+        delete data;
+        data = new int(*other.data); // 深拷贝
+        return *this;
+    }
+    // 移动赋值运算符
+    MyClass& operator=(MyClass&& other) {
+        if (this == &other) return *this; // 自我赋值检查
+        delete data;
+        data = other.data;
+        other.data = nullptr; // 避免析构时重复释放
+        return *this;
+    }
+    ~MyClass() {
+        delete data;
+    }
+private:
+    int* data;
+};
+```
+在这段代码中，只要是重构赋值运算符的代码中：
+1. 先进行自我赋值检查，**防止赋值给自己导致逻辑出错或资源被提前释放**。
+2. 释放已有的资源，**防止内存泄漏**。
+
+须注意一点是，移动赋值运算符中，还要让**源对象(other)的资源指针**设为 `nullptr` ，**避免它在析构时发生二次释放的问题**。
+:::tip
+
+指向 `nullptr` 的指针可以**安全地重复** `delete` 操作，不会导致程序崩溃或行为未定义。  
+
+`delete` 只是**释放指针所指向的内存**，并没有自动地将指针指向 `nullptr` ，因此有不需要再使用的指针时，进行 `delete` 的操作后，还要手动将指针设为 `nullptr`。  
+```C++
+int* p = new int(42);
+delete p;
+p = nullptr;
+```
+
+`delete` 或 `delete[]` **只能用于指针**。 `new[]` **创建的指针必须用** `delete[]`，因为在**分配方式上的不同**，使用 `new[]` 时编译器会在内存中“偷偷藏一个额外的数字”来记住数组大小，以便于调用析构函数（如果是对象数组）。  
+`delete` **只释放一个对象**，此时可能就会造成内存泄漏或崩溃。  
+`new` 和 `delete` 都是针对 **堆内存（手动分配）** 进行操作的，如果对 **栈内存（程序自动分配）** 操作可能会出现未定义行为或崩溃。
+```C++
+int* p = new int(10);
+delete p;
+int* arr = new int[5];
+delete[] arr;
+```
+:::
 

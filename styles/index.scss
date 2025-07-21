@@ -4,9 +4,9 @@
 }
 
 :root {
-    --va-code-font-size: 1.15em;
+    --va-code-font-size: 16px;
     --va-code-line-height: 1.8;
-    --va-custom-block-font-size: 18px;
+    --va-custom-block-font-size: 16px;
     --va-custom-block-code-font-size: 16px;
     --va-primary-color-soft: var(--va-c-tip-soft);
 }
@@ -23,7 +23,7 @@
 }
 
 .prose {
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .markdown-body blockquote p {
@@ -99,4 +99,11 @@
     margin-right: auto;
     display: table;
     text-align: center;
+}
+
+.markdown-body .prose code,
+.prose code,
+pre,
+pre code {
+    font-family: 'ComicShannsMono Nerd Font Mono', 'JetBrains Mono', "Source Code Pro", "Consolas", "Cascadia Mono", monospace, Helvetica, Tahoma, Arial, STXihei, "STHeiti Light", "Microsoft YaHei", sans-serif !important;
 }
