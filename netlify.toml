@@ -1,9 +1,10 @@
 [build]
 publish = "dist"
-command = "node --max_old_space_size=2048 ./node_modules/.bin/pnpm build"
+command = "pnpm build"
 
 [build.environment]
 NODE_VERSION = "22.1.0"
+NODE_OPTIONS = "--max_old_space_size=4096"
 
 [[redirects]]
 from = "/*"
