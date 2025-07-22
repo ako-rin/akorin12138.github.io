@@ -12,8 +12,6 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "mermaid": "^11.4.1",
-    "unhead": "2.0.12",
     "valaxy": "0.25.10",
     "valaxy-addon-bangumi": "^0.2.2",
     "valaxy-addon-components": "^0.1.0",
@@ -27,6 +25,6 @@
     "@iconify-json/hugeicons": "^1.2.3",
     "@iconify-json/line-md": "^1.2.8",
     "typescript": "^5.8.3",
-    "vite": "^5.4.19"
+    "vite": "^7.0.5"
   }
 }
