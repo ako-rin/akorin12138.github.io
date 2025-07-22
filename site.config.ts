@@ -32,7 +32,7 @@ export default defineSiteConfig({
     // },
     {
       name: 'GitHub',
-      link: 'https://github.com/akorin12138',
+      link: 'https://github.com/ako-rin',
       icon: 'i-ri-github-line',
       color: '#A5A5E3',
     },
