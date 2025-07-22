@@ -1,6 +1,6 @@
 [build]
 publish = "dist"
-command = "pnpm build:spa"
+command = "pnpm build"
 
 [build.environment]
 NODE_VERSION = "22.17.0"
