@@ -1,7 +1,7 @@
 ---
 title: C++学习记录
 date: 2025-07-10
-updated: 2025-07-21
+updated: 2025-07-26
 categories: 笔记
 tags:
   - 学习
@@ -717,4 +717,21 @@ int* arr = new int[5];
 delete[] arr;
 ```
 :::
+
+#### 类继承
+
+类继承允许一个派生类从另一个基类继承属性和行为。通过继承，派生类可以用基类的代码（成员、函数），可以重写现有成员和添加新的成员。派生类继承基类的写法如下：
+
+```C++
+class Base {
+  // code 
+}
+class Derived : public Base {
+  // code
+}
+```
+上式中 `public` 表示公有继承，它保持基类中 `public` 和  `protected` 成员的访问权限不变。
+
+- 若写成 `protected` ：基类的 `public` 和 `protected` 成员全部变成 `protected` ，只能在派生类及其子类中访问。
+- 若写成 `private` ：基类的 `public` 和 `protected` 成员都会变成 `private` ，只能在该派生类中访问，子类访问不到。
 
