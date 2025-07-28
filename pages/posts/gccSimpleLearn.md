@@ -1,7 +1,7 @@
 ---
 title: C++学习记录
 date: 2025-07-10
-updated: 2025-07-26
+updated: 2025-07-28
 categories: 笔记
 tags:
   - 学习
@@ -20,6 +20,13 @@ end: false
 <!-- more -->
 
 ## C++基础知识
+
+### C++中函数声明的正确格式：
+
+```C++
+<返回类型> <函数名>(<参数列表>) [const] [其他限定符];
+```
+其中 `const` 可选，后面跟着其他限定符。
 
 ### `extern` 的用法
 
@@ -287,7 +294,7 @@ int *para[5];
 
 `const` 修饰的变量为常量，必须初始化且在不能修改。通过 `const` 提高代码的安全性和可读性。
 
-指针本身也是变量，因此也能够被`const`修饰。
+指针本身也是变量，因此也能够被`const`修饰。 `const` 也能修饰函数，一般放在参数列表后面。
 
 #### `const` 在声明变量中的位置
 
@@ -402,7 +409,8 @@ std:vector<std:string> words; //字符串向量
 ```
 
 向量可以直接增删改查：
-- `push_back()` ：在向量末尾添加一个元素。
+- `push_back()` ：在向量末尾添加一个已有的对象。
+- `emplace_back()` ：在向量末尾原地构造一个对象。
 - `pop_back()` ：移除向量末尾的元素。
 - `insert()` ：在指定位置插入元素。
 - `erase()` ：移除指定位置的元素或范围内的元素。
@@ -553,9 +561,9 @@ Student(const std::string& name, int age) {
 ```
 同时构造函数也可以在外部实现：
 ```C++
-    Student :: Student(const std::string& name, int age)
-    : name_(name), age_(age) {
-    }
+Student :: Student(const std::string& name, int age)
+: name_(name), age_(age) {
+}
 ```
 
 复杂一点的例子：
@@ -605,17 +613,27 @@ public:
 上述的构造函数是**参数化构造函数**，除此之外还有：
 - 拷贝构造函数：用一个对象去创建另一个对象时。
   ```C++
-  ClassName(const ClassName& other);
+  ClassName(const ClassName& other) {
+    _name = other._name;
+    _age = other._age;
+  };
   Student s1("Alice", 20);
   Student s2 = s1;  // 触发拷贝构造函数
   ```
 - 移动构造函数：使用一个临时对象（右值）初始化另一个对象时（避免不必要的深拷贝）。
   ```C++
-  ClassName(ClassName&& other);
+  ClassName(ClassName&& other) noexcept {
+    _name = std::move(other._name);
+    _age = std::move(other._age);
+  };
   Student s3 = Student("Bob", 21);  // 触发移动构造函数
   ```
   临时对象（右值）优先调用移动构造函数初始化 `s3` ，避免深度拷贝，提高性能。如果类没有定义移动构造函数，则会退而使用拷贝构造，降低效率。  
   理论上移动构造函数和直接赋值性能上差不多，在C++17之后，编译器在开启优化的前提下，会**强制执行拷贝省略**（也称返回值优化 RVO）。  
+
+:::tip
+其中 `noexcept` 表示不会抛出异常，若没有这个关键字，则STL会退而求其次使用拷贝构造。
+:::
 
 涉及到移动构造函数，这不得不提C++的**Rule of Five（五法则）**，或  
 **Special Member Functions Generation Rules（特殊成员函数生成规则）**：
@@ -676,7 +694,7 @@ public:
         return *this;
     }
     // 移动赋值运算符
-    MyClass& operator=(MyClass&& other) {
+    MyClass& operator=(MyClass&& other) noexcept {
         if (this == &other) return *this; // 自我赋值检查
         delete data;
         data = other.data;
@@ -725,6 +743,7 @@ delete[] arr;
 ```C++
 class Base {
   // code 
+  virtual ~Base() = default; 
 }
 class Derived : public Base {
   // code
@@ -735,3 +754,267 @@ class Derived : public Base {
 - 若写成 `protected` ：基类的 `public` 和 `protected` 成员全部变成 `protected` ，只能在派生类及其子类中访问。
 - 若写成 `private` ：基类的 `public` 和 `protected` 成员都会变成 `private` ，只能在该派生类中访问，子类访问不到。
 
+上述代码的基类中涉及到继承，应该声明一个 **虚析构函数**：
+1. 保证通过基类指针/引用删除派生类对象时不会“资源泄漏”。
+2. 更安全的类层次设计，防止将来踩坑。
+
+#### 虚函数
+
+虚函数允许派生类重新定义基类中的函数，以实现多态性。在类中使用关键字 `virtual` 来声明函数为虚函数。
+
+基类中定义：
+```C++
+class Base {
+public:
+    virtual void function() {
+      std::cout << "Base virtual function" << std::endl;
+    }
+    virtual void constfunction() const {}
+}
+```
+在派生类（子类）中定义：
+```C++
+class Child : public Base {
+publid:
+    void function() override {
+      // 重载代码
+      std::cout << "Child virtual function" << std::endl;
+    }
+    void constfunction() override {
+      // 重载代码
+    }
+}
+```
+
+如果基类不写 `virtual` 那么子类即使写了重名的函数也不会发生重载（覆盖）。  
+通过基类指针访问重载后的函数，仍然使用被重载后的代码：
+
+```C++
+MyChild *c = new Child;
+MyClass *b = new Class;
+MyClass *p = c;   // 创建基类指针
+p->function;      // 使用基类指针访问基类的函数
+```
+此时会输出 `Child virtual function`。
+
+:::info
+类继承基类后，如果基类没有**无参数构造函数**，则子类应显式调用基类的含参构造函数，为基类进行初始化。
+:::
+
+#### 纯虚函数
+
+纯虚函数是在基类中声明但不定义的虚函数，目的是为了让派生类强制实现它。包含了至少一个纯虚函数的类被称为 **抽象基类(Abstract Base Class, ABC)**，在声明的虚函数后面加上 `=0` 表示纯虚函数。抽象基类**不能实例化**，抽象基类的目的是作为接口（interface）使用，派生类必须实现其所有纯虚函数，才能实例化对象。
+
+```C++
+class Shape {
+public:
+    virtual void draw() const = 0; // 纯虚函数
+    virtual ~Shape() = default; 
+};
+class Circle : public Shape {
+public:
+    void draw() const override {
+        cout << "Drawing Circle" << endl;
+    }
+};
+Shape s;    // [!code error] 抽象类不能被实例化 
+Circle c;   // 派生类实现了纯虚函数，可以实例化
+Shape* ptr = &c; // 使用基类指针访问被重载后的函数
+ptr->draw();
+return 0;
+```
+最后会输出 `Drawing Circle`。
+
+#### 拷贝/移动构造与拷贝/移动运算符控制
+
+当基类声明了拷贝/移动构造函数和拷贝/移动赋值运算符时，子类可以直接调用基类已声明的构造和运算符。
+
+##### 拷贝构造和拷贝运算符：
+```C++
+class Base {
+public:
+    Base(std::string str) : name_(str) {
+        std::cout << "Name:" << name_ <<std::endl;
+    }
+    Base(const Base& other) : name_(other.name_) {
+        std::cout << "Base copy constructor" << std::endl;
+    }
+    Base& operator=(const Base& other) {
+        std::cout << "Base copy assignment" << std::endl;
+        if (this != &other) {
+            name_ = other.name_;
+        }
+        return *this;
+    }
+    virtual ~Base() = default; 
+protected:
+    std::string name_;
+};
+class Derived : public Base {
+public:
+    Derived(std::string str, int value) : Base(str), value_(value) {
+        std::cout << "Value:" << value_ <<std::endl;
+    }
+    Derived(const Derived &other) : Base(other) {
+         std::cout << "Derived copy constructor" << std::endl;
+    }
+    Derived& operator=(const Derived& other) {
+        std::cout << "Derived copy assignment" << std::endl;
+        if (this != &other) {
+            Base::operator=(other);  // 显式调用基类的拷贝赋值运算符
+            value_ = other.value_;
+        }
+        return *this;
+    }
+private:
+    int value_;
+};
+int main() {
+    Derived s1 = Derived("Alice", 16);
+    Derived s2 = s1;
+    Derived s3("David", 14);
+    s3 = s1;
+    return 0;
+}
+```
+此时输出：
+```
+Name:Alice
+Value:16
+Base copy constructor
+Derived copy constructor
+Name:David
+Value:14
+Derived copy assignment
+Base copy assignment
+```
+
+##### 移动构造和移动运算符：
+```C++
+class Base {
+public:
+    Base(std::string str) : name_(str) {
+        std::cout << "Name:" << name_ << std::endl;
+    }
+    Base(Base &&other) noexcept : name_(std::move(other.name_)) {
+        std::cout << "Base move constructor" << std::endl;
+    }
+    Base &operator=(Base &&other) noexcept {
+        std::cout << "Base move assignment" << std::endl;
+        if (this != &other) {
+            name_ = std::move(other.name_);
+        }
+        return *this;
+    }
+    virtual ~Base() = default; 
+protected:
+    std::string name_;
+};
+class Derived : public Base {
+public:
+    Derived(std::string str, int value) : Base(str), value_(value) {
+        std::cout << "Value:" << value_ << std::endl;
+    }
+    Derived(Derived &&other) noexcept : Base(std::move(other)) {
+        std::cout << "Derived move constructor" << std::endl;
+    }
+    Derived &operator=(Derived &&other) {
+        std::cout << "Derived move assignment" << std::endl;
+        if (this != &other) {
+            Base::operator=(std::move(other)); // 显式调用基类的移动赋值运算符
+            value_ = other.value_;
+        }
+        return *this;
+    }
+private:
+    int value_;
+};
+int main() {
+    Derived s1 = std::move(Derived("Alice", 16));
+    Derived s2("David", 14);
+    s2 = std::move(s1);
+    return 0;
+}
+```
+:::info
+这里显式调用 `std::move` 是因为 `Base` 这个类中没有动态调整内存（使用指针或开辟空间），如果不显式调用 `std::move` 编译器会触发返回值优化（Return Value Optimization,RVO），直接将s1构造在s2的地址空间里，而不会触发移动构造。
+:::
+
+此时输出：
+```
+Name:Alice
+Value:16
+Base move constructor
+Derived move constructor
+Name:David
+Value:14
+Derived move assignment
+Base move assignment
+```
+
+#### 容器与继承
+
+在 C++ 中，**对象切片（object slicing）** 是指当一个派生类对象赋值给一个基类对象 **（而不是指针或引用）** 时，只有基类的部分会被拷贝，派生类中新增的成员变量和虚函数行为就会 **被“切掉”**，这会导致多态失效，这一情况在容器类中比较容易出现。
+
+```C++
+class Base {
+public:
+    virtual void speak() const {
+        std::cout << "Base speaking\n";
+    }
+    virtual ~Base() = default; 
+};
+class Derived : public Base {
+public:
+    void speak() const override {
+        std::cout << "Derived speaking\n";
+    }
+};
+int main() {
+    std::vector<Base> vec;
+    vec.push_back(Derived()); // [!code error]此时会发生切片
+    for (const auto& ptr : vec) {
+        ptr->speak(); // 输出：Base speaking
+    }
+}
+```
+此时会输出基类声明的虚函数： `Base speaking`。
+
+此时要解决**切片**问题，应使用指针或智能指针来解决，即往容器中存储对象指针。则主函数 `main` 应这样改写：
+
+```C++
+int main() {
+    std::vector<Base*> vec;
+    vec.push_back(new Derived());
+    for (auto ptr : vec) {
+        ptr->say();  // 输出：Derived speaking
+    }
+    // ❗手动释放内存
+    for (auto ptr : vec) {
+        delete ptr;
+    }
+    return 0;
+}
+```
+或者使用智能指针：
+```C++
+int main() {
+    std::vector<std::unique_ptr<Base>> vec;
+    vec.push_back(std::make_unique<Derived>());
+    for (const auto& ptr : vec) {
+        ptr->speak(); // 输出：Derived speaking
+    }
+}
+```
+智能指针能够避免忘记删除指针，防止内存泄漏。同时由于多个指针都指向同一块地址，容易发生二次释放，因此使用智能指针更安全。最后如果**中途抛出异常**，则可能不会执行 `delete ptr` ，依然会造成内存泄露。
+
+:::tip
+智能指针能够自动释放资源，无需手动 `delete`，且支持转移所有权，符合限带C++的 RAII哲学，还支持异常安全。
+:::
+
+| 名称               | 本质                               | 用法目的                         |
+| ------------------ | ---------------------------------- | -------------------------------- |
+| `unique_ptr<T>`    | 独占式智能指针（不能拷贝可以移动） | 自动释放内存，避免手动 `delete`  |
+| `shared_ptr<T>`    | 引用计数式共享智能指针             | 多处共享对象，最后一个释放才释放 |
+| `make_unique<T>()` | 安全创建 `unique_ptr<T>`           | 比较推荐的方式，避免裸用 `new`   |
+| `make_shared<T>()` | 安全创建 `shared_ptr<T>`           | 在堆上只分配一次内存             |
