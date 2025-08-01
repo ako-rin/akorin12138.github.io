@@ -61,7 +61,7 @@ export default defineValaxyConfig<ThemeUserConfig>({
       fixedImg: true,
       typewriter: true,
       enableHitokoto: true,
-      waveTheme: 'yunCloud',
+      waveTheme: 'horizontal',
     },
     // notice: {
     //   message: '<b>这是一个公告信息</br>',
@@ -236,20 +236,22 @@ export default defineValaxyConfig<ThemeUserConfig>({
         target: '_blank',
       },
     ],
-    sidebarOptions: {
-      position: 'left',
-    },
-    tags: {
-      rainbow: true,
-    },
     footer: {
       since: 2025,
       icon: {
         img: '/favicon-16x16.ico',
         animated: true,
-        url: 'https://akorin.icu',
+        url: 'https://icp.gov.moe/?keyword=20252010',
         title: 'AkoRin',
       },
+      powered: true,
+      icp: '萌ICP备20252010号',
+    },
+    sidebarOptions: {
+      position: 'left',
+    },
+    tags: {
+      rainbow: true,
     },
     scrollToTop: true,
     scrollIndicator: true,
@@ -260,7 +262,7 @@ export default defineValaxyConfig<ThemeUserConfig>({
     //   url: 'https://pic.akorin.icu/bg-dark1.jpg',
     //   dark: 'https://pic.akorin.icu/bg-white1.png',
     //   opacity: 0.55,
-    // },
+  // },
   addons: [
       addonWaline({
         // Waline 配置项，参考 https://waline.js.org/reference/client/props.html
