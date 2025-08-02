@@ -1,7 +1,7 @@
 ---
 title: C++学习记录
 date: 2025-07-10
-updated: 2025-07-28
+updated: 2025-08-02
 categories: 笔记
 tags:
   - 学习
@@ -1018,3 +1018,77 @@ int main() {
 | `shared_ptr<T>`    | 引用计数式共享智能指针             | 多处共享对象，最后一个释放才释放 |
 | `make_unique<T>()` | 安全创建 `unique_ptr<T>`           | 比较推荐的方式，避免裸用 `new`   |
 | `make_shared<T>()` | 安全创建 `shared_ptr<T>`           | 在堆上只分配一次内存             |
+
+### `map`
+
+`std::map` 是C++标准模板库(STL)中的一个关联容器，用于存储键值对(key-value pairs)，每个简直都是唯一的，自动排序（一般是升序）。
+
+#### 声明 `map`
+
+```C++
+// 键：int  值: std::string
+std::map<int,std::string> myMap;
+// 键：std::string  值: int
+std::map<std::string,double> myMap;
+```
+
+#### 初始化 `map`
+
+```C++
+std::map<int, std::string> myMap = {
+    {1, "Apple"},
+    {2, "Banana"},
+    {3, "Cherry"}
+};
+```
+
+#### 常见用法
+
+- `insert`:插入
+    ```C++
+    myMap.insert(pair<int, string>(4, "Date"));
+    myMap.insert(make_pair(5, "Elderberry"));
+    myMap.insert( {6, "Fig"} );
+    ```
+- 运算符 `[]` 操作
+    ```C++
+    myMap[7] = "Grape";
+    // 如果键 8 不存在，则会插入键 8 并赋值
+    myMap[8] = "Honeydew";
+    ```
+- `at`: 键值查询
+    ```C++
+    string fruit = myMap.at(2); // 获取键为 2 的值 "Banana"
+    ```
+- `find`: 元素查询，返回迭代器
+    ```C++
+    auto it = myMap.find(3);
+    ```
+- `eraser`: 删除
+    ```C++
+    myMap.erase(2);   // 传入键值
+    myMap.erase(it);  // 传入迭代器
+    myMap.erase(myMap.begin(),myMap.find(2));  // 传入范围
+    ```
+- `clear`: 删除所有元素
+    ```C++
+    myMap.clear(); // 删除所有元素
+    ```
+- `size()`: 获取容器中元素的数量
+- `empty()`: 判断容器是否为空
+- `count(key)`: 返回具有指定键元素的数量
+- `lower_bound(key)`: 返回指向第一个不小于键的迭代器
+- `upper_bound(key)`: 返回指向第一个不大于键的迭代器
+- `equal_range(key)`: 返回包含等于指定键元素的范围
+
+#### 自定义排序顺序
+```C++
+struct Compare {
+    bool operator()(const int& a, const int& b) const {
+        return a > b; // 降序排序
+    }
+};
+map<int, string, Compare> myMapDesc;
+myMapDesc[1] = "Apple";
+myMapDesc[2] = "Banana";
+```
