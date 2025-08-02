@@ -51,6 +51,9 @@ export default defineValaxyConfig<ThemeUserConfig>({
         'https://pic.akorin.icu/cover2.jpg',
         'https://pic.akorin.icu/cover3.jpg',
         'https://pic.akorin.icu/cover4.jpg',
+        'https://pic.akorin.icu/bg-dark1.jpg',
+        'https://pic.akorin.icu/bg_black1.jpg',
+        
         // 'https://valaxy-theme-sakura.s3.bitiful.net/wallpaper/yae-miko-sunset-sakura-genshin-impact-moewalls-com.mp4',
       ],
       randomUrls: true,
