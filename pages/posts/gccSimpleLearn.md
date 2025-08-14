@@ -10,8 +10,8 @@ tags:
 cover: 'https://pic.akorin.icu/c++cover.jpg'
 codeHeightLimit: 500
 toc: true
-time_warning: false
-end: false
+time_warning: true
+end: true
 ---
 
 ## 怎么这么难啊
