@@ -32,6 +32,8 @@ declare module 'vue-router/auto-routes' {
     '/page/[page]': RouteRecordInfo<'/page/[page]', '/page/:page', { page: ParamValue<true> }, { page: ParamValue<false> }>,
     '/posts/0suiKnowledge': RouteRecordInfo<'/posts/0suiKnowledge', '/posts/0suiKnowledge', Record<never, never>, Record<never, never>>,
     '/posts/51microcopmuter': RouteRecordInfo<'/posts/51microcopmuter', '/posts/51microcopmuter', Record<never, never>, Record<never, never>>,
+    '/posts/高级排序': RouteRecordInfo<'/posts/高级排序', '/posts/高级排序', Record<never, never>, Record<never, never>>,
+    '/posts/基础排序': RouteRecordInfo<'/posts/基础排序', '/posts/基础排序', Record<never, never>, Record<never, never>>,
     '/posts/数字信号处理': RouteRecordInfo<'/posts/数字信号处理', '/posts/数字信号处理', Record<never, never>, Record<never, never>>,
     '/posts/数字信号处理Matlab': RouteRecordInfo<'/posts/数字信号处理Matlab', '/posts/数字信号处理Matlab', Record<never, never>, Record<never, never>>,
     '/posts/通信原理': RouteRecordInfo<'/posts/通信原理', '/posts/通信原理', Record<never, never>, Record<never, never>>,
