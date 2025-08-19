@@ -4,6 +4,7 @@
 }
 
 :root {
+    --sakura-color-divider:oklch(86.07% 0.0001 271.152);
     --va-font-serif: "Noto Serif SC", "Source Han Serif SC",
         DM Serif Display, STZhongsong, STKaiti, KaiTi,
         Roboto, serif;
@@ -64,8 +65,48 @@
     margin-bottom: 0;
 }
 
+.markdown-body .prose ul,
+.markdown-body .prose ol {
+    border: 2px dashed var(--sakura-color-divider);
+    padding: 5px 10px 5px 30px;
+    color: var(--sakura-color-text);
+    margin-left: 0;
+    margin-top: 0px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+}
+
 .markdown-body .prose ul li {
     padding: 2px 0;
+}
+
+.markdown-body .prose ol li {
+    padding: 2px 0;
+}
+
+/* 代码块里的 code：不换行，横向滚动 */
+.markdown-body pre code {
+    white-space: pre;
+    /* 保持原样 */
+    word-break: normal;
+}
+
+.markdown-body pre {
+    overflow-x: auto;
+    /* 横向滚动条 */
+}
+
+/* 行内 code：允许换行 */
+.markdown-body p code,
+.markdown-body li code {
+    white-space: pre-wrap;
+    /* 保留空格，允许换行 */
+    word-break: break-word;
+    /* 长单词强制断行 */
+}
+
+.custom-block p+p {
+    margin: 0px 0;
 }
 
 .prose>ol>li> :last-child {
@@ -76,9 +117,6 @@
     margin-top: 0em;
 }
 
-.markdown-body .prose ol li {
-    padding: 2px 0;
-}
 
 .prose ol {
     margin-top: 0.25em;
@@ -90,6 +128,7 @@
     margin-top: 0.45em;
     margin-bottom: 0.45em;
 }
+
 
 .prose img {
     margin-top: 0.9em;
@@ -119,4 +158,23 @@
 pre,
 pre code {
     font-family: 'ComicShannsMono Nerd Font Mono', 'JetBrains Mono', "Source Code Pro", "Consolas", "Cascadia Mono", monospace, Helvetica, Tahoma, Arial, STXihei, "STHeiti Light", "Microsoft YaHei", sans-serif !important;
+}
+
+.prose h2 {
+    color: var(--sakura-color-text-deep);
+    font-weight: 700;
+    font-size: 1.5em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    line-height: 1.3333333;
+}
+
+.markdown-body .prose h2 {
+    padding-bottom: 8px;
+    border-bottom: 2px groove var(--sakura-color-divider);
+}
+
+.markdown-body .prose h4 {
+    padding-bottom: 8px;
+    border-bottom: 1px inset var(--sakura-color-divider);
 }
