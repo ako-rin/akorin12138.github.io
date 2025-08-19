@@ -182,6 +182,7 @@ pre code {
     border-bottom: 1px inset var(--sakura-color-divider);
 }
 
+// 手机不设置成bold看不到加粗变化
 .prose strong {
     color: var(--sakura-color-text-deep);
     font-weight: bold;
