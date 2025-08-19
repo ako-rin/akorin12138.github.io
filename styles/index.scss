@@ -11,7 +11,7 @@
         DM Serif Display, STZhongsong, STKaiti, KaiTi,
         Roboto, sans-serif;
 
-    --va-font-sans: "Helvetica Neue", "MiSans", "HarmonyOS Sans", "OPPO Sans", "PingFang SC",
+    --va-font-sans: "Helvetica Neue", "MiSans", "HarmonyOS Sans", "OPPO Sans", "vivo Sans", "PingFang SC",
         "Source Han Sans SC", "Noto Sans SC", "sans-serif",
         DM Sans, Inter,
         -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -180,4 +180,9 @@ pre code {
 .markdown-body .prose h4 {
     padding-bottom: 8px;
     border-bottom: 1px inset var(--sakura-color-divider);
+}
+
+.prose strong {
+    color: var(--sakura-color-text-deep);
+    font-weight: bold;
 }
