@@ -4,6 +4,19 @@
 }
 
 :root {
+    --va-font-serif: "Noto Serif SC", "Source Han Serif SC",
+        DM Serif Display, STZhongsong, STKaiti, KaiTi,
+        Roboto, serif;
+
+    --va-font-sans: "MiSans", "HarmonyOS Sans", "OPPO Sans", "PingFang SC",
+        "Source Han Sans SC", "Noto Sans SC",
+        DM Sans, Inter,
+        -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans",
+        "Droid Sans", "Helvetica Neue", sans-serif;
+
+    --va-font-mono: DM Mono, Menlo, Monaco, Consolas, "Courier New", monospace;
+
     --va-code-font-size: 16px;
     --va-code-line-height: 1.8;
     --va-custom-block-font-size: 16px;
@@ -105,5 +118,5 @@
 .prose code,
 pre,
 pre code {
-    font-family: 'ComicShannsMono Nerd Font Mono', 'JetBrains Mono', "Source Code Pro", "Roboto", "Source Han Sans SC", "Consolas", "Cascadia Mono", monospace, Helvetica, Tahoma, Arial, STXihei, "STHeiti Light", "Microsoft YaHei", sans-serif !important;
+    font-family: 'ComicShannsMono Nerd Font Mono', 'JetBrains Mono', "Source Code Pro", "Consolas", "Cascadia Mono", monospace, Helvetica, Tahoma, Arial, STXihei, "STHeiti Light", "Microsoft YaHei", sans-serif !important;
 }
