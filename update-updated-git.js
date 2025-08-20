@@ -8,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // 博客文章目录（改成你自己的）
-const POSTS_DIR = path.join(__dirname, "posts");
+const POSTS_DIR = path.join(__dirname, "./pages/posts");
 
 function formatDate(date) {
   const pad = (n) => String(n).padStart(2, "0");

@@ -1,7 +1,7 @@
 ---
 title: 信号的Matlab编程
-date: 2025-02-25
-updated: 2025-03-08
+date: 2025-02-25T00:00:00.000Z
+updated: '2025-07-10 21:24:43 +0800'
 categories: 笔记
 tags:
   - 笔记
