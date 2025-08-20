@@ -3,6 +3,7 @@ import type { ThemeUserConfig } from 'valaxy-theme-sakura'
 import { defineValaxyConfig } from 'valaxy'
 import { addonWaline } from 'valaxy-addon-waline'
 import { addonBangumi } from 'valaxy-addon-bangumi'
+import { addonHitokoto } from 'valaxy-addon-hitokoto'
 import { addonVercount } from 'valaxy-addon-vercount'
 
 // add icons what you will need
@@ -54,17 +55,12 @@ export default defineValaxyConfig<ThemeUserConfig>({
         'https://pic.akorin.icu/bg-dark1.jpg',
         'https://pic.akorin.icu/bg_black1.jpg',
         'https://pic.akorin.icu/bg-white.png',
-        
-        // 'https://valaxy-theme-sakura.s3.bitiful.net/wallpaper/yae-miko-sunset-sakura-genshin-impact-moewalls-com.mp4',
       ],
       randomUrls: true,
-      // playerUrl: 'https://valaxy-theme-sakura.s3.bitiful.net/PV/563098369-1-208.mp4',
-      // playerUrl: 'https://valaxy-theme-sakura.s3.bitiful.net/theming-demos/mashiro/The Pet Girl of Sakurasou.mp4',
-      // playerUrl: 'https://valaxy-theme-sakura.s3.bitiful.net/PV/Original PV Little love song MONGOL 800 cover by Amatsuki.mp4',
-      style: 'filter-dim',
       fixedImg: true,
       typewriter: true,
       enableHitokoto: true,
+      style: 'dim',
       waveTheme: 'horizontal',
     },
     // notice: {
@@ -286,7 +282,10 @@ export default defineValaxyConfig<ThemeUserConfig>({
       }),
       addonVercount({
       api: 'cn'
-    }),
+      }),
+      addonHitokoto({
+        api: 'intl',
+      }),
     ],
   unocss: { safelist },
   vite: {

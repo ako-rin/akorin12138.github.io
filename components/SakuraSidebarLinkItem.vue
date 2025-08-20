@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { NavItem } from '../types'
+import type { NavItem } from './types'
 import SakuraNavLink2 from './SakuraNavLink2.vue';
 
 defineProps<{

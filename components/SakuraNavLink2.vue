@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import { computed } from 'vue'
-import type { NavItem } from '../types'
+import type { NavItem } from './types'
 
 const props = defineProps<Partial<NavItem>>()
 

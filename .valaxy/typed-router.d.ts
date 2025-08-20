@@ -32,17 +32,145 @@ declare module 'vue-router/auto-routes' {
     '/page/[page]': RouteRecordInfo<'/page/[page]', '/page/:page', { page: ParamValue<true> }, { page: ParamValue<false> }>,
     '/posts/0suiKnowledge': RouteRecordInfo<'/posts/0suiKnowledge', '/posts/0suiKnowledge', Record<never, never>, Record<never, never>>,
     '/posts/51microcopmuter': RouteRecordInfo<'/posts/51microcopmuter', '/posts/51microcopmuter', Record<never, never>, Record<never, never>>,
-    '/posts/高级排序': RouteRecordInfo<'/posts/高级排序', '/posts/高级排序', Record<never, never>, Record<never, never>>,
-    '/posts/基础排序': RouteRecordInfo<'/posts/基础排序', '/posts/基础排序', Record<never, never>, Record<never, never>>,
-    '/posts/数字信号处理': RouteRecordInfo<'/posts/数字信号处理', '/posts/数字信号处理', Record<never, never>, Record<never, never>>,
-    '/posts/数字信号处理Matlab': RouteRecordInfo<'/posts/数字信号处理Matlab', '/posts/数字信号处理Matlab', Record<never, never>, Record<never, never>>,
-    '/posts/通信原理': RouteRecordInfo<'/posts/通信原理', '/posts/通信原理', Record<never, never>, Record<never, never>>,
-    '/posts/信号Matlab': RouteRecordInfo<'/posts/信号Matlab', '/posts/信号Matlab', Record<never, never>, Record<never, never>>,
-    '/posts/栈与队列': RouteRecordInfo<'/posts/栈与队列', '/posts/栈与队列', Record<never, never>, Record<never, never>>,
     '/posts/gccSimpleLearn': RouteRecordInfo<'/posts/gccSimpleLearn', '/posts/gccSimpleLearn', Record<never, never>, Record<never, never>>,
     '/posts/JapanTravel': RouteRecordInfo<'/posts/JapanTravel', '/posts/JapanTravel', Record<never, never>, Record<never, never>>,
     '/posts/zenbrowser': RouteRecordInfo<'/posts/zenbrowser', '/posts/zenbrowser', Record<never, never>, Record<never, never>>,
+    '/posts/信号Matlab': RouteRecordInfo<'/posts/信号Matlab', '/posts/信号Matlab', Record<never, never>, Record<never, never>>,
+    '/posts/基础排序': RouteRecordInfo<'/posts/基础排序', '/posts/基础排序', Record<never, never>, Record<never, never>>,
+    '/posts/数字信号处理': RouteRecordInfo<'/posts/数字信号处理', '/posts/数字信号处理', Record<never, never>, Record<never, never>>,
+    '/posts/数字信号处理Matlab': RouteRecordInfo<'/posts/数字信号处理Matlab', '/posts/数字信号处理Matlab', Record<never, never>, Record<never, never>>,
+    '/posts/栈与队列': RouteRecordInfo<'/posts/栈与队列', '/posts/栈与队列', Record<never, never>, Record<never, never>>,
+    '/posts/通信原理': RouteRecordInfo<'/posts/通信原理', '/posts/通信原理', Record<never, never>, Record<never, never>>,
+    '/posts/高级排序': RouteRecordInfo<'/posts/高级排序', '/posts/高级排序', Record<never, never>, Record<never, never>>,
     '/search/': RouteRecordInfo<'/search/', '/search', Record<never, never>, Record<never, never>>,
     '/tags/': RouteRecordInfo<'/tags/', '/tags', Record<never, never>, Record<never, never>>,
   }
+
+  /**
+   * Route file to route info map by unplugin-vue-router.
+   * Used by the volar plugin to automatically type useRoute()
+   *
+   * Each key is a file path relative to the project root with 2 properties:
+   * - routes: union of route names of the possible routes when in this page (passed to useRoute<...>())
+   * - views: names of nested views (can be passed to <RouterView name="...">)
+   *
+   * @internal
+   */
+  export interface _RouteFileInfoMap {
+    'node_modules/.pnpm/valaxy-theme-sakura@0.10.2__1d5cb8bb617a6832f495fc32f56d8b16/node_modules/valaxy-theme-sakura/pages/index.vue': {
+      routes: '/'
+      views: never
+    }
+    'node_modules/.pnpm/valaxy@0.26.3_@babel+parser_aa0df0dbd699d0ffab7d9207abe04a61/node_modules/valaxy/client/pages/[...path].vue': {
+      routes: '/[...path]'
+      views: never
+    }
+    'pages/404.md': {
+      routes: '/404'
+      views: never
+    }
+    'pages/about/index.md': {
+      routes: '/about/'
+      views: never
+    }
+    'pages/about/site.md': {
+      routes: '/about/site'
+      views: never
+    }
+    'pages/anime/index.md': {
+      routes: '/anime/'
+      views: never
+    }
+    'pages/archives/index.md': {
+      routes: '/archives/'
+      views: never
+    }
+    'pages/categories/index.md': {
+      routes: '/categories/'
+      views: never
+    }
+    'pages/comment/index.md': {
+      routes: '/comment/'
+      views: never
+    }
+    'pages/links/index.md': {
+      routes: '/links/'
+      views: never
+    }
+    'pages/notes/index.md': {
+      routes: '/notes/'
+      views: never
+    }
+    'node_modules/.pnpm/valaxy-theme-sakura@0.10.2__1d5cb8bb617a6832f495fc32f56d8b16/node_modules/valaxy-theme-sakura/pages/page/[page].vue': {
+      routes: '/page/[page]'
+      views: never
+    }
+    'pages/posts/0suiKnowledge.md': {
+      routes: '/posts/0suiKnowledge'
+      views: never
+    }
+    'pages/posts/51microcopmuter.md': {
+      routes: '/posts/51microcopmuter'
+      views: never
+    }
+    'pages/posts/gccSimpleLearn.md': {
+      routes: '/posts/gccSimpleLearn'
+      views: never
+    }
+    'pages/posts/JapanTravel.md': {
+      routes: '/posts/JapanTravel'
+      views: never
+    }
+    'pages/posts/zenbrowser.md': {
+      routes: '/posts/zenbrowser'
+      views: never
+    }
+    'pages/posts/信号Matlab.md': {
+      routes: '/posts/信号Matlab'
+      views: never
+    }
+    'pages/posts/基础排序.md': {
+      routes: '/posts/基础排序'
+      views: never
+    }
+    'pages/posts/数字信号处理.md': {
+      routes: '/posts/数字信号处理'
+      views: never
+    }
+    'pages/posts/数字信号处理Matlab.md': {
+      routes: '/posts/数字信号处理Matlab'
+      views: never
+    }
+    'pages/posts/栈与队列.md': {
+      routes: '/posts/栈与队列'
+      views: never
+    }
+    'pages/posts/通信原理.md': {
+      routes: '/posts/通信原理'
+      views: never
+    }
+    'pages/posts/高级排序.md': {
+      routes: '/posts/高级排序'
+      views: never
+    }
+    'pages/search/index.md': {
+      routes: '/search/'
+      views: never
+    }
+    'pages/tags/index.md': {
+      routes: '/tags/'
+      views: never
+    }
+  }
+
+  /**
+   * Get a union of possible route names in a certain route component file.
+   * Used by the volar plugin to automatically type useRoute()
+   *
+   * @internal
+   */
+  export type _RouteNamesForFilePath<FilePath extends string> =
+    _RouteFileInfoMap extends Record<FilePath, infer Info>
+      ? Info['routes']
+      : keyof RouteNamedMap
 }
