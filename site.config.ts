@@ -8,7 +8,7 @@ export default defineSiteConfig({
 
   mediumZoom: { enable: true },
 
-  favicon: 'https://pic.akorin.icu/icon.png',
+  favicon: 'https://pic.akorin.icu/20250822000714280.webp',
   author: {
     name: 'akorin',
     avatar: 'https://pic.akorin.icu/touxiang.png',

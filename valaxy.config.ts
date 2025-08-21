@@ -48,13 +48,15 @@ export default defineValaxyConfig<ThemeUserConfig>({
       title: 'AKORIN\'s HOME',
       motto: 'You got to put the past behind you before you can move on.',
       urls: [
-        'https://pic.akorin.icu/cover1.png',
-        'https://pic.akorin.icu/cover2.jpg',
-        'https://pic.akorin.icu/cover3.jpg',
-        'https://pic.akorin.icu/cover4.jpg',
-        'https://pic.akorin.icu/bg-dark1.jpg',
-        'https://pic.akorin.icu/bg_black1.jpg',
-        'https://pic.akorin.icu/bg-white.png',
+        'https://pic.akorin.icu/20250821235738973.webp',
+        'https://pic.akorin.icu/20250822000048269.webp',
+        'https://pic.akorin.icu/20250821235930749.webp',
+        'https://pic.akorin.icu/20250822000224307.webp',
+        'https://pic.akorin.icu/20250821234944713.webp',
+        'https://pic.akorin.icu/20250821235633395.webp',
+        'https://pic.akorin.icu/20250822000002560.webp',
+        'https://pic.akorin.icu/20250822000430257.webp'
+
       ],
       randomUrls: true,
       fixedImg: true,
