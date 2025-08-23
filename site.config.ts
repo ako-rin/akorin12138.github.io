@@ -1,40 +1,40 @@
 import { defineSiteConfig } from 'valaxy'
 
 export default defineSiteConfig({
-  url: 'https://akorin.icu',
-  lang: 'zh-CN',
-  title: 'AkoRin\'s home',
-  subtitle: '列车定会驶向下一站 那么舞台呢 我们呢',
+  url: "https://akorin.icu",
+  lang: "zh-CN",
+  title: "AkoRin's home",
+  subtitle: "列车定会驶向下一站 那么舞台呢 我们呢",
 
   mediumZoom: { enable: true },
 
-  favicon: 'https://pic.akorin.icu/20250822000714280.webp',
+  favicon: "https://pic.akorin.icu/20250822000714280.webp",
   author: {
-    name: 'akorin',
-    avatar: 'https://pic.akorin.icu/touxiang.png',
+    name: "akorin",
+    avatar: "https://pic.akorin.icu/20250822182421523.webp",
     status: {
-      emoji: '🌸',
-    }
+      emoji: "🌸",
+    },
   },
-  description: '随心记录 ',
+  description: "随心记录 ",
   social: [
     {
-      name: 'RSS',
-      link: '/atom.xml',
-      icon: 'i-ri-rss-line',
-      color: '#ffecc2ff',
+      name: "RSS",
+      link: "/atom.xml",
+      icon: "i-ri-rss-line",
+      color: "#ffecc2ff",
     },
     {
-      name: 'GitHub',
-      link: 'https://github.com/ako-rin',
-      icon: 'i-ri-github-line',
-      color: '#e7e7ffff',
+      name: "GitHub",
+      link: "https://github.com/ako-rin",
+      icon: "i-ri-github-line",
+      color: "#e7e7ffff",
     },
     {
-      name: 'E-Mail',
-      link: 'mailto:love@akorin.icu',
-      icon: 'i-ri-mail-line',
-      color: '#ccfff3ff',
+      name: "E-Mail",
+      link: "mailto:love@akorin.icu",
+      icon: "i-ri-mail-line",
+      color: "#ccfff3ff",
     },
     // {
     //   name: 'Travelling',
@@ -46,11 +46,11 @@ export default defineSiteConfig({
 
   search: {
     enable: true,
-    type:'fuse'
+    type: "fuse",
   },
   fuse: {
     options: {
-      keys: ['title', 'tags', 'categories', 'excerpt', 'content', 'Bangumi'],
+      keys: ["title", "tags", "categories", "excerpt", "content", "Bangumi"],
       /**
        * @default 0.6
        * @see https://www.fusejs.io/api/options.html#threshold
@@ -71,7 +71,7 @@ export default defineSiteConfig({
   },
   sponsor: {
     enable: true,
-    description: '谢谢你的喜欢',
+    description: "谢谢你的喜欢",
   },
   statistics: {
     enable: true,
@@ -84,7 +84,7 @@ export default defineSiteConfig({
   },
   encrypt: {
     // 开启加密，默认关闭
-    enable: true
+    enable: true,
     // algorithm
     // iv
     // salt
@@ -92,4 +92,4 @@ export default defineSiteConfig({
   vanillaLazyload: {
     enable: true,
   },
-})
+});

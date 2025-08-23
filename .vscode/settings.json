@@ -19,5 +19,36 @@
     "REG51.H": "cpp"
   },
   "svg.preview.background": "editor",
-  "sarif-viewer.connectToGithubCodeScanning": "off"
+  "sarif-viewer.connectToGithubCodeScanning": "off",
+
+  "[markdown]": {
+    // 自动换行，写笔记不用自己回车
+    "editor.wordWrap": "on",
+
+    // 中文删除优化（逐字删除，不会一键删整行）
+    "editor.wordSeparators": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?",
+
+    // 关闭不必要的智能提示，保持干净
+    "editor.quickSuggestions": {
+      "comments": "off",
+      "strings": "off",
+      "other": "off"
+  },
+
+  // Tab 转 2 个空格（Markdown 社区常见缩进风格）
+  "editor.tabSize": 2,
+
+  // 输入 `**` `##` 等符号后自动补全
+  "editor.autoClosingBrackets": "always",
+  "editor.autoClosingQuotes": "always",
+
+  // 保存时自动去掉多余空格，保持整洁
+  "files.trimTrailingWhitespace": true
+},
+
+// Markdown 插件常用优化（全局设置，不止 Markdown）
+"markdown-preview-enhanced.breakOnSingleNewline": true, // 单回车换行
+"markdown-preview-enhanced.enableTypographer": true,    // 智能标点
+"markdown-preview-enhanced.previewTheme": "github-light.css", // 预览主题
+"markdown.preview.breaks": true // VSCode 自带预览换行
 }

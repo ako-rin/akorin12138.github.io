@@ -36,6 +36,7 @@ declare module 'vue-router/auto-routes' {
     '/posts/JapanTravel': RouteRecordInfo<'/posts/JapanTravel', '/posts/JapanTravel', Record<never, never>, Record<never, never>>,
     '/posts/zenbrowser': RouteRecordInfo<'/posts/zenbrowser', '/posts/zenbrowser', Record<never, never>, Record<never, never>>,
     '/posts/信号Matlab': RouteRecordInfo<'/posts/信号Matlab', '/posts/信号Matlab', Record<never, never>, Record<never, never>>,
+    '/posts/哈希表': RouteRecordInfo<'/posts/哈希表', '/posts/哈希表', Record<never, never>, Record<never, never>>,
     '/posts/基础排序': RouteRecordInfo<'/posts/基础排序', '/posts/基础排序', Record<never, never>, Record<never, never>>,
     '/posts/数字信号处理': RouteRecordInfo<'/posts/数字信号处理', '/posts/数字信号处理', Record<never, never>, Record<never, never>>,
     '/posts/数字信号处理Matlab': RouteRecordInfo<'/posts/数字信号处理Matlab', '/posts/数字信号处理Matlab', Record<never, never>, Record<never, never>>,
@@ -127,6 +128,10 @@ declare module 'vue-router/auto-routes' {
     }
     'pages/posts/信号Matlab.md': {
       routes: '/posts/信号Matlab'
+      views: never
+    }
+    'pages/posts/哈希表.md': {
+      routes: '/posts/哈希表'
       views: never
     }
     'pages/posts/基础排序.md': {
