@@ -17,6 +17,8 @@ node_modules
 .idea/
 *.log
 
+update-updated-git.js
+
 components.d.ts
 
 # valaxy fuse

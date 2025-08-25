@@ -38,6 +38,7 @@ declare module 'vue-router/auto-routes' {
     '/posts/信号Matlab': RouteRecordInfo<'/posts/信号Matlab', '/posts/信号Matlab', Record<never, never>, Record<never, never>>,
     '/posts/哈希表': RouteRecordInfo<'/posts/哈希表', '/posts/哈希表', Record<never, never>, Record<never, never>>,
     '/posts/基础排序': RouteRecordInfo<'/posts/基础排序', '/posts/基础排序', Record<never, never>, Record<never, never>>,
+    '/posts/大数据查重': RouteRecordInfo<'/posts/大数据查重', '/posts/大数据查重', Record<never, never>, Record<never, never>>,
     '/posts/数字信号处理': RouteRecordInfo<'/posts/数字信号处理', '/posts/数字信号处理', Record<never, never>, Record<never, never>>,
     '/posts/数字信号处理Matlab': RouteRecordInfo<'/posts/数字信号处理Matlab', '/posts/数字信号处理Matlab', Record<never, never>, Record<never, never>>,
     '/posts/栈与队列': RouteRecordInfo<'/posts/栈与队列', '/posts/栈与队列', Record<never, never>, Record<never, never>>,
@@ -136,6 +137,10 @@ declare module 'vue-router/auto-routes' {
     }
     'pages/posts/基础排序.md': {
       routes: '/posts/基础排序'
+      views: never
+    }
+    'pages/posts/大数据查重.md': {
+      routes: '/posts/大数据查重'
       views: never
     }
     'pages/posts/数字信号处理.md': {

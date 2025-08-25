@@ -1,7 +1,7 @@
 ---
 title: C++学习记录
 date: 2025-07-10T00:00:00.000Z
-updated: '2025-08-14 15:48:37 +0800'
+updated: '2025-08-24 01:46:36 +0800'
 categories: 笔记
 tags:
   - 学习
@@ -1092,6 +1092,78 @@ map<int, string, Compare> myMapDesc;
 myMapDesc[1] = "Apple";
 myMapDesc[2] = "Banana";
 ```
+
+### `unordered_map`
+
+与 `map` 不同， `unordered_map` 是基于哈希表的键值对存储结构，而 `map` 是基于红黑树实现。
+
+#### 基本定义
+
+```C++
+std::unordered_map<
+    KeyType,
+    ValueType,
+    Hash = std::hash<KeyType>,
+    KeyEqual = std::equal_to<KeyType>,
+    Allocator = std::allocator<std::pair<const KeyType, ValueType>>
+>
+```
+其中：
+- `KeyType`：键的类型，需要支持哈希运算和相等比较。
+- `ValueType`：值的类型。
+- `Hash`：哈希函数，默认为 `std::hash<KeyType>`。
+- `KeyEqual`：键相等的比较函数，默认为 `std::equal_to<KeyType>`。
+- `Allocator`：内存分配器，默认为 `std::allocator`。
+
+
+#### 插入元素
+- `insert`
+- 下标操作符 `[]`
+```C++
+// 方式一：使用 insert(pair)
+mp.insert({1, "apple"});
+mp.insert(make_pair(2, "banana"));
+
+// 方式二：使用下标操作符 []
+mp[3] = "cherry";   // 若 key=3 不存在，创建并赋值
+mp[2] = "blueberry"; // 覆盖原值
+```
+
+#### 查找元素
+- `find`：查找值并返回迭代器。
+- `at`：查找值，没找到就抛出异常
+- `count`：若存在指定的key，则返回1否则返回0。
+- `first` 取出键（key）。
+- `second` 取出值（value）。
+
+```C++
+// 使用 find()
+auto it = mp.find(3);
+if (it != mp.end()) {
+    // it 指向一个元素，类型是 pair<const Key, T>
+    // 其中 it->first 表示 key，it->second 表示 value
+    cout << "Found: " << it->first << " -> " << it->second << endl;
+} else {
+    cout << "Not found" << endl;
+}
+
+// 使用 at()
+try {
+    cout << "Key=1, value=" << mp.at(1) << endl;
+    cout << "Key=3, value=" << mp.at(3) << endl; // 不存在，抛出异常
+} catch (const out_of_range &e) {
+    cout << "Exception: " << e.what() << endl;
+}
+// 使用 count()
+if (mp.count(2)) cout << "存在 key=2" << endl;
+
+
+```
+
+#### 删除元素
+- `erase`：删除指定的key，或者迭代器。
+- `clear`：清空。
+
 
 ## 补充
 
