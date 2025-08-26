@@ -35,6 +35,7 @@ declare module 'vue-router/auto-routes' {
     '/posts/gccSimpleLearn': RouteRecordInfo<'/posts/gccSimpleLearn', '/posts/gccSimpleLearn', Record<never, never>, Record<never, never>>,
     '/posts/JapanTravel': RouteRecordInfo<'/posts/JapanTravel', '/posts/JapanTravel', Record<never, never>, Record<never, never>>,
     '/posts/zenbrowser': RouteRecordInfo<'/posts/zenbrowser', '/posts/zenbrowser', Record<never, never>, Record<never, never>>,
+    '/posts/一致性哈希算法': RouteRecordInfo<'/posts/一致性哈希算法', '/posts/一致性哈希算法', Record<never, never>, Record<never, never>>,
     '/posts/信号Matlab': RouteRecordInfo<'/posts/信号Matlab', '/posts/信号Matlab', Record<never, never>, Record<never, never>>,
     '/posts/哈希表': RouteRecordInfo<'/posts/哈希表', '/posts/哈希表', Record<never, never>, Record<never, never>>,
     '/posts/基础排序': RouteRecordInfo<'/posts/基础排序', '/posts/基础排序', Record<never, never>, Record<never, never>>,
@@ -126,6 +127,10 @@ declare module 'vue-router/auto-routes' {
     }
     'pages/posts/zenbrowser.md': {
       routes: '/posts/zenbrowser'
+      views: never
+    }
+    'pages/posts/一致性哈希算法.md': {
+      routes: '/posts/一致性哈希算法'
       views: never
     }
     'pages/posts/信号Matlab.md': {

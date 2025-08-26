@@ -34,7 +34,14 @@ function toSearch() {
 </script>
 
 <template>
-    <Transition name="fade" @enter="isLocked = true" @after-leave="isLocked = false">
+    <Transition
+        name="fade"
+        @enter="isLocked = true"
+        @after-leave="isLocked = false"
+        enter-active-class="elastic-enter-active"
+        leave-active-class="elastic-leave-active"
+        leave-to-class="elastic-leave-to"
+    >
         <div v-if="open" ref="searchContainer" class="mashiro-search"
             :style="{ '--sakura-search-bg-img': `url('${iloliImg}')` }">
             <div class="mashiro-search-container">
@@ -119,6 +126,34 @@ function toSearch() {
         &:hover {
             color: var(--sakura-color-primary);
         }
+    }
+}
+
+/* 进入动画 */
+.elastic-enter-active {
+    animation: elastic 0.5s forwards;
+}
+
+/* 离开动画 */
+.elastic-leave-active {
+    animation: shrink 0.5s forwards;
+}
+
+.elastic-leave-to {
+    transform: scale(0);
+    opacity: 0;
+}
+
+/* 离开时的缩小动画 */
+@keyframes shrink {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0);
+        opacity: 0;
     }
 }
 </style>

@@ -19,6 +19,10 @@ end: true
 
 大数据topk问题就是 **求大量数据的前k个最大/最小的数据**。
 
+有两种方法解决：
+- 大小根堆
+- 快排分割
+
 <!-- more -->
 
 ## 大小根堆求解
@@ -157,3 +161,57 @@ cout << endl;
 `[capture list] (parameter list) -> return type { function body }`
 :::
 
+## 快排分割求解
+
+分割到前 `k` 个数组取出来即可：因为 **基准数前面的数都小于它，基准数后面的数都大于它。** 因此找出前 `k` 个最大/最小数，就只需要找到位置是 `k-1` 的基准数的位置（基准数也是前 `k` 个数），并返回前 `k` 个数的子数组。
+
+操作的平均时间复杂度也是O(n)。
+- 获取分割后的位置 `pos` ，与 `k-1` 进行比较。
+- 若 `pos` > `k-1` ，说明在左边数列中找。
+- 若 `pos` < `k-1` ，说明在右边数列中找。
+
+```C++
+// 分割一次
+int Partation(int arr[], int begin, int end) {
+    int val = arr[begin];
+    int left = begin;
+    int right = end;
+    while (left < right) {
+        // while中要判断左右指针的位置，防止右指针越过左指针
+        // 使得右边数组越多val位置遍历到左边数组去了
+        while (left < right && arr[right]> val) {
+            --right;
+        }
+        if (left < right) {
+            arr[left] = arr[right];
+            ++left;
+        } else {
+            break;
+        }
+        while (left < right && arr[left] < val) {
+            ++left;
+        }
+        if (left < right) {
+            arr[right] = arr[left];
+            --right;
+        } else {
+            break;
+        }
+    }
+    arr[left] = val;
+    return left;
+}
+
+void SelectTopk(int arr[], int begin, int end, int k) {
+
+    int pos = Partation(arr, begin, end);
+    if (pos == k - 1) {
+        return;
+    } else if (pos > k - 1)
+        SelectTopk(arr, begin, pos - 1, k);
+    else
+        SelectTopk(arr, pos + 1, end, k);
+}
+```
+
+要注意快排分割中左右指针循环条件，**不要让左右指针越界** 。
