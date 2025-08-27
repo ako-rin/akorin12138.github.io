@@ -188,3 +188,28 @@ pre code {
     color: var(--sakura-color-text-deep);
     font-weight: bold;
 }
+
+/* --- Sidebar overlay mode override: prevent main content shift --- */
+/* 当主题为侧边栏打开时会在容器上注入 --sakura-private-sidebar-offset: var(--sakura-sidebar-offset); */
+/* 这里强行把偏移变量置 0，并清除可能的 margin/transform */
+html, body, .app-container {
+    --sakura-private-sidebar-offset: 0 !important;
+    --sakura-sidebar-offset: 0 !important;
+}
+
+.app-container {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    transform: none !important;
+}
+
+/* 防止由于宽度滚动条补偿产生的 layout 抖动 */
+body.sidebar-open, body.is-sidebar-open {
+    padding-right: 0 !important;
+}
+
+@media (min-width: 48rem) {
+  .md\:hidden {
+    display: flex;
+  }
+}

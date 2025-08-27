@@ -22,19 +22,19 @@ export default defineSiteConfig({
       name: "RSS",
       link: "/atom.xml",
       icon: "i-ri-rss-line",
-      color: "#ffecc2ff",
+      color: "#ffdd94ff",
     },
     {
       name: "GitHub",
       link: "https://github.com/ako-rin",
       icon: "i-ri-github-line",
-      color: "#e7e7ffff",
+      color: "#b2b2ffff",
     },
     {
       name: "E-Mail",
       link: "mailto:love@akorin.icu",
       icon: "i-ri-mail-line",
-      color: "#ccfff3ff",
+      color: "#89ffe4ff",
     },
     // {
     //   name: 'Travelling',

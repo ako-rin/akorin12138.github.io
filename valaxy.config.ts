@@ -251,7 +251,9 @@ export default defineValaxyConfig<ThemeUserConfig>({
     },
     sidebarOptions: {
       position: 'left',
+      enableOnDesktop: true,
     },
+    
     tags: {
       rainbow: true,
     },
