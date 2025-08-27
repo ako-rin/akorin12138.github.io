@@ -122,6 +122,7 @@ function onItemClick(e: MouseEvent) {
   handleClick(e)
   close()
 }
+
 </script>
 
 <template>
@@ -177,6 +178,17 @@ function onItemClick(e: MouseEvent) {
                     :href="child.link"
                     @click="onItemClick"
                   >{{ child.title }}</RouterLink>
+                  <ul v-if="child.children?.length" class="toc-sub">
+                    <li v-for="g in child.children" :key="g.link" class="toc-item">
+                      <RouterLink
+                        :to="g.link"
+                        class="toc-link"
+                        :class="{ active: activeHash === g.link }"
+                        :href="g.link"
+                        @click="onItemClick"
+                      >{{ g.title }}</RouterLink>
+                    </li>
+                  </ul>
                 </li>
               </ul>
             </li>
@@ -248,6 +260,7 @@ function onItemClick(e: MouseEvent) {
   display: flex;
   flex-direction: column;
   font-size: 14px;
+  text-align: left; /* 确保面板内文字左对齐 */
 }
 
 .panel-header {
@@ -273,11 +286,35 @@ function onItemClick(e: MouseEvent) {
   overflow-y: auto;
   padding: 8px 12px 32px;
   -webkit-overflow-scrolling: touch;
+  text-align: left; /* 强制 body 内文字左对齐 */
 }
 
+
+/* 层级结构样式增强 */
 .toc-root, .toc-sub { list-style: none; margin: 0; padding: 0; }
-.toc-sub { padding-left: 12px; }
-.toc-item { margin: 0; }
+.toc-root { padding-left: 0; }
+.toc-sub { position: relative; padding-left: 14px; margin: 2px 0 4px; border-left: 1.5px solid var(--va-c-divider, #e2e2e2); }
+.toc-sub .toc-sub { border-color: var(--va-c-divider, #ececec); }
+
+.toc-item { margin: 0; position: relative; }
+.toc-sub > .toc-item::before {
+  content: '';
+  position: absolute;
+  left: -7px;
+  top: 13px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--va-c-divider, #d0d0d0);
+  transform: translateY(-50%);
+}
+.toc-sub > .toc-item:hover::before, .toc-sub > .toc-item .toc-link.active + .toc-sub > .toc-item::before { background: var(--sakura-color-primary); }
+
+/* 字体层级 */
+.toc-root > .toc-item > .toc-link { font-weight: 600; font-size: 14px; }
+.toc-sub > .toc-item > .toc-link { font-size: 13px; font-weight: 500; }
+.toc-sub .toc-sub > .toc-item > .toc-link { font-size: 12.5px; opacity: .92; }
+.toc-sub .toc-sub .toc-sub > .toc-item > .toc-link { font-size: 12px; opacity: .85; }
 
 .toc-link {
   display: block;
@@ -291,6 +328,7 @@ function onItemClick(e: MouseEvent) {
   overflow: hidden;
   text-overflow: ellipsis;
   transition: background .2s, color .2s;
+  text-align: left; /* 链接文本左对齐 */
   &.active { color: var(--sakura-color-primary); background: var(--va-c-bg-alt, #f5f5f5); }
   &:hover { background: var(--va-c-bg-alt, #f5f5f5); }
 }
