@@ -17,7 +17,8 @@ node_modules
 .idea/
 *.log
 
-update.cjs
+scripts/
+
 
 components.d.ts
 

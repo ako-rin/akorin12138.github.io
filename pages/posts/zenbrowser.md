@@ -1,6 +1,6 @@
 ---
 title: Zen Browser默认打开卡顿
-date: '2025-02-21 00:00:00 +0800'
+date: 2025-02-21 00:00:00
 categories: 浏览器
 tags:
   - Zen Browser
