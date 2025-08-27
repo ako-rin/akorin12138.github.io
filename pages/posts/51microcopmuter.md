@@ -1,6 +1,6 @@
 ---
 title: 51单片机编程
-date: 2025-03-15T00:00:00.000Z
+date: '2025-03-15 00:00:00 +0800'
 updated: '2025-07-10 17:08:02 +0800'
 categories: 笔记
 tags:
@@ -14,7 +14,7 @@ time_warning: true
 ---
 
 51单片机主要使用的函数
- 
+
 <!-- more -->
 
 ## 定时器&中断
@@ -72,12 +72,12 @@ STC89C52/AT89C52内部FLASH扇区地址：
 
 stateDiagram
 
-  设定ISP等待时间 --> 设定ISP模式 
-  设定ISP模式 --> 设定ISP操作地址 
-  设定ISP操作地址 --> 关闭全局定时器 
-  关闭全局定时器 --> ISP_TRIG寄存器存入0x46 
-  ISP_TRIG寄存器存入0x46 --> ISP_TRIG寄存器存入0xB9 
-  ISP_TRIG寄存器存入0xB9 --> 等待一个空闲周期 
+  设定ISP等待时间 --> 设定ISP模式
+  设定ISP模式 --> 设定ISP操作地址
+  设定ISP操作地址 --> 关闭全局定时器
+  关闭全局定时器 --> ISP_TRIG寄存器存入0x46
+  ISP_TRIG寄存器存入0x46 --> ISP_TRIG寄存器存入0xB9
+  ISP_TRIG寄存器存入0xB9 --> 等待一个空闲周期
   等待一个空闲周期 --> 退出ISP模式
 
 ```

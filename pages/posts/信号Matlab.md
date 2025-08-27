@@ -1,6 +1,6 @@
 ---
 title: 信号的Matlab编程
-date: 2025-02-25T00:00:00.000Z
+date: '2025-02-25 00:00:00 +0800'
 updated: '2025-07-10 21:24:43 +0800'
 categories: 笔记
 tags:
@@ -202,7 +202,7 @@ subplot(3, 1, 3);stem(k,y);
 ![](https://pic.akorin.icu/20250225215129580.png)
 
 ```matlab
-x2=0.8.^k2;  
+x2=0.8.^k2;
 x2=0.8^k2;  %[!code error]
 ```
 由于k2是一个矩阵，不能直接用运算符与之做运算，需要在运算符前加一个点号表明将矩阵的每个元素分别做运算
@@ -316,7 +316,7 @@ h=impulse(num,den,t);
 figure(2);
 plot(t,h);
 title('impulse Respone');
-[H,w]=freqs(num,den);   
+[H,w]=freqs(num,den);
 
 figure(3);
 plot(w,abs(H));     %横坐标为角频率w，纵坐标为幅度H的绝对值
@@ -388,7 +388,7 @@ $$
 +\begin{bmatrix}
   10 \\
   0
-\end{bmatrix}f(t) 
+\end{bmatrix}f(t)
 
 $$
 
@@ -588,7 +588,7 @@ $$
 f(t)=\sin(2\pi f_0 t)+ \frac{1}{3} \sin(6\pi f_0 t)
 $$
 
-求该信号的频谱并在采样信号 
+求该信号的频谱并在采样信号
 
 $$
 Fs>2f_m,F_s=2f_m,Fs<2f_m

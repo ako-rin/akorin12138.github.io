@@ -17,7 +17,7 @@ node_modules
 .idea/
 *.log
 
-update-updated-git.js
+update.cjs
 
 components.d.ts
 
