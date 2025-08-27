@@ -1,0 +1,304 @@
+<script setup lang="ts">
+import { ref, watchEffect, onMounted, onUnmounted, computed } from 'vue'
+import { useOutline, useFrontmatter } from 'valaxy'
+import { useMediaQuery } from '@vueuse/core'
+import { useRoute } from 'vue-router'
+
+// 可配置：按钮图标（未展开 / 展开）、是否显示阅读进度环
+const props = withDefaults(defineProps<{
+  icon?: string
+  activeIcon?: string
+  showProgress?: boolean
+}>(), {
+  icon: 'i-line-md-list-3',
+  activeIcon: 'i-line-md-close-small',
+  showProgress: true,
+})
+
+// 获取当前页面的标题（headers）
+const { headers, handleClick } = useOutline()
+
+// 是否为移动端（与 aside 逻辑互补：小于 960px 视为移动）
+const isMobile = useMediaQuery('(max-width: 959px)')
+
+// 仅文章页显示：判断 layout 或路径
+const frontmatter = useFrontmatter()
+const route = useRoute()
+const isPost = computed(() => frontmatter.value?.layout === 'post' || route.path.startsWith('/posts/'))
+
+// 浮动按钮 & 面板显隐
+const open = ref(false)
+const hasHeaders = ref(false)
+
+// 阅读进度（0-100）
+const progress = ref(0)
+function updateProgress() {
+  if (!props.showProgress) return
+  const scrollTop = window.scrollY
+  const doc = document.documentElement
+  const scrollHeight = doc.scrollHeight - window.innerHeight
+  const p = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0
+  progress.value = Math.min(100, Math.max(0, p))
+}
+
+watchEffect(() => {
+  hasHeaders.value = !!headers.value?.length
+  if (!isMobile.value) {
+    open.value = false
+  }
+})
+
+function toggle() {
+  if (!hasHeaders.value)
+    return
+  open.value = !open.value
+}
+
+function close() {
+  open.value = false
+}
+
+// 禁用滚动（可选）
+onMounted(() => {
+  const lockScroll = () => {
+    if (open.value) {
+      document.documentElement.style.overflow = 'hidden'
+    }
+    else {
+      document.documentElement.style.overflow = ''
+    }
+  }
+  watchEffect(lockScroll)
+  window.addEventListener('scroll', updateProgress, { passive: true })
+  updateProgress()
+})
+onUnmounted(() => {
+  document.documentElement.style.overflow = ''
+  window.removeEventListener('scroll', updateProgress)
+})
+
+// 简单的当前标题高亮（IntersectionObserver）
+const activeHash = ref<string>('')
+let observer: IntersectionObserver | null = null
+
+function initObserver() {
+  if (observer) {
+    observer.disconnect()
+    observer = null
+  }
+  if (!isMobile.value)
+    return
+
+  const headings = Array.from(document.querySelectorAll('.markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4, .markdown-body h5, .markdown-body h6')) as HTMLElement[]
+  if (!headings.length)
+    return
+
+  observer = new IntersectionObserver((entries) => {
+    // 选取最接近顶部且可见的 heading
+    const visible = entries.filter(e => e.isIntersecting)
+    if (visible.length) {
+      // 取 y 最小者
+      const topMost = visible.sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0]
+      const id = (topMost.target as HTMLElement).id
+      if (id) activeHash.value = `#${decodeURIComponent(id)}`
+    }
+  }, {
+    rootMargin: '0px 0px -70% 0px', // 提前高亮
+    threshold: [0, 1.0],
+  })
+
+  headings.forEach(h => observer!.observe(h))
+}
+
+onMounted(() => {
+  setTimeout(initObserver, 0)
+})
+
+onUnmounted(() => {
+  observer?.disconnect()
+})
+
+function onItemClick(e: MouseEvent) {
+  handleClick(e)
+  close()
+}
+</script>
+
+<template>
+  <!-- 浮动按钮：仅移动端且存在目录时显示 -->
+  <button
+    v-if="isMobile && hasHeaders && isPost"
+    class="sakura-mobile-toc-btn"
+    type="button"
+    aria-label="目录"
+    :class="{ open }"
+    :style="props.showProgress ? { '--toc-progress': progress + '%' } : undefined"
+    @click="toggle"
+  >
+    <span class="inner">
+      <span class="toc-icon" :class="open ? props.activeIcon : props.icon" />
+    </span>
+    <span class="visually-hidden">TOC</span>
+  </button>
+
+  <!-- 遮罩 -->
+  <transition name="fade">
+    <div v-if="open" class="sakura-mobile-toc-mask" role="button" tabindex="-1" aria-label="关闭目录" @click.self="close" />
+  </transition>
+
+  <!-- 侧滑面板 -->
+  <transition name="slide">
+    <aside
+      v-if="open"
+      class="sakura-mobile-toc-panel"
+      aria-label="文章目录"
+    >
+      <header class="panel-header">
+        <span class="title">目录</span>
+        <button class="close" type="button" aria-label="关闭" @click="close">×</button>
+      </header>
+      <nav class="panel-body" aria-labelledby="mobile-toc-label">
+        <ul class="toc-root">
+          <template v-for="item in headers" :key="item.link">
+            <li class="toc-item">
+              <RouterLink
+                :to="item.link"
+                class="toc-link"
+                :class="{ active: activeHash === item.link }"
+                :href="item.link"
+                @click="onItemClick"
+              >{{ item.title }}</RouterLink>
+              <ul v-if="item.children?.length" class="toc-sub">
+                <li v-for="child in item.children" :key="child.link" class="toc-item">
+                  <RouterLink
+                    :to="child.link"
+                    class="toc-link"
+                    :class="{ active: activeHash === child.link }"
+                    :href="child.link"
+                    @click="onItemClick"
+                  >{{ child.title }}</RouterLink>
+                </li>
+              </ul>
+            </li>
+          </template>
+        </ul>
+      </nav>
+    </aside>
+  </transition>
+</template>
+
+<style scoped lang="scss">
+.sakura-mobile-toc-btn {
+  --toc-progress: 0%;
+  position: fixed;
+  right: 16px;
+  bottom: 88px; // 避开底部可能的其他按钮
+  z-index: 1000;
+  width: 58px;
+  height: 58px;
+  padding: 5px; // 用作进度环的空白
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background:
+    conic-gradient(var(--sakura-color-primary) var(--toc-progress), var(--va-c-bg-soft, #e5e5e5) 0) border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.18), 0 0 0 1px rgba(255,255,255,0.3) inset;
+  transition: transform .35s cubic-bezier(.4,0,.2,1), box-shadow .3s, background .4s;
+  &:active { transform: scale(.9); }
+  &.open { transform: rotate(135deg) scale(1.05); }
+  .inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: var(--sakura-color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 22px;
+    position: relative;
+    overflow: hidden;
+  }
+  .toc-icon { transition: transform .45s, opacity .3s; }
+  &.open .toc-icon { transform: rotate(-135deg); }
+}
+
+.visually-hidden { position: absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); clip-path:inset(50%); border:0; }
+
+.sakura-mobile-toc-mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.38);
+  backdrop-filter: blur(2px);
+  z-index: 998;
+}
+
+.sakura-mobile-toc-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: min(80%, 320px);
+  background: var(--va-c-bg, #fff);
+  box-shadow: -4px 0 18px rgba(0,0,0,0.15);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  font-weight: 600;
+  background: var(--va-c-bg-soft, #fafafa);
+  border-bottom: 1px solid var(--va-c-divider, #e5e5e5);
+  .close {
+    font-size: 24px;
+    line-height: 1;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: var(--va-c-text-2, #666);
+  }
+}
+
+.panel-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 12px 32px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.toc-root, .toc-sub { list-style: none; margin: 0; padding: 0; }
+.toc-sub { padding-left: 12px; }
+.toc-item { margin: 0; }
+
+.toc-link {
+  display: block;
+  padding: 6px 4px;
+  color: var(--va-c-text-1, #333);
+  text-decoration: none;
+  border-radius: 6px;
+  line-height: 1.3;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background .2s, color .2s;
+  &.active { color: var(--sakura-color-primary); background: var(--va-c-bg-alt, #f5f5f5); }
+  &:hover { background: var(--va-c-bg-alt, #f5f5f5); }
+}
+
+// 动画
+.fade-enter-active, .fade-leave-active { transition: opacity .25s; }
+.fade-enter-from, .fade-leave-to { opacity: 0; }
+
+.slide-enter-active, .slide-leave-active { transition: transform .28s cubic-bezier(.4,0,.2,1); }
+.slide-enter-from, .slide-leave-to { transform: translateX(100%); }
+</style>

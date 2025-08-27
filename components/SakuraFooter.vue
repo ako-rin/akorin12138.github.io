@@ -30,5 +30,7 @@ const footer = computed (() => props.footer || themeConfig.value.footer)
     </div>
 
     <slot />
+  <!-- Mobile TOC Floating Button -->
+  <SakuraMobileToc />
   </footer>
 </template>
