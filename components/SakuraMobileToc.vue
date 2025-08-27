@@ -204,11 +204,11 @@ function onItemClick(e: MouseEvent) {
   --toc-progress: 0%;
   position: fixed;
   right: 16px;
-  bottom: 88px; // 避开底部可能的其他按钮
+  bottom: 56px; // 调低位置，离底部更近
   z-index: 1000;
-  width: 58px;
-  height: 58px;
-  padding: 5px; // 用作进度环的空白
+  width: 50px; // 缩小整体尺寸
+  height: 50px;
+  padding: 4px; // 进度环留白随尺寸缩小
   border: none;
   border-radius: 50%;
   cursor: pointer;
@@ -230,7 +230,7 @@ function onItemClick(e: MouseEvent) {
     align-items: center;
     justify-content: center;
     color: #fff;
-    font-size: 22px;
+  font-size: 20px; // 图标随按钮缩小
     position: relative;
     overflow: hidden;
   }
