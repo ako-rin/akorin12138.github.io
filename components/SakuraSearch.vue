@@ -97,7 +97,6 @@ function clickBackdrop(e: MouseEvent) {
             >
                 <Transition name="panel-fade" appear>
                     <div class="search-panel" v-if="open" role="dialog" aria-modal="true" aria-label="Search dialog">
-                        <button class="close-btn" aria-label="Close" type="button" @click="search.close">×</button>
                         <div class="input-wrapper">
                             <i class="i-fa-search leading-icon" />
                             <input
@@ -169,35 +168,50 @@ function clickBackdrop(e: MouseEvent) {
     backdrop-filter: blur(20px) saturate(1.4);
 }
 @media (max-width: 767px) {
-    .search-panel { width: 100%; border-radius: 16px; padding: 1rem 1rem 1.25rem; }
+    .search-panel { width: 100%; border-radius: 16px; padding: .9rem .85rem 1.05rem; }
 }
 
-.close-btn {
-    position: absolute; top: .4rem; right: .6rem;
-    background: transparent; border: none; font-size: 1.4rem; line-height: 1; cursor: pointer;
-    color: var(--sakura-color-text-secondary, #666);
-    transition: color .15s;
-}
-.close-btn:hover { color: var(--sakura-color-primary); }
 
-.input-wrapper { position: relative; display: flex; align-items: center; gap: .75rem; }
+.input-wrapper { position: relative; display: flex; align-items: center; gap: .7rem; }
 .leading-icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); pointer-events: none; }
 .search-input {
     flex: 1;
     background: #fff;
-    border: 1.5px solid #b9bed1; /* 更清晰边框 */
-    padding: .75rem 1rem .75rem 2.5rem;
+    border: 1.5px solid #b9bed1;
+    padding: .62rem .95rem .62rem 2.4rem; /* 更紧凑保持高度一致 */
     border-radius: 14px;
     font-size: 1rem;
     line-height: 1.1;
     font-weight: 500;
     color: #222;
     transition: border-color .18s, box-shadow .18s, background .25s;
+    height: 2.7rem;
+    box-sizing: border-box;
+    /* 允许在窄屏水平放不下时收缩，避免把按钮挤出容器 */
+    min-width: 0;
 }
 .search-input:focus { outline: none; border-color: var(--sakura-color-primary); box-shadow: 0 0 0 3px rgba(140 120 255 / .25); }
 .search-input:disabled { opacity: .6; cursor: progress; }
 
-.go-btn { height: 2.5rem; padding: 0 1rem; border: 1.5px solid var(--sakura-color-primary); border-radius: 12px; background: var(--sakura-color-primary); color:#fff; font-weight:600; cursor:pointer; transition: background .2s, box-shadow .2s, transform .15s; }
+.go-btn { height: 2.7rem; padding: 0 .95rem; border: 1.5px solid var(--sakura-color-primary); border-radius: 12px; background: var(--sakura-color-primary); color:#fff; font-weight:600; cursor:pointer; transition: background .2s, box-shadow .2s, transform .15s; display:flex; align-items:center; justify-content:center; white-space:nowrap; line-height:1; }
+@media (max-width: 767px) {
+    .search-input { font-size: .95rem; height: 2.55rem; padding: .5rem .85rem .5rem 2.2rem; }
+    .go-btn { height: 2.55rem; font-size: .8rem; padding: 0 .75rem; min-width: 4.1rem; }
+    .input-wrapper { gap: .55rem; }
+}
+
+/* 介于 421px~520px 的窄宽度：保持横向布局但再紧凑一点 */
+@media (max-width: 520px) and (min-width: 421px) {
+    .input-wrapper { gap: .45rem; }
+    .search-input { padding-right: .8rem; }
+}
+
+/* 极窄屏（例如 360px 以下）防止按钮挤出：改为纵向排列 */
+@media (max-width: 420px) {
+    .input-wrapper { flex-direction: column; align-items: stretch; gap: .5rem; }
+    .search-input { width: 100%; height: 2.6rem; padding: .55rem .9rem .55rem 2.2rem; }
+    .go-btn { width: 100%; height: 2.55rem; font-size: .85rem; justify-content: center; }
+}
 .go-btn:disabled { opacity:.5; cursor: not-allowed; }
 .go-btn:not(:disabled):hover { filter: brightness(1.1); }
 .go-btn:not(:disabled):active { transform: translateY(1px); }
@@ -241,10 +255,6 @@ function clickBackdrop(e: MouseEvent) {
 .dark .history-item:hover { background: rgba(255 255 255 / .14); border-color: rgba(255 255 255 / .12); }
 @media (prefers-color-scheme: dark) { .history-item:hover { background: rgba(255 255 255 / .14); border-color: rgba(255 255 255 / .12); } }
 
-.dark .close-btn { color: rgba(255 255 255 / .55); }
-@media (prefers-color-scheme: dark) { .close-btn { color: rgba(255 255 255 / .55); } }
-.dark .close-btn:hover { color: #fff; }
-@media (prefers-color-scheme: dark) { .close-btn:hover { color: #fff; } }
 
 .dark .tip { color: rgba(255 255 255 / .55); opacity: .7; }
 @media (prefers-color-scheme: dark) { .tip { color: rgba(255 255 255 / .55); opacity: .7; } }
