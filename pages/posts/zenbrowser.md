@@ -1,6 +1,7 @@
 ---
 title: Zen Browser默认打开卡顿
 date: 2025-02-21 00:00:00
+updated: 2025-02-21 00:02:15
 categories: 浏览器
 tags:
   - Zen Browser
