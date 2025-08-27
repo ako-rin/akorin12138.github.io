@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watchEffect, onMounted, onUnmounted, computed } from 'vue'
+import { ref, watchEffect, onMounted, onUnmounted, computed, watch } from 'vue'
 import { useOutline, useFrontmatter } from 'valaxy'
 import { useMediaQuery } from '@vueuse/core'
 import { useRoute } from 'vue-router'
@@ -114,6 +114,9 @@ onMounted(() => {
   setTimeout(initObserver, 0)
 })
 
+// 路由变化时重建 observer (文章切换)
+watch(() => route.path, () => setTimeout(initObserver, 0))
+
 onUnmounted(() => {
   observer?.disconnect()
 })
@@ -126,77 +129,79 @@ function onItemClick(e: MouseEvent) {
 </script>
 
 <template>
-  <!-- 浮动按钮：仅移动端且存在目录时显示 -->
-  <button
-    v-if="isMobile && hasHeaders && isPost"
-    class="sakura-mobile-toc-btn"
-    type="button"
-    aria-label="目录"
-    :class="{ open }"
-    :style="props.showProgress ? { '--toc-progress': progress + '%' } : undefined"
-    @click="toggle"
-  >
-    <span class="inner">
-      <span class="toc-icon" :class="open ? props.activeIcon : props.icon" />
-    </span>
-    <span class="visually-hidden">TOC</span>
-  </button>
-
-  <!-- 遮罩 -->
-  <transition name="fade">
-    <div v-if="open" class="sakura-mobile-toc-mask" role="button" tabindex="-1" aria-label="关闭目录" @click.self="close" />
-  </transition>
-
-  <!-- 侧滑面板 -->
-  <transition name="slide">
-    <aside
-      v-if="open"
-      class="sakura-mobile-toc-panel"
-      aria-label="文章目录"
+  <teleport to="body">
+    <!-- 仅在文章页显示按钮 -->
+    <button
+      v-if="isMobile && hasHeaders && isPost"
+      class="sakura-mobile-toc-btn"
+      type="button"
+      aria-label="目录"
+      :class="{ open }"
+      :style="props.showProgress ? { '--toc-progress': progress + '%' } : undefined"
+      @click="toggle"
     >
-      <header class="panel-header">
-        <span class="title">目录</span>
-        <button class="close" type="button" aria-label="关闭" @click="close">×</button>
-      </header>
-      <nav class="panel-body" aria-labelledby="mobile-toc-label">
-        <ul class="toc-root">
-          <template v-for="item in headers" :key="item.link">
-            <li class="toc-item">
-              <RouterLink
-                :to="item.link"
-                class="toc-link"
-                :class="{ active: activeHash === item.link }"
-                :href="item.link"
-                @click="onItemClick"
-              >{{ item.title }}</RouterLink>
-              <ul v-if="item.children?.length" class="toc-sub">
-                <li v-for="child in item.children" :key="child.link" class="toc-item">
-                  <RouterLink
-                    :to="child.link"
-                    class="toc-link"
-                    :class="{ active: activeHash === child.link }"
-                    :href="child.link"
-                    @click="onItemClick"
-                  >{{ child.title }}</RouterLink>
-                  <ul v-if="child.children?.length" class="toc-sub">
-                    <li v-for="g in child.children" :key="g.link" class="toc-item">
-                      <RouterLink
-                        :to="g.link"
-                        class="toc-link"
-                        :class="{ active: activeHash === g.link }"
-                        :href="g.link"
-                        @click="onItemClick"
-                      >{{ g.title }}</RouterLink>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-          </template>
-        </ul>
-      </nav>
-    </aside>
-  </transition>
+      <span class="inner">
+        <span class="toc-icon" :class="open ? props.activeIcon : props.icon" />
+      </span>
+      <span class="visually-hidden">TOC</span>
+    </button>
+
+    <!-- 遮罩 -->
+    <transition name="fade">
+      <div v-if="open" class="sakura-mobile-toc-mask" role="button" tabindex="-1" aria-label="关闭目录" @click.self="close" />
+    </transition>
+
+    <!-- 侧滑面板 -->
+    <transition name="slide">
+      <aside
+        v-if="open"
+        class="sakura-mobile-toc-panel"
+        aria-label="文章目录"
+      >
+        <header class="panel-header">
+          <span class="title">目录</span>
+          <button class="close" type="button" aria-label="关闭" @click="close">×</button>
+        </header>
+        <nav class="panel-body" aria-labelledby="mobile-toc-label">
+          <ul class="toc-root">
+            <template v-for="item in headers" :key="item.link">
+              <li class="toc-item">
+                <RouterLink
+                  :to="item.link"
+                  class="toc-link"
+                  :class="{ active: activeHash === item.link }"
+                  :href="item.link"
+                  @click="onItemClick"
+                >{{ item.title }}</RouterLink>
+                <ul v-if="item.children?.length" class="toc-sub">
+                  <li v-for="child in item.children" :key="child.link" class="toc-item">
+                    <RouterLink
+                      :to="child.link"
+                      class="toc-link"
+                      :class="{ active: activeHash === child.link }"
+                      :href="child.link"
+                      @click="onItemClick"
+                    >{{ child.title }}</RouterLink>
+                    <ul v-if="child.children?.length" class="toc-sub">
+                      <li v-for="g in child.children" :key="g.link" class="toc-item">
+                        <RouterLink
+                          :to="g.link"
+                          class="toc-link"
+                          :class="{ active: activeHash === g.link }"
+                          :href="g.link"
+                          @click="onItemClick"
+                        >{{ g.title }}</RouterLink>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </template>
+          </ul>
+        </nav>
+      </aside>
+    </transition>
+  </teleport>
 </template>
 
 <style scoped lang="scss">
