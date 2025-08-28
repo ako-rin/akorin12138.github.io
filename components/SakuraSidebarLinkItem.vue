@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { NavItem } from './types'
-import SakuraNavLink2 from './SakuraNavLink2.vue';
+import SakuraNavLink from './SakuraNavLink.vue';
 
 defineProps<{
   items?: Partial<NavItem>[]
@@ -10,9 +10,9 @@ defineProps<{
 
 <template>
   <template v-if="item">
-    <SakuraNavLink2 v-bind="item">
+    <SakuraNavLink v-bind="item">
       <SakuraSidebarCount :locale="item.locale" />
-    </SakuraNavLink2>
+    </SakuraNavLink>
   </template>
 
   <ul v-else-if="items?.length" class="sakura-sidebar-link-items">
