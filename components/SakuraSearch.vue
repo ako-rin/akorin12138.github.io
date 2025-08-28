@@ -88,15 +88,16 @@ function clickBackdrop(e: MouseEvent) {
 
 <template>
         <Teleport to="body">
-            <div
-                v-if="open"
-                class="sakura-search-overlay"
-                :class="{ 'is-desktop': isDesktop }"
-                @mousedown="clickBackdrop"
-                :style="{ '--sakura-search-bg-img': `url('${iloliImg}')` }"
-            >
-                <Transition name="panel-fade" appear>
-                    <div class="search-panel" v-if="open" role="dialog" aria-modal="true" aria-label="Search dialog">
+            <Transition name="overlay-fade" appear>
+                <div
+                    v-if="open"
+                    class="sakura-search-overlay"
+                    :class="{ 'is-desktop': isDesktop }"
+                    @mousedown="clickBackdrop"
+                    :style="{ '--sakura-search-bg-img': `url('${iloliImg}')` }"
+                >
+                    <Transition name="panel-fade" appear>
+                        <div class="search-panel" v-if="open" role="dialog" aria-modal="true" aria-label="Search dialog">
                         <div class="input-wrapper">
                             <i class="i-fa-search leading-icon" />
                             <input
@@ -117,9 +118,10 @@ function clickBackdrop(e: MouseEvent) {
                             </li>
                         </ul>
                         <p class="tip" v-if="!history.length">{{ t('search.placeholder') }} ⇧/⌘K</p>
-                    </div>
-                </Transition>
-            </div>
+                        </div>
+                    </Transition>
+                </div>
+            </Transition>
         </Teleport>
 </template>
 
@@ -211,6 +213,8 @@ function clickBackdrop(e: MouseEvent) {
     .input-wrapper { flex-direction: column; align-items: stretch; gap: .5rem; }
     .search-input { width: 100%; height: 2.6rem; padding: .55rem .9rem .55rem 2.2rem; }
     .go-btn { width: 100%; height: 2.55rem; font-size: .85rem; justify-content: center; }
+    /* 列布局下图标按原 50% 会位于输入与按钮之间，这里改为相对输入垂直居中 */
+    .leading-icon { top: 1.3rem; transform: translateY(-50%); }
 }
 .go-btn:disabled { opacity:.5; cursor: not-allowed; }
 .go-btn:not(:disabled):hover { filter: brightness(1.1); }
@@ -225,6 +229,10 @@ function clickBackdrop(e: MouseEvent) {
 /* 面板进入/离开动画（遮罩保持静止不透明度，避免跳变） */
 .panel-fade-enter-active, .panel-fade-leave-active { transition: opacity .22s ease, transform .22s ease; }
 .panel-fade-enter-from, .panel-fade-leave-to { opacity: 0; transform: translateY(4px); }
+
+/* 覆盖层淡入淡出：点击空白关闭时更柔和 */
+.overlay-fade-enter-active, .overlay-fade-leave-active { transition: opacity .25s ease; }
+.overlay-fade-enter-from, .overlay-fade-leave-to { opacity: 0; }
 
 /* 占位符颜色（亮色模式） */
 .search-input::placeholder { color: rgba(0 0 0 / .35); }
