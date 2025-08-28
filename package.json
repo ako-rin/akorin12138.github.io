@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
+    "lightgallery": "2.9.0-beta.1",
     "valaxy": "0.26.3",
     "valaxy-addon-bangumi": "^0.2.2",
     "valaxy-addon-components": "^0.1.0",

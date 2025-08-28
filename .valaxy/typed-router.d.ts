@@ -23,6 +23,8 @@ declare module 'vue-router/auto-routes' {
     '/404': RouteRecordInfo<'/404', '/404', Record<never, never>, Record<never, never>>,
     '/about/': RouteRecordInfo<'/about/', '/about', Record<never, never>, Record<never, never>>,
     '/about/site': RouteRecordInfo<'/about/site', '/about/site', Record<never, never>, Record<never, never>>,
+    '/album': RouteRecordInfo<'/album', '/album', Record<never, never>, Record<never, never>>,
+    '/albums/': RouteRecordInfo<'/albums/', '/albums', Record<never, never>, Record<never, never>>,
     '/anime/': RouteRecordInfo<'/anime/', '/anime', Record<never, never>, Record<never, never>>,
     '/archives/': RouteRecordInfo<'/archives/', '/archives', Record<never, never>, Record<never, never>>,
     '/categories/': RouteRecordInfo<'/categories/', '/categories', Record<never, never>, Record<never, never>>,
@@ -80,6 +82,14 @@ declare module 'vue-router/auto-routes' {
     }
     'pages/about/site.md': {
       routes: '/about/site'
+      views: never
+    }
+    'pages/album.md': {
+      routes: '/album'
+      views: never
+    }
+    'pages/albums/index.md': {
+      routes: '/albums/'
       views: never
     }
     'pages/anime/index.md': {

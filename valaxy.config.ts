@@ -122,6 +122,17 @@ export default defineValaxyConfig<ThemeUserConfig>({
         link: '/comment',
       },
       {
+        text: '相册',
+        icon: 'i-fa-image',
+        link: '/album',
+      },
+      {
+        text: "AkoRin",
+        icon: 'i-line-md-heart-twotone-half',
+        link: "https://akorin.icu",
+        target: '_blank',
+      },
+      {
         text: '友情链接',
         icon: 'i-fa-chain',
         link: '/links',
@@ -142,18 +153,6 @@ export default defineValaxyConfig<ThemeUserConfig>({
             link: 'https://github.com/YunYouJun/valaxy',
           },
         ],
-      },
-      {
-        text: "AkoRin",
-        icon: 'i-line-md-heart-twotone-half',
-        link: "https://akorin.icu",
-        target: '_blank',
-      },
-      {
-        text: '关于',
-        icon: 'i-fa-leaf',
-        link: "https://akorin.icu",
-        target: '_blank',
       },
       {
         text: 'RSS',
@@ -197,6 +196,17 @@ export default defineValaxyConfig<ThemeUserConfig>({
         link: '/comment',
       },
       {
+        text: '相册',
+        icon: 'i-fa-image',
+        link: '/album',
+      },
+      {
+        text: "AkoRin",
+        icon: 'i-line-md-heart-twotone-half',
+        link: "https://akorin.icu",
+        target: '_blank',
+      },
+      {
         text: '友情链接',
         icon: 'i-fa-chain',
         link: '/links',
@@ -218,18 +228,6 @@ export default defineValaxyConfig<ThemeUserConfig>({
             link: 'https://github.com/YunYouJun/valaxy',
           },
         ],
-      },
-      {
-        text: "AkoRin",
-        icon: 'i-line-md-heart-twotone-half',
-        link: "https://akorin.icu",
-        target: '_blank',
-      },
-      {
-        text: '关于',
-        icon: 'i-fa-leaf',
-        link: "https://akorin.icu",
-        target: '_blank',
       },
       {
         text: 'RSS',
@@ -290,6 +288,7 @@ export default defineValaxyConfig<ThemeUserConfig>({
       addonHitokoto({
         api: 'intl',
       }),
+
     ],
   unocss: { safelist },
   vite: {
