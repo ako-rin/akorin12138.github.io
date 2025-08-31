@@ -1,0 +1,37 @@
+[
+  // 逐字删除（后退）
+{
+  "key": "ctrl+backspace",
+  "command": "-deleteWordLeft"
+},
+{
+  "key": "ctrl+backspace",
+  "command": "deleteLeft",
+  "when": "textInputFocus && !editorReadonly"
+},
+
+// 逐字删除（向前）
+{
+  "key": "ctrl+delete",
+  "command": "-deleteWordRight"
+},
+{
+  "key": "ctrl+delete",
+  "command": "deleteRight",
+  "when": "textInputFocus && !editorReadonly"
+},
+  {
+    // 在 Markdown 中将 Ctrl+Delete 改成按“词片段”向右删除
+    "key": "ctrl+delete",
+    "command": "deleteWordPartRight",
+    "when": "editorTextFocus && editorLangId == markdown && !editorReadonly"
+  },
+  {
+    // 如果你想真正做到逐字符（而不是词片段），可以把上面两个换成 deleteLeft / deleteRight，下面先提供一个备选（默认禁用）
+    "key": "ctrl+alt+backspace",
+    "command": "deleteLeft",
+    "when": "editorTextFocus && editorLangId == markdown && !editorReadonly",
+    "args": {},
+    "enablement": "false" // 设为 true 或删除此字段来启用
+  }
+]

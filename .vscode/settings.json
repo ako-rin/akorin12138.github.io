@@ -24,31 +24,31 @@
   "[markdown]": {
     // 自动换行，写笔记不用自己回车
     "editor.wordWrap": "on",
-
     // 中文删除优化（逐字删除，不会一键删整行）
     "editor.wordSeparators": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?",
-
     // 关闭不必要的智能提示，保持干净
     "editor.quickSuggestions": {
       "comments": "off",
       "strings": "off",
       "other": "off"
+    },
+    // Tab 转 2 个空格（Markdown 社区常见缩进风格）
+    "editor.tabSize": 2,
+    // 输入 `**` `##` 等符号后自动补全
+    "editor.autoClosingBrackets": "always",
+    "editor.autoClosingQuotes": "always",
+    // 关键：保留行尾两个空格 (Markdown 强制换行)，不要裁剪
+    "files.trimTrailingWhitespace": false,
+    // 防止其它格式化器覆盖
+    "editor.formatOnSave": false
   },
-
-  // Tab 转 2 个空格（Markdown 社区常见缩进风格）
-  "editor.tabSize": 2,
-
-  // 输入 `**` `##` 等符号后自动补全
-  "editor.autoClosingBrackets": "always",
-  "editor.autoClosingQuotes": "always",
-
-  // 保存时自动去掉多余空格，保持整洁
-  "files.trimTrailingWhitespace": true
-},
 
 // Markdown 插件常用优化（全局设置，不止 Markdown）
 "markdown-preview-enhanced.breakOnSingleNewline": true, // 单回车换行
 "markdown-preview-enhanced.enableTypographer": true,    // 智能标点
 "markdown-preview-enhanced.previewTheme": "github-light.css", // 预览主题
-"markdown.preview.breaks": true // VSCode 自带预览换行
+"markdown.preview.breaks": true, // VSCode 自带预览换行
+"files.trimTrailingWhitespace": false,
+"prettier.trimTrailingWhitespace": false,
+// 允许 Markdown 中的行尾空格（由 markdownlint 配置禁用 MD009 实现）
 }
