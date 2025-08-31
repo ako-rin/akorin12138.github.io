@@ -40,6 +40,7 @@ declare module 'vue-router/auto-routes' {
     '/posts/一致性哈希算法': RouteRecordInfo<'/posts/一致性哈希算法', '/posts/一致性哈希算法', Record<never, never>, Record<never, never>>,
     '/posts/二叉树': RouteRecordInfo<'/posts/二叉树', '/posts/二叉树', Record<never, never>, Record<never, never>>,
     '/posts/信号Matlab': RouteRecordInfo<'/posts/信号Matlab', '/posts/信号Matlab', Record<never, never>, Record<never, never>>,
+    '/posts/十来个二叉树常见问题': RouteRecordInfo<'/posts/十来个二叉树常见问题', '/posts/十来个二叉树常见问题', Record<never, never>, Record<never, never>>,
     '/posts/哈希表': RouteRecordInfo<'/posts/哈希表', '/posts/哈希表', Record<never, never>, Record<never, never>>,
     '/posts/基础排序': RouteRecordInfo<'/posts/基础排序', '/posts/基础排序', Record<never, never>, Record<never, never>>,
     '/posts/大数据topk问题': RouteRecordInfo<'/posts/大数据topk问题', '/posts/大数据topk问题', Record<never, never>, Record<never, never>>,
@@ -150,6 +151,10 @@ declare module 'vue-router/auto-routes' {
     }
     'pages/posts/信号Matlab.md': {
       routes: '/posts/信号Matlab'
+      views: never
+    }
+    'pages/posts/十来个二叉树常见问题.md': {
+      routes: '/posts/十来个二叉树常见问题'
       views: never
     }
     'pages/posts/哈希表.md': {
