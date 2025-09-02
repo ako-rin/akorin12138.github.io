@@ -34,6 +34,7 @@ declare module 'vue-router/auto-routes' {
     '/page/[page]': RouteRecordInfo<'/page/[page]', '/page/:page', { page: ParamValue<true> }, { page: ParamValue<false> }>,
     '/posts/0suiKnowledge': RouteRecordInfo<'/posts/0suiKnowledge', '/posts/0suiKnowledge', Record<never, never>, Record<never, never>>,
     '/posts/51microcopmuter': RouteRecordInfo<'/posts/51microcopmuter', '/posts/51microcopmuter', Record<never, never>, Record<never, never>>,
+    '/posts/AVL树': RouteRecordInfo<'/posts/AVL树', '/posts/AVL树', Record<never, never>, Record<never, never>>,
     '/posts/gccSimpleLearn': RouteRecordInfo<'/posts/gccSimpleLearn', '/posts/gccSimpleLearn', Record<never, never>, Record<never, never>>,
     '/posts/JapanTravel': RouteRecordInfo<'/posts/JapanTravel', '/posts/JapanTravel', Record<never, never>, Record<never, never>>,
     '/posts/zenbrowser': RouteRecordInfo<'/posts/zenbrowser', '/posts/zenbrowser', Record<never, never>, Record<never, never>>,
@@ -127,6 +128,10 @@ declare module 'vue-router/auto-routes' {
     }
     'pages/posts/51microcopmuter.md': {
       routes: '/posts/51microcopmuter'
+      views: never
+    }
+    'pages/posts/AVL树.md': {
+      routes: '/posts/AVL树'
       views: never
     }
     'pages/posts/gccSimpleLearn.md': {
