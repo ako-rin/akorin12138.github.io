@@ -9,7 +9,7 @@ tags:
   - B树
   - 数据结构
   - 数据库
-cover: 'https://pic.akorin.icu/20250905221627654.webp'
+cover: 'https://pic.akorin.icu/20250905223311409.webp'
 codeHeightLimit: 500
 toc: true
 time_warning: true
