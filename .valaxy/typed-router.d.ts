@@ -49,6 +49,7 @@ declare module 'vue-router/auto-routes' {
     '/posts/数字信号处理': RouteRecordInfo<'/posts/数字信号处理', '/posts/数字信号处理', Record<never, never>, Record<never, never>>,
     '/posts/数字信号处理Matlab': RouteRecordInfo<'/posts/数字信号处理Matlab', '/posts/数字信号处理Matlab', Record<never, never>, Record<never, never>>,
     '/posts/栈与队列': RouteRecordInfo<'/posts/栈与队列', '/posts/栈与队列', Record<never, never>, Record<never, never>>,
+    '/posts/红黑树': RouteRecordInfo<'/posts/红黑树', '/posts/红黑树', Record<never, never>, Record<never, never>>,
     '/posts/通信原理': RouteRecordInfo<'/posts/通信原理', '/posts/通信原理', Record<never, never>, Record<never, never>>,
     '/posts/高级排序': RouteRecordInfo<'/posts/高级排序', '/posts/高级排序', Record<never, never>, Record<never, never>>,
     '/search/': RouteRecordInfo<'/search/', '/search', Record<never, never>, Record<never, never>>,
@@ -188,6 +189,10 @@ declare module 'vue-router/auto-routes' {
     }
     'pages/posts/栈与队列.md': {
       routes: '/posts/栈与队列'
+      views: never
+    }
+    'pages/posts/红黑树.md': {
+      routes: '/posts/红黑树'
       views: never
     }
     'pages/posts/通信原理.md': {

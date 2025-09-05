@@ -7,12 +7,13 @@ categories: 算法
 tags:
   - 算法
   - 二叉树
+  - AVL树
   - 编程
   - C++
 codeHeightLimit: 500
 toc: true
-time_warning: false
-end: false
+time_warning: true
+end: true
 updated: '2025-09-03 02:52:02'
 ---
 
