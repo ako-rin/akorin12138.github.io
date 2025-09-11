@@ -33,9 +33,11 @@
       "other": "off"
     },
     // Tab 转 2 个空格（Markdown 社区常见缩进风格）
-    "editor.tabSize": 2,
-    // 输入 `**` `##` 等符号后自动补全
-    "editor.autoClosingBrackets": "always",
+    "editor.tabSize": 4,
+    // 关闭尖括号 < > 的自动补全：把 always 改成 languageDefined （Markdown 语言配置本身不定义 <> 为成对括号）
+    // 如果仍然出现 <> 自动补全，可能是某个扩展(如自动补全标签)造成，可临时禁用该扩展或将此值改成 "never"。
+    // "never" 会同时关闭 () [] {} 的补全；如需彻底关闭改成: "editor.autoClosingBrackets": "never"
+    "editor.autoClosingBrackets": "languageDefined",
     "editor.autoClosingQuotes": "always",
     // 关键：保留行尾两个空格 (Markdown 强制换行)，不要裁剪
     "files.trimTrailingWhitespace": false,
