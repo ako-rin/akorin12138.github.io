@@ -1,0 +1,266 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "AkoRin's home",
+    "home_page_url": "https://akorin.icu/",
+    "feed_url": "https://akorin.icu/feed.json",
+    "description": "随心记录 ",
+    "icon": "https://pic.akorin.icu/20250822182421523.webp",
+    "author": {
+        "name": "akorin",
+        "url": "https://valaxy.site"
+    },
+    "items": [
+        {
+            "id": "https://akorin.icu/posts/回溯算法",
+            "content_html": "<h1>回溯算法</h1>\n<p>回溯算法（Backtracking）是一种通过试探并在失败时回退的搜索算法，常用于解决组合、排列、子集、图遍历、约束满足等问题。它的核心思想是：</p>\n<ol>\n<li>选择：尝试某个候选解。</li>\n<li>约束：判断当前选择是否满足条件。</li>\n<li>回溯：若不满足条件，撤销选择（回退一步），继续尝试其他可能。</li>\n</ol>\n<p>可以理解为在一棵“状态树”上进行 深度优先搜索（DFS），遇到死胡同时就回到上一步继续探索。</p>\n<p>有两种解空间：</p>\n<ul>\n<li>子集树</li>\n<li>排列数</li>\n</ul>\n<br/><p>访问 <a href=\"https://akorin.icu/posts/回溯算法\" target=\"_blank\">https://akorin.icu/posts/回溯算法</a> 阅读全文。</p>",
+            "url": "https://akorin.icu/posts/回溯算法",
+            "title": "回溯算法",
+            "date_modified": "2025-09-11T10:10:39.000Z",
+            "date_published": "2025-09-11T23:39:13.000Z",
+            "author": {
+                "name": "akorin",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://akorin.icu/posts/B树",
+            "content_html": "<h1>B树 (B-Tree)</h1>\n<p>B 树（Balance Tree / 多路平衡查找树）是一种<strong>多路自平衡搜索树</strong>，广泛应用于数据库与文件系统的索引结构。它通过<strong>把大量有序关键字集中在节点中并尽量减少树高度</strong>，在磁盘 / SSD 的块（page）为单位读取场景下显著降低 I/O 次数。</p>\n<p>核心目标：在保持有序字典操作 O(log n) 的同时，把树的高度压低，使得一次查询只需极少磁盘访问。</p>\n<br/><p>访问 <a href=\"https://akorin.icu/posts/B树\" target=\"_blank\">https://akorin.icu/posts/B树</a> 阅读全文。</p>",
+            "url": "https://akorin.icu/posts/B树",
+            "title": "B树",
+            "date_modified": "2025-09-05T22:30:00.000Z",
+            "date_published": "2025-09-05T22:30:00.000Z",
+            "author": {
+                "name": "akorin",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://akorin.icu/posts/红黑树",
+            "content_html": "<h1>红黑树</h1>\n<p>红黑树不是一颗平衡树，节点到左右子树的高度差， <strong>长的不超过短的2倍。</strong> 比AVL旋转的次数要少很多。</p>\n<p>红黑树通过给节点增加**颜色属性（红/黑）**并遵循一组规则，保证树的高度始终接近 O(log n)，从而在最坏情况下也能高效完成查找、插入和删除操作。</p>\n<p>如果主要使用查询操作，那就还是AVL树的效率更高一点。但是如果插入、删除、查询都很频繁，这个时候使用红黑树就比较好了。</p>\n<blockquote>\n<p>由于红黑树要频繁访问祖父节点和舅舅节点，主流都采用非递归的形式。</p>\n</blockquote>\n<br/><p>访问 <a href=\"https://akorin.icu/posts/红黑树\" target=\"_blank\">https://akorin.icu/posts/红黑树</a> 阅读全文。</p>",
+            "url": "https://akorin.icu/posts/红黑树",
+            "title": "红黑树",
+            "date_modified": "2025-09-03T15:40:41.000Z",
+            "date_published": "2025-09-05T21:03:10.000Z",
+            "author": {
+                "name": "akorin",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://akorin.icu/posts/AVL树",
+            "content_html": "<h1>AVL树</h1>\n<p>AVL树是一种自平衡二叉查找树（BST），由Adelson-Velsky和Landis提出，在任意一个节点上，左子树和右子树的高度差不超过1，从而保证整棵树的高度始终维持在 O(log n) 级别。</p>\n<p>相比普通二叉查找树，AVL树在最坏情况下也能高效完成查找、插入和删除操作，但由于需要频繁旋转，它在插入/删除频繁的场景下性能可能不如红黑树。</p>\n<br/><p>访问 <a href=\"https://akorin.icu/posts/AVL树\" target=\"_blank\">https://akorin.icu/posts/AVL树</a> 阅读全文。</p>",
+            "url": "https://akorin.icu/posts/AVL树",
+            "title": "AVL树",
+            "date_modified": "2025-09-01T14:48:41.000Z",
+            "date_published": "2025-09-03T02:52:02.000Z",
+            "author": {
+                "name": "akorin",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://akorin.icu/posts/九个二叉树常见问题",
+            "content_html": "<p>一些经典的关于二叉树的算法问题。</p>\n<h1>我脑子不转了，有什么头猪吗。</h1>\n<br/><p>访问 <a href=\"https://akorin.icu/posts/九个二叉树常见问题\" target=\"_blank\">https://akorin.icu/posts/九个二叉树常见问题</a> 阅读全文。</p>",
+            "url": "https://akorin.icu/posts/九个二叉树常见问题",
+            "title": "九个二叉树常见问题",
+            "date_modified": "2025-08-31T13:37:48.000Z",
+            "date_published": "2025-09-01T01:28:12.000Z",
+            "author": {
+                "name": "akorin",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://akorin.icu/posts/二叉树",
+            "content_html": "<h1>二叉树</h1>\n<p>二叉树（Binary Tree）是一种 树形数据结构，它的每个节点最多有 两个子节点，通常称为：</p>\n<ul>\n<li>左子节点（Left Child）</li>\n<li>右子节点（Right Child）<br>\n所以，二叉树的每个节点最多分叉 2 个，而不是任意多个。</li>\n</ul>\n<br/><p>访问 <a href=\"https://akorin.icu/posts/二叉树\" target=\"_blank\">https://akorin.icu/posts/二叉树</a> 阅读全文。</p>",
+            "url": "https://akorin.icu/posts/二叉树",
+            "title": "二叉树",
+            "date_modified": "2025-08-27T17:01:08.000Z",
+            "date_published": "2025-08-31T23:18:11.000Z",
+            "author": {
+                "name": "akorin",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://akorin.icu/posts/一致性哈希算法",
+            "content_html": "<h1>一致性哈希算法</h1>\n<p><strong>一致性哈希（Consistent Hashing）</strong> ：是一种特殊的哈希算法，用于解决 <strong>分布式系统中的数据分布与动态伸缩问题。</strong></p>\n<ul>\n<li>当 <strong>节点</strong>（机器/缓存服务器）数量发生变化（增加或减少）时，尽可能减少需要重新映射的数据量。</li>\n<li>避免传统哈希算法带来的大规模数据迁移问题。</li>\n</ul>\n<br/><p>访问 <a href=\"https://akorin.icu/posts/一致性哈希算法\" target=\"_blank\">https://akorin.icu/posts/一致性哈希算法</a> 阅读全文。</p>",
+            "url": "https://akorin.icu/posts/一致性哈希算法",
+            "title": "一致性哈希算法",
+            "date_modified": "2025-08-26T15:46:58.000Z",
+            "date_published": "2025-08-27T16:25:45.000Z",
+            "author": {
+                "name": "akorin",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://akorin.icu/posts/大数据topk问题",
+            "content_html": "<h1>大数据topk</h1>\n<p>大数据topk问题就是 <strong>求大量数据的前k个最大/最小的数据</strong>。</p>\n<p>有两种方法解决：</p>\n<ul>\n<li>大小根堆</li>\n<li>快排分割</li>\n</ul>\n<br/><p>访问 <a href=\"https://akorin.icu/posts/大数据topk问题\" target=\"_blank\">https://akorin.icu/posts/大数据topk问题</a> 阅读全文。</p>",
+            "url": "https://akorin.icu/posts/大数据topk问题",
+            "title": "大数据topk问题",
+            "date_modified": "2025-08-26T11:02:37.000Z",
+            "date_published": "2025-08-27T00:20:34.000Z",
+            "author": {
+                "name": "akorin",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://akorin.icu/posts/大数据查重",
+            "content_html": "<h1>大数据查重</h1>\n<p>这里的大数据不是java那种大数据分析，而是数据量很庞大的数据。</p>\n<p>这种大数据查重有几种算法：</p>\n<ul>\n<li>哈希表查重</li>\n<li>位图算法</li>\n<li>布隆过滤器</li>\n</ul>\n<p>类似问题有：一亿个数据，哪些元素重复了，谁是第一个重复的，谁是第一个不重复的……且内存限制100M。</p>\n<br/><p>访问 <a href=\"https://akorin.icu/posts/大数据查重\" target=\"_blank\">https://akorin.icu/posts/大数据查重</a> 阅读全文。</p>",
+            "url": "https://akorin.icu/posts/大数据查重",
+            "title": "大数据查重",
+            "date_modified": "2025-08-25T14:50:54.000Z",
+            "date_published": "2025-08-26T00:20:34.000Z",
+            "author": {
+                "name": "akorin",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://akorin.icu/posts/gccSimpleLearn",
+            "content_html": "<h2>怎么这么难啊</h2>\n<p>在C语言的基础上继续学习CPP</p>\n<br/><p>访问 <a href=\"https://akorin.icu/posts/gccSimpleLearn\" target=\"_blank\">https://akorin.icu/posts/gccSimpleLearn</a> 阅读全文。</p>",
+            "url": "https://akorin.icu/posts/gccSimpleLearn",
+            "title": "C++学习记录",
+            "date_modified": "2025-07-10T00:00:00.000Z",
+            "date_published": "2025-08-25T19:41:37.000Z",
+            "author": {
+                "name": "akorin",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://akorin.icu/posts/哈希表",
+            "content_html": "<h1>哈</h1>\n<br/><p>访问 <a href=\"https://akorin.icu/posts/哈希表\" target=\"_blank\">https://akorin.icu/posts/哈希表</a> 阅读全文。</p>",
+            "url": "https://akorin.icu/posts/哈希表",
+            "title": "哈希表",
+            "date_modified": "2025-08-23T02:11:08.000Z",
+            "date_published": "2025-08-25T19:41:37.000Z",
+            "author": {
+                "name": "akorin",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://akorin.icu/posts/栈与队列",
+            "content_html": "<blockquote>\n<p>栈与队列需要依赖数组或者链表，且都不是一个单独的数据结构。</p>\n</blockquote>\n<br/><p>访问 <a href=\"https://akorin.icu/posts/栈与队列\" target=\"_blank\">https://akorin.icu/posts/栈与队列</a> 阅读全文。</p>",
+            "url": "https://akorin.icu/posts/栈与队列",
+            "title": "栈与队列",
+            "date_modified": "2025-08-14T00:00:00.000Z",
+            "date_published": "2025-08-22T01:17:08.000Z",
+            "author": {
+                "name": "akorin",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://akorin.icu/posts/基础排序",
+            "content_html": "<p>一大堆排序，简要记录中心思想。</p>\n<br/><p>访问 <a href=\"https://akorin.icu/posts/基础排序\" target=\"_blank\">https://akorin.icu/posts/基础排序</a> 阅读全文。</p>",
+            "url": "https://akorin.icu/posts/基础排序",
+            "title": "基础排序",
+            "date_modified": "2025-08-18T00:00:00.000Z",
+            "date_published": "2025-08-21T00:58:53.000Z",
+            "author": {
+                "name": "akorin",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://akorin.icu/posts/高级排序",
+            "content_html": "<p>简要记录一系列高级排序的中心思想。</p>\n<br/><p>访问 <a href=\"https://akorin.icu/posts/高级排序\" target=\"_blank\">https://akorin.icu/posts/高级排序</a> 阅读全文。</p>",
+            "url": "https://akorin.icu/posts/高级排序",
+            "title": "高级排序",
+            "date_modified": "2025-08-18T02:11:08.000Z",
+            "date_published": "2025-08-21T00:58:53.000Z",
+            "author": {
+                "name": "akorin",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://akorin.icu/posts/数字信号处理Matlab",
+            "content_html": "<p>记录数字信号处理有关的Matlab代码</p>\n<br/><p>访问 <a href=\"https://akorin.icu/posts/数字信号处理Matlab\" target=\"_blank\">https://akorin.icu/posts/数字信号处理Matlab</a> 阅读全文。</p>",
+            "url": "https://akorin.icu/posts/数字信号处理Matlab",
+            "title": "数字信号处理Matlab编程",
+            "date_modified": "2025-03-03T00:00:00.000Z",
+            "date_published": "2025-03-28T22:54:31.000Z",
+            "author": {
+                "name": "akorin",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://akorin.icu/posts/信号Matlab",
+            "content_html": "<p>记录基于Matlab的有关信号的编程</p>\n<br/><p>访问 <a href=\"https://akorin.icu/posts/信号Matlab\" target=\"_blank\">https://akorin.icu/posts/信号Matlab</a> 阅读全文。</p>",
+            "url": "https://akorin.icu/posts/信号Matlab",
+            "title": "信号的Matlab编程",
+            "date_modified": "2025-02-25T00:00:00.000Z",
+            "date_published": "2025-03-28T19:32:11.000Z",
+            "author": {
+                "name": "akorin",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://akorin.icu/posts/51microcopmuter",
+            "content_html": "<p>51单片机主要使用的函数</p>\n<br/><p>访问 <a href=\"https://akorin.icu/posts/51microcopmuter\" target=\"_blank\">https://akorin.icu/posts/51microcopmuter</a> 阅读全文。</p>",
+            "url": "https://akorin.icu/posts/51microcopmuter",
+            "title": "51单片机编程",
+            "date_modified": "2025-03-15T00:00:00.000Z",
+            "date_published": "2025-03-22T11:02:04.000Z",
+            "author": {
+                "name": "akorin",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://akorin.icu/posts/数字信号处理",
+            "content_html": "<p>主要记录数字信号处理Matlab代码及相关知识</p>\n<p>:::warning</p>\n<p>默认已学习完信号与系统</p>\n<p>:::</p>\n<br/><p>访问 <a href=\"https://akorin.icu/posts/数字信号处理\" target=\"_blank\">https://akorin.icu/posts/数字信号处理</a> 阅读全文。</p>",
+            "url": "https://akorin.icu/posts/数字信号处理",
+            "title": "数字信号处理简记",
+            "date_modified": "2025-02-19T00:00:00.000Z",
+            "date_published": "2025-03-20T21:24:43.000Z",
+            "author": {
+                "name": "akorin",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://akorin.icu/posts/通信原理",
+            "content_html": "<p>记录通信原理的一些知识，重点记录数字通信系统</p>\n<br/><p>访问 <a href=\"https://akorin.icu/posts/通信原理\" target=\"_blank\">https://akorin.icu/posts/通信原理</a> 阅读全文。</p>",
+            "url": "https://akorin.icu/posts/通信原理",
+            "title": "通信原理简记",
+            "date_modified": "2025-01-27T00:00:00.000Z",
+            "date_published": "2025-03-11T11:42:15.000Z",
+            "author": {
+                "name": "akorin",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://akorin.icu/posts/zenbrowser",
+            "content_html": "<p><strong>Zen浏览器在全屏使用的时候总有卡顿，最后发现每次启动时，核显的占用率都会达到99%，而Chrome不会</strong></p>\n<h2>解决方案</h2>\n<ul>\n<li>等待Zen Browser的后续优化</li>\n<li>启动Zen Browser时使用高性能（独立显卡启动）：</li>\n</ul>\n<p><img src=\"https://pub-3f9780acd0d54f9dabe63c0a1ab77225.r2.dev/20250221164427234.png\" alt=\"\"></p>\n<br/><p>访问 <a href=\"https://akorin.icu/posts/zenbrowser\" target=\"_blank\">https://akorin.icu/posts/zenbrowser</a> 阅读全文。</p>",
+            "url": "https://akorin.icu/posts/zenbrowser",
+            "title": "Zen Browser默认打开卡顿",
+            "date_modified": "2025-02-21T00:00:00.000Z",
+            "date_published": "2025-02-21T00:02:15.000Z",
+            "author": {
+                "name": "akorin",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://akorin.icu/posts/JapanTravel",
+            "content_html": "<p>去霓虹准备的东西以及大致路线、要去圣地巡礼的地点。具体路线根据住宿的位置来决定</p>\n<br/><p>访问 <a href=\"https://akorin.icu/posts/JapanTravel\" target=\"_blank\">https://akorin.icu/posts/JapanTravel</a> 阅读全文。</p>",
+            "url": "https://akorin.icu/posts/JapanTravel",
+            "title": "Japan计划！",
+            "date_modified": "2025-01-29T00:00:00.000Z",
+            "date_published": "2025-02-01T00:11:24.000Z",
+            "author": {
+                "name": "akorin",
+                "url": "https://valaxy.site"
+            }
+        }
+    ]
+}

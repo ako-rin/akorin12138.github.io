@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>AkoRin's home</title>
+        <link>https://akorin.icu/</link>
+        <description>随心记录 </description>
+        <lastBuildDate>Thu, 11 Sep 2025 15:43:04 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <image>
+            <title>AkoRin's home</title>
+            <url>https://pic.akorin.icu/20250822182421523.webp</url>
+            <link>https://akorin.icu/</link>
+        </image>
+        <copyright>CC BY-NC-SA 4.0 2025 © akorin</copyright>
+        <atom:link href="https://akorin.icu/feed.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[回溯算法]]></title>
+            <link>https://akorin.icu/posts/回溯算法</link>
+            <guid isPermaLink="false">https://akorin.icu/posts/回溯算法</guid>
+            <pubDate>Thu, 11 Sep 2025 23:39:13 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>回溯算法</h1>
+<p>回溯算法（Backtracking）是一种通过试探并在失败时回退的搜索算法，常用于解决组合、排列、子集、图遍历、约束满足等问题。它的核心思想是：</p>
+<ol>
+<li>选择：尝试某个候选解。</li>
+<li>约束：判断当前选择是否满足条件。</li>
+<li>回溯：若不满足条件，撤销选择（回退一步），继续尝试其他可能。</li>
+</ol>
+<p>可以理解为在一棵“状态树”上进行 深度优先搜索（DFS），遇到死胡同时就回到上一步继续探索。</p>
+<p>有两种解空间：</p>
+<ul>
+<li>子集树</li>
+<li>排列数</li>
+</ul>
+<br/><p>访问 <a href="https://akorin.icu/posts/回溯算法" target="_blank">https://akorin.icu/posts/回溯算法</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (akorin)</author>
+        </item>
+        <item>
+            <title><![CDATA[B树]]></title>
+            <link>https://akorin.icu/posts/B树</link>
+            <guid isPermaLink="false">https://akorin.icu/posts/B树</guid>
+            <pubDate>Fri, 05 Sep 2025 22:30:00 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>B树 (B-Tree)</h1>
+<p>B 树（Balance Tree / 多路平衡查找树）是一种<strong>多路自平衡搜索树</strong>，广泛应用于数据库与文件系统的索引结构。它通过<strong>把大量有序关键字集中在节点中并尽量减少树高度</strong>，在磁盘 / SSD 的块（page）为单位读取场景下显著降低 I/O 次数。</p>
+<p>核心目标：在保持有序字典操作 O(log n) 的同时，把树的高度压低，使得一次查询只需极少磁盘访问。</p>
+<br/><p>访问 <a href="https://akorin.icu/posts/B树" target="_blank">https://akorin.icu/posts/B树</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (akorin)</author>
+        </item>
+        <item>
+            <title><![CDATA[红黑树]]></title>
+            <link>https://akorin.icu/posts/红黑树</link>
+            <guid isPermaLink="false">https://akorin.icu/posts/红黑树</guid>
+            <pubDate>Fri, 05 Sep 2025 21:03:10 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>红黑树</h1>
+<p>红黑树不是一颗平衡树，节点到左右子树的高度差， <strong>长的不超过短的2倍。</strong> 比AVL旋转的次数要少很多。</p>
+<p>红黑树通过给节点增加**颜色属性（红/黑）**并遵循一组规则，保证树的高度始终接近 O(log n)，从而在最坏情况下也能高效完成查找、插入和删除操作。</p>
+<p>如果主要使用查询操作，那就还是AVL树的效率更高一点。但是如果插入、删除、查询都很频繁，这个时候使用红黑树就比较好了。</p>
+<blockquote>
+<p>由于红黑树要频繁访问祖父节点和舅舅节点，主流都采用非递归的形式。</p>
+</blockquote>
+<br/><p>访问 <a href="https://akorin.icu/posts/红黑树" target="_blank">https://akorin.icu/posts/红黑树</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (akorin)</author>
+        </item>
+        <item>
+            <title><![CDATA[AVL树]]></title>
+            <link>https://akorin.icu/posts/AVL树</link>
+            <guid isPermaLink="false">https://akorin.icu/posts/AVL树</guid>
+            <pubDate>Wed, 03 Sep 2025 02:52:02 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>AVL树</h1>
+<p>AVL树是一种自平衡二叉查找树（BST），由Adelson-Velsky和Landis提出，在任意一个节点上，左子树和右子树的高度差不超过1，从而保证整棵树的高度始终维持在 O(log n) 级别。</p>
+<p>相比普通二叉查找树，AVL树在最坏情况下也能高效完成查找、插入和删除操作，但由于需要频繁旋转，它在插入/删除频繁的场景下性能可能不如红黑树。</p>
+<br/><p>访问 <a href="https://akorin.icu/posts/AVL树" target="_blank">https://akorin.icu/posts/AVL树</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (akorin)</author>
+        </item>
+        <item>
+            <title><![CDATA[九个二叉树常见问题]]></title>
+            <link>https://akorin.icu/posts/九个二叉树常见问题</link>
+            <guid isPermaLink="false">https://akorin.icu/posts/九个二叉树常见问题</guid>
+            <pubDate>Mon, 01 Sep 2025 01:28:12 GMT</pubDate>
+            <content:encoded><![CDATA[<p>一些经典的关于二叉树的算法问题。</p>
+<h1>我脑子不转了，有什么头猪吗。</h1>
+<br/><p>访问 <a href="https://akorin.icu/posts/九个二叉树常见问题" target="_blank">https://akorin.icu/posts/九个二叉树常见问题</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (akorin)</author>
+        </item>
+        <item>
+            <title><![CDATA[二叉树]]></title>
+            <link>https://akorin.icu/posts/二叉树</link>
+            <guid isPermaLink="false">https://akorin.icu/posts/二叉树</guid>
+            <pubDate>Sun, 31 Aug 2025 23:18:11 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>二叉树</h1>
+<p>二叉树（Binary Tree）是一种 树形数据结构，它的每个节点最多有 两个子节点，通常称为：</p>
+<ul>
+<li>左子节点（Left Child）</li>
+<li>右子节点（Right Child）<br>
+所以，二叉树的每个节点最多分叉 2 个，而不是任意多个。</li>
+</ul>
+<br/><p>访问 <a href="https://akorin.icu/posts/二叉树" target="_blank">https://akorin.icu/posts/二叉树</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (akorin)</author>
+        </item>
+        <item>
+            <title><![CDATA[一致性哈希算法]]></title>
+            <link>https://akorin.icu/posts/一致性哈希算法</link>
+            <guid isPermaLink="false">https://akorin.icu/posts/一致性哈希算法</guid>
+            <pubDate>Wed, 27 Aug 2025 16:25:45 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>一致性哈希算法</h1>
+<p><strong>一致性哈希（Consistent Hashing）</strong> ：是一种特殊的哈希算法，用于解决 <strong>分布式系统中的数据分布与动态伸缩问题。</strong></p>
+<ul>
+<li>当 <strong>节点</strong>（机器/缓存服务器）数量发生变化（增加或减少）时，尽可能减少需要重新映射的数据量。</li>
+<li>避免传统哈希算法带来的大规模数据迁移问题。</li>
+</ul>
+<br/><p>访问 <a href="https://akorin.icu/posts/一致性哈希算法" target="_blank">https://akorin.icu/posts/一致性哈希算法</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (akorin)</author>
+        </item>
+        <item>
+            <title><![CDATA[大数据topk问题]]></title>
+            <link>https://akorin.icu/posts/大数据topk问题</link>
+            <guid isPermaLink="false">https://akorin.icu/posts/大数据topk问题</guid>
+            <pubDate>Wed, 27 Aug 2025 00:20:34 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>大数据topk</h1>
+<p>大数据topk问题就是 <strong>求大量数据的前k个最大/最小的数据</strong>。</p>
+<p>有两种方法解决：</p>
+<ul>
+<li>大小根堆</li>
+<li>快排分割</li>
+</ul>
+<br/><p>访问 <a href="https://akorin.icu/posts/大数据topk问题" target="_blank">https://akorin.icu/posts/大数据topk问题</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (akorin)</author>
+        </item>
+        <item>
+            <title><![CDATA[大数据查重]]></title>
+            <link>https://akorin.icu/posts/大数据查重</link>
+            <guid isPermaLink="false">https://akorin.icu/posts/大数据查重</guid>
+            <pubDate>Tue, 26 Aug 2025 00:20:34 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>大数据查重</h1>
+<p>这里的大数据不是java那种大数据分析，而是数据量很庞大的数据。</p>
+<p>这种大数据查重有几种算法：</p>
+<ul>
+<li>哈希表查重</li>
+<li>位图算法</li>
+<li>布隆过滤器</li>
+</ul>
+<p>类似问题有：一亿个数据，哪些元素重复了，谁是第一个重复的，谁是第一个不重复的……且内存限制100M。</p>
+<br/><p>访问 <a href="https://akorin.icu/posts/大数据查重" target="_blank">https://akorin.icu/posts/大数据查重</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (akorin)</author>
+        </item>
+        <item>
+            <title><![CDATA[C++学习记录]]></title>
+            <link>https://akorin.icu/posts/gccSimpleLearn</link>
+            <guid isPermaLink="false">https://akorin.icu/posts/gccSimpleLearn</guid>
+            <pubDate>Mon, 25 Aug 2025 19:41:37 GMT</pubDate>
+            <content:encoded><![CDATA[<h2>怎么这么难啊</h2>
+<p>在C语言的基础上继续学习CPP</p>
+<br/><p>访问 <a href="https://akorin.icu/posts/gccSimpleLearn" target="_blank">https://akorin.icu/posts/gccSimpleLearn</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (akorin)</author>
+        </item>
+        <item>
+            <title><![CDATA[哈希表]]></title>
+            <link>https://akorin.icu/posts/哈希表</link>
+            <guid isPermaLink="false">https://akorin.icu/posts/哈希表</guid>
+            <pubDate>Mon, 25 Aug 2025 19:41:37 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>哈</h1>
+<br/><p>访问 <a href="https://akorin.icu/posts/哈希表" target="_blank">https://akorin.icu/posts/哈希表</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (akorin)</author>
+        </item>
+        <item>
+            <title><![CDATA[栈与队列]]></title>
+            <link>https://akorin.icu/posts/栈与队列</link>
+            <guid isPermaLink="false">https://akorin.icu/posts/栈与队列</guid>
+            <pubDate>Fri, 22 Aug 2025 01:17:08 GMT</pubDate>
+            <content:encoded><![CDATA[<blockquote>
+<p>栈与队列需要依赖数组或者链表，且都不是一个单独的数据结构。</p>
+</blockquote>
+<br/><p>访问 <a href="https://akorin.icu/posts/栈与队列" target="_blank">https://akorin.icu/posts/栈与队列</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (akorin)</author>
+        </item>
+        <item>
+            <title><![CDATA[基础排序]]></title>
+            <link>https://akorin.icu/posts/基础排序</link>
+            <guid isPermaLink="false">https://akorin.icu/posts/基础排序</guid>
+            <pubDate>Thu, 21 Aug 2025 00:58:53 GMT</pubDate>
+            <content:encoded><![CDATA[<p>一大堆排序，简要记录中心思想。</p>
+<br/><p>访问 <a href="https://akorin.icu/posts/基础排序" target="_blank">https://akorin.icu/posts/基础排序</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (akorin)</author>
+        </item>
+        <item>
+            <title><![CDATA[高级排序]]></title>
+            <link>https://akorin.icu/posts/高级排序</link>
+            <guid isPermaLink="false">https://akorin.icu/posts/高级排序</guid>
+            <pubDate>Thu, 21 Aug 2025 00:58:53 GMT</pubDate>
+            <content:encoded><![CDATA[<p>简要记录一系列高级排序的中心思想。</p>
+<br/><p>访问 <a href="https://akorin.icu/posts/高级排序" target="_blank">https://akorin.icu/posts/高级排序</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (akorin)</author>
+        </item>
+        <item>
+            <title><![CDATA[数字信号处理Matlab编程]]></title>
+            <link>https://akorin.icu/posts/数字信号处理Matlab</link>
+            <guid isPermaLink="false">https://akorin.icu/posts/数字信号处理Matlab</guid>
+            <pubDate>Fri, 28 Mar 2025 22:54:31 GMT</pubDate>
+            <content:encoded><![CDATA[<p>记录数字信号处理有关的Matlab代码</p>
+<br/><p>访问 <a href="https://akorin.icu/posts/数字信号处理Matlab" target="_blank">https://akorin.icu/posts/数字信号处理Matlab</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (akorin)</author>
+        </item>
+        <item>
+            <title><![CDATA[信号的Matlab编程]]></title>
+            <link>https://akorin.icu/posts/信号Matlab</link>
+            <guid isPermaLink="false">https://akorin.icu/posts/信号Matlab</guid>
+            <pubDate>Fri, 28 Mar 2025 19:32:11 GMT</pubDate>
+            <content:encoded><![CDATA[<p>记录基于Matlab的有关信号的编程</p>
+<br/><p>访问 <a href="https://akorin.icu/posts/信号Matlab" target="_blank">https://akorin.icu/posts/信号Matlab</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (akorin)</author>
+        </item>
+        <item>
+            <title><![CDATA[51单片机编程]]></title>
+            <link>https://akorin.icu/posts/51microcopmuter</link>
+            <guid isPermaLink="false">https://akorin.icu/posts/51microcopmuter</guid>
+            <pubDate>Sat, 22 Mar 2025 11:02:04 GMT</pubDate>
+            <content:encoded><![CDATA[<p>51单片机主要使用的函数</p>
+<br/><p>访问 <a href="https://akorin.icu/posts/51microcopmuter" target="_blank">https://akorin.icu/posts/51microcopmuter</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (akorin)</author>
+        </item>
+        <item>
+            <title><![CDATA[数字信号处理简记]]></title>
+            <link>https://akorin.icu/posts/数字信号处理</link>
+            <guid isPermaLink="false">https://akorin.icu/posts/数字信号处理</guid>
+            <pubDate>Thu, 20 Mar 2025 21:24:43 GMT</pubDate>
+            <content:encoded><![CDATA[<p>主要记录数字信号处理Matlab代码及相关知识</p>
+<p>:::warning</p>
+<p>默认已学习完信号与系统</p>
+<p>:::</p>
+<br/><p>访问 <a href="https://akorin.icu/posts/数字信号处理" target="_blank">https://akorin.icu/posts/数字信号处理</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (akorin)</author>
+        </item>
+        <item>
+            <title><![CDATA[通信原理简记]]></title>
+            <link>https://akorin.icu/posts/通信原理</link>
+            <guid isPermaLink="false">https://akorin.icu/posts/通信原理</guid>
+            <pubDate>Tue, 11 Mar 2025 11:42:15 GMT</pubDate>
+            <content:encoded><![CDATA[<p>记录通信原理的一些知识，重点记录数字通信系统</p>
+<br/><p>访问 <a href="https://akorin.icu/posts/通信原理" target="_blank">https://akorin.icu/posts/通信原理</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (akorin)</author>
+        </item>
+        <item>
+            <title><![CDATA[Zen Browser默认打开卡顿]]></title>
+            <link>https://akorin.icu/posts/zenbrowser</link>
+            <guid isPermaLink="false">https://akorin.icu/posts/zenbrowser</guid>
+            <pubDate>Fri, 21 Feb 2025 00:02:15 GMT</pubDate>
+            <content:encoded><![CDATA[<p><strong>Zen浏览器在全屏使用的时候总有卡顿，最后发现每次启动时，核显的占用率都会达到99%，而Chrome不会</strong></p>
+<h2>解决方案</h2>
+<ul>
+<li>等待Zen Browser的后续优化</li>
+<li>启动Zen Browser时使用高性能（独立显卡启动）：</li>
+</ul>
+<p><img src="https://pub-3f9780acd0d54f9dabe63c0a1ab77225.r2.dev/20250221164427234.png" alt=""></p>
+<br/><p>访问 <a href="https://akorin.icu/posts/zenbrowser" target="_blank">https://akorin.icu/posts/zenbrowser</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (akorin)</author>
+        </item>
+        <item>
+            <title><![CDATA[Japan计划！]]></title>
+            <link>https://akorin.icu/posts/JapanTravel</link>
+            <guid isPermaLink="false">https://akorin.icu/posts/JapanTravel</guid>
+            <pubDate>Sat, 01 Feb 2025 00:11:24 GMT</pubDate>
+            <content:encoded><![CDATA[<p>去霓虹准备的东西以及大致路线、要去圣地巡礼的地点。具体路线根据住宿的位置来决定</p>
+<br/><p>访问 <a href="https://akorin.icu/posts/JapanTravel" target="_blank">https://akorin.icu/posts/JapanTravel</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (akorin)</author>
+        </item>
+    </channel>
+</rss>
