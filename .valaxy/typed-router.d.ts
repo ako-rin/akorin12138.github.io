@@ -42,9 +42,13 @@ declare module 'vue-router/auto-routes' {
     '/posts/一致性哈希算法': RouteRecordInfo<'/posts/一致性哈希算法', '/posts/一致性哈希算法', Record<never, never>, Record<never, never>>,
     '/posts/九个二叉树常见问题': RouteRecordInfo<'/posts/九个二叉树常见问题', '/posts/九个二叉树常见问题', Record<never, never>, Record<never, never>>,
     '/posts/二叉树': RouteRecordInfo<'/posts/二叉树', '/posts/二叉树', Record<never, never>, Record<never, never>>,
+    '/posts/似然': RouteRecordInfo<'/posts/似然', '/posts/似然', Record<never, never>, Record<never, never>>,
     '/posts/信号Matlab': RouteRecordInfo<'/posts/信号Matlab', '/posts/信号Matlab', Record<never, never>, Record<never, never>>,
+    '/posts/动态规划': RouteRecordInfo<'/posts/动态规划', '/posts/动态规划', Record<never, never>, Record<never, never>>,
     '/posts/哈希表': RouteRecordInfo<'/posts/哈希表', '/posts/哈希表', Record<never, never>, Record<never, never>>,
     '/posts/回溯算法': RouteRecordInfo<'/posts/回溯算法', '/posts/回溯算法', Record<never, never>, Record<never, never>>,
+    '/posts/图': RouteRecordInfo<'/posts/图', '/posts/图', Record<never, never>, Record<never, never>>,
+    '/posts/图神经网络': RouteRecordInfo<'/posts/图神经网络', '/posts/图神经网络', Record<never, never>, Record<never, never>>,
     '/posts/基础排序': RouteRecordInfo<'/posts/基础排序', '/posts/基础排序', Record<never, never>, Record<never, never>>,
     '/posts/大数据topk问题': RouteRecordInfo<'/posts/大数据topk问题', '/posts/大数据topk问题', Record<never, never>, Record<never, never>>,
     '/posts/大数据查重': RouteRecordInfo<'/posts/大数据查重', '/posts/大数据查重', Record<never, never>, Record<never, never>>,
@@ -165,8 +169,16 @@ declare module 'vue-router/auto-routes' {
       routes: '/posts/二叉树'
       views: never
     }
+    'pages/posts/似然.md': {
+      routes: '/posts/似然'
+      views: never
+    }
     'pages/posts/信号Matlab.md': {
       routes: '/posts/信号Matlab'
+      views: never
+    }
+    'pages/posts/动态规划.md': {
+      routes: '/posts/动态规划'
       views: never
     }
     'pages/posts/哈希表.md': {
@@ -175,6 +187,14 @@ declare module 'vue-router/auto-routes' {
     }
     'pages/posts/回溯算法.md': {
       routes: '/posts/回溯算法'
+      views: never
+    }
+    'pages/posts/图.md': {
+      routes: '/posts/图'
+      views: never
+    }
+    'pages/posts/图神经网络.md': {
+      routes: '/posts/图神经网络'
       views: never
     }
     'pages/posts/基础排序.md': {
