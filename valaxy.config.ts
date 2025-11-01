@@ -48,14 +48,14 @@ export default defineValaxyConfig<ThemeUserConfig>({
       title: 'YURIN\'s HOME',
       motto: 'You got to put the past behind you before you can move on.',
       urls: [
-        'https://pic.akorin.icu/20250821235738973.webp',
-        'https://pic.akorin.icu/20250822000048269.webp',
-        'https://pic.akorin.icu/20250821235930749.webp',
-        'https://pic.akorin.icu/20250822000224307.webp',
-        'https://pic.akorin.icu/20250821234944713.webp',
-        'https://pic.akorin.icu/20250821235633395.webp',
-        'https://pic.akorin.icu/20250822000002560.webp',
-        'https://pic.akorin.icu/20250822000430257.webp'
+        'https://pic.yurin.cc/20250821235738973.webp',
+        'https://pic.yurin.cc/20250822000048269.webp',
+        'https://pic.yurin.cc/20250821235930749.webp',
+        'https://pic.yurin.cc/20250822000224307.webp',
+        'https://pic.yurin.cc/20250821234944713.webp',
+        'https://pic.yurin.cc/20250821235633395.webp',
+        'https://pic.yurin.cc/20250822000002560.webp',
+        'https://pic.yurin.cc/20250822000430257.webp'
 
       ],
       randomUrls: true,
@@ -261,14 +261,14 @@ export default defineValaxyConfig<ThemeUserConfig>({
   },
     // bg_image: {
     //   enable: true,
-    //   url: 'https://pic.akorin.icu/bg-dark1.jpg',
-    //   dark: 'https://pic.akorin.icu/bg-white1.png',
+    //   url: 'https://pic.yurin.cc/bg-dark1.jpg',
+    //   dark: 'https://pic.yurin.cc/bg-white1.png',
     //   opacity: 0.55,
   // },
   addons: [
       addonWaline({
         // Waline 配置项，参考 https://waline.js.org/reference/client/props.html
-        serverURL: 'https://waline.akorin.icu',
+        serverURL: 'https://waline.yurin.cc',
         meta: ['nick', 'mail'],
         emoji: ['https://unpkg.com/@waline/emojis@1.1.0/tw-emoji'],
         login: 'force',

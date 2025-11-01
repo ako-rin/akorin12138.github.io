@@ -6,7 +6,7 @@ categories: 旅行计划
 tags:
   - 计划
   - 日本
-cover: 'https://pic.akorin.icu/conwtz3p.png'
+cover: 'https://pic.yurin.cc/conwtz3p.png'
 time_warning: true
 end: true
 ---

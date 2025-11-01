@@ -6,7 +6,7 @@ categories: 浏览器
 tags:
   - Zen Browser
   - 优化
-cover: 'https://pic.akorin.icu/67jja5nl.png'
+cover: 'https://pic.yurin.cc/67jja5nl.png'
 time_warning: true
 end: true
 ---

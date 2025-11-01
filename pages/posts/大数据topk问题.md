@@ -8,7 +8,7 @@ tags:
   - 大数据
   - 编程
   - C++
-cover: 'https://pic.akorin.icu/20250826110602265.webp'
+cover: 'https://pic.yurin.cc/20250826110602265.webp'
 codeHeightLimit: 500
 toc: true
 time_warning: true

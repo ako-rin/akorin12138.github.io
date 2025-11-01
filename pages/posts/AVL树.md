@@ -2,7 +2,7 @@
 layout: post
 title: AVL树
 date: 2025-09-01 14:48:41
-cover: 'https://pic.akorin.icu/20250901162043571.webp'
+cover: 'https://pic.yurin.cc/20250901162043571.webp'
 categories: 算法
 tags:
   - 算法
@@ -32,7 +32,7 @@ AVL树是一种自平衡二叉查找树（BST），由Adelson-Velsky和Landis提
 AVL树为了维护节点平衡引入的四种节点旋转操作：
 
 1. **右旋转操作：** 左孩子的左子树太高了，需要右旋。
-    ![](https://pic.akorin.icu/20250902180720750.webp)
+    ![](https://pic.yurin.cc/20250902180720750.webp)
     ``` 
     LL（左左）失衡：对 A 右旋
       Before:             After (RightRotate A):
@@ -45,7 +45,7 @@ AVL树为了维护节点平衡引入的四种节点旋转操作：
     T0    T1
     ```
 2. **左旋转操作：** 右孩子的右子树太高了，需要左旋。
-    ![](https://pic.akorin.icu/20250902180739356.webp)
+    ![](https://pic.yurin.cc/20250902180739356.webp)
     ```
     RR（右右）失衡：对 A 左旋
       Before:             After (LeftRotate A):
@@ -58,7 +58,7 @@ AVL树为了维护节点平衡引入的四种节点旋转操作：
               T2  T3
     ```
 3. **左平衡操作：** 左孩子的右子树太高了，需要先左旋板成第一种情况，然后再右旋。
-    ![](https://pic.akorin.icu/20250902202744510.webp)
+    ![](https://pic.yurin.cc/20250902202744510.webp)
     ```
     LR（左右）失衡：先左旋 B，再右旋 A
       Before:            中间（左旋 B）：       After:
@@ -72,7 +72,7 @@ AVL树为了维护节点平衡引入的四种节点旋转操作：
 
     ```
 4. **右平衡操作：** 右孩子的左子树太高了，需要先右旋扳成第二种情况，然后再左旋。
-    ![](https://pic.akorin.icu/20250902202817931.webp)
+    ![](https://pic.yurin.cc/20250902202817931.webp)
     ```
     RL（右左）失衡：先右旋 B，再左旋 A
       Before:            中间（右旋 B）：      After:

@@ -7,7 +7,7 @@ tags:
   - 学习
   - 编程
   - C++
-cover: 'https://pic.akorin.icu/c++cover.jpg'
+cover: 'https://pic.yurin.cc/c++cover.jpg'
 codeHeightLimit: 500
 toc: true
 time_warning: true
@@ -156,7 +156,7 @@ heapVar = 50
 ```
 :::
 从下图中可以看出字符串都存储在了常量区。
-![alt text](https://pic.akorin.icu/20250712171019110.png)
+![alt text](https://pic.yurin.cc/20250712171019110.png)
 
 
 ### 引用

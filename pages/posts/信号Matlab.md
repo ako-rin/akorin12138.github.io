@@ -9,7 +9,7 @@ tags:
   - 速通
   - matlab
 codeHeightLimit: 350
-cover: 'https://pic.akorin.icu/封面3.png'
+cover: 'https://pic.yurin.cc/封面3.png'
 end: true
 time_warning: true
 ---
@@ -39,7 +39,7 @@ x=b*exp(-a*t).*sin(pi*t);
 figure(1);
 plot(t, x);
 ```
-![](https://pic.akorin.icu/20250225210740529.png)
+![](https://pic.yurin.cc/20250225210740529.png)
 
 ### 离散信号
 
@@ -56,7 +56,7 @@ figure(2);
 stem(k, y);
 ```
 
-![](https://pic.akorin.icu/20250225210818824.png)
+![](https://pic.yurin.cc/20250225210818824.png)
 
 
 ```matlab
@@ -101,7 +101,7 @@ fs2=laplace(t*exp(-t));     %求函数f1的拉氏变换fs1
 yt=simplify(ilaplace(fs1*fs2)); %求拉式反变换
 ezplot(yt);                     %绘制变换后的图像
 ```
-![](https://pic.akorin.icu/20250225211440024.png)
+![](https://pic.yurin.cc/20250225211440024.png)
 
 
 ### 离散信号Z变换
@@ -178,7 +178,7 @@ t3=0:0.001:3;
 plot(t3,ft3);
 title('ft1(t)*ft2(t)')
 ```
-![](https://pic.akorin.icu/20250225214019300.png)
+![](https://pic.yurin.cc/20250225214019300.png)
 
 :::warning
 matlab用conv函数求卷积时，要在前面乘上采样间隔才正确
@@ -199,7 +199,7 @@ subplot(3, 1, 1);stem(k1,x1);
 subplot(3, 1, 2);stem(k2,x2);
 subplot(3, 1, 3);stem(k,y);
 ```
-![](https://pic.akorin.icu/20250225215129580.png)
+![](https://pic.yurin.cc/20250225215129580.png)
 
 ```matlab
 x2=0.8.^k2;
@@ -234,7 +234,7 @@ pzmap(sys);
 sgrid;
 zap=roots(a);
 ```
-![](https://pic.akorin.icu/20250225225143483.png)
+![](https://pic.yurin.cc/20250225225143483.png)
 
 ### 离散系统
 
@@ -264,11 +264,11 @@ title('幅频响应');
 
 <div class="flex grid-cols-2 justify-center items-center">
 
-![](https://pic.akorin.icu/20250225235445908.png)
+![](https://pic.yurin.cc/20250225235445908.png)
 
-![](https://pic.akorin.icu/20250225235457967.png)
+![](https://pic.yurin.cc/20250225235457967.png)
 
-![](https://pic.akorin.icu/20250225235507923.png)
+![](https://pic.yurin.cc/20250225235507923.png)
 
 </div>
 
@@ -327,11 +327,11 @@ title('Frequency Spectrum');
 
 <div class="flex grid-cols-2 justify-center">
 
-![](https://pic.akorin.icu/20250227152233684.png)
+![](https://pic.yurin.cc/20250227152233684.png)
 
-![](https://pic.akorin.icu/20250227152306961.png)
+![](https://pic.yurin.cc/20250227152306961.png)
 
-![](https://pic.akorin.icu/20250227152317892.png)
+![](https://pic.yurin.cc/20250227152317892.png)
 
 </div>
 
@@ -361,7 +361,7 @@ subplot(2,1,2);
 plot(t,yt);
 title('响应');
 ```
-![](https://pic.akorin.icu/20250227153908502.png)
+![](https://pic.yurin.cc/20250227153908502.png)
 
 ### 函数
 
@@ -451,7 +451,7 @@ xlabel('t');
 ylabel('y');
 title('零状态响应')
 ```
-![](https://pic.akorin.icu/20250227160441605.png)
+![](https://pic.yurin.cc/20250227160441605.png)
 
 ### 离散系统
 
@@ -519,7 +519,7 @@ xlabel('k');
 ylabel('y');
 title('全响应')
 ```
-![](https://pic.akorin.icu/20250227161354348.png)
+![](https://pic.yurin.cc/20250227161354348.png)
 
 ## 实现Sa信号的采样和恢复
 
@@ -552,7 +552,7 @@ title('恢复信号')
 subplot(3,1,3);plot(t,error);
 title('恢复信号与原信号之间的差值');
 ```
-![](https://pic.akorin.icu/20250308212833536.png)
+![](https://pic.yurin.cc/20250308212833536.png)
 
 ```matlab
 f=fs*1/pi*pi*sinc(1/pi*(ones(length(nTs),1)*t-nTs'*ones(1,length(t))));
@@ -670,11 +670,11 @@ plot(t, F3,'r',t,f,'b');
 <div class="flex flex-col">
 <div class="flex grid-cols-2 justify-center items-center">
 
-![](https://pic.akorin.icu/20250310170814974.png)
+![](https://pic.yurin.cc/20250310170814974.png)
 
-![](https://pic.akorin.icu/20250310170821224.png)
+![](https://pic.yurin.cc/20250310170821224.png)
 
-![](https://pic.akorin.icu/20250310170845805.png)
+![](https://pic.yurin.cc/20250310170845805.png)
 
 </div>
 </div>

@@ -6,7 +6,7 @@ categories: 笔记
 tags:
   - 复试
   - 问答
-cover: 'https://pic.akorin.icu/cover2.png'
+cover: 'https://pic.yurin.cc/cover2.png'
 end: false
 password: rinko1017
 ---
@@ -87,7 +87,7 @@ DMA(Direct Memory Acess)直接存储访问，借助内部DMA控制器实现内�
 
 ## 超外差式接收机
 - 结构
-  - ![](https://pic.akorin.icu/20250315204150710.png)
+  - ![](https://pic.yurin.cc/20250315204150710.png)
 - 特点
   - 具有很大的接收动态范围
   - 具有很高的邻道选择性和一个接收灵敏度
@@ -234,11 +234,11 @@ QAM(Quadrature Amplitude Modulation)正交振幅调制，QAM使数字调制的�
 
 ## 戴维南定理
 含独立电源的线性电阻单口网络N，就端口特性而言，可以等效为一个电压源和电阻串联的单口网络
-![](https://pic.akorin.icu/20250315220115543.png)
+![](https://pic.yurin.cc/20250315220115543.png)
 
 ## 诺顿定理
 任意线性二端直流网络可以用电流源和并联电阻的等效电路来替换
-![](https://pic.akorin.icu/20250315220211555.png)
+![](https://pic.yurin.cc/20250315220211555.png)
 
 ## 什么是阻抗
 阻抗是电路i中对电流所起的阻碍作用，由电阻、电感和电容相互作用决定
@@ -268,12 +268,12 @@ ATM(Asynchronous Transfer Mode)异步传输模式，以信元为基础的一种�
   - 可变电阻区
   - 恒流区
   - 截止区
-![](https://pic.akorin.icu/20250315224909169.png)
+![](https://pic.yurin.cc/20250315224909169.png)
 - BJT
   - 饱和区
   - 放大区
   - 截止区
-![](https://pic.akorin.icu/20250315224719669.png)
+![](https://pic.yurin.cc/20250315224719669.png)
 
 ## 直接调频和间接调频的优缺点
 - 直接调频
@@ -324,11 +324,11 @@ $$
 - 甲乙类功放：
   - 工作周期：大半周期- $\pi$~$2\pi$
   - 输出功率： $P_o\approx\frac{1}{8}\frac{V^2_{CC}}{R_L}$
-  - ![](https://pic.akorin.icu/20250315230126615.png)
+  - ![](https://pic.yurin.cc/20250315230126615.png)
 - 丙类功放
   - 工作周期：小半周期- $<\pi$
 
-![](https://pic.akorin.icu/20250315230240113.png)
+![](https://pic.yurin.cc/20250315230240113.png)
 
 ## 交越失真
 三极管存在开启电压，当信号在 -0.7V~0.7V时，二极管不导通，导致信号失真

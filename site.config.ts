@@ -8,10 +8,10 @@ export default defineSiteConfig({
 
   mediumZoom: { enable: true },
 
-  favicon: "https://pic.akorin.icu/20250822000714280.webp",
+  favicon: "https://pic.yurin.cc/20250822000714280.webp",
   author: {
     name: "yurin",
-    avatar: "https://pic.akorin.icu/20250822182421523.webp",
+    avatar: "https://pic.yurin.cc/20250822182421523.webp",
     status: {
       emoji: "🌸",
     },
@@ -32,7 +32,7 @@ export default defineSiteConfig({
     },
     {
       name: "E-Mail",
-      link: "mailto:love@akorin.icu",
+      link: "mailto:love@yurin.cc",
       icon: "i-ri-mail-line",
       color: "#89ffe4ff",
     },

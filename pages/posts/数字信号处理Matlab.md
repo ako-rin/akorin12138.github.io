@@ -7,7 +7,7 @@ tags:
   - 笔记
   - 数字信号处理
   - matlab
-cover: 'https://pic.akorin.icu/封面4.png'
+cover: 'https://pic.yurin.cc/封面4.png'
 end: false
 ---
 
@@ -360,9 +360,9 @@ $$
 <div class="flex flex-col">
 <div class="flex grid-cols-2 justify-center items-center">
 
-![](https://pic.akorin.icu/20250306165711447.png)
+![](https://pic.yurin.cc/20250306165711447.png)
 
-![](https://pic.akorin.icu/20250306165728680.png)
+![](https://pic.yurin.cc/20250306165728680.png)
 
 </div>
 </div>
@@ -370,14 +370,14 @@ $$
 <div class="flex flex-col">
 <div class="flex grid-cols-2 justify-center items-center">
 
-![](https://pic.akorin.icu/20250306165837959.png)
+![](https://pic.yurin.cc/20250306165837959.png)
 
-![](https://pic.akorin.icu/20250306165846804.png)
+![](https://pic.yurin.cc/20250306165846804.png)
 
 </div>
 </div>
 
-![](https://pic.akorin.icu/20250306165536593.png)
+![](https://pic.yurin.cc/20250306165536593.png)
 
 ## 生成各种信号的设计方法
 
@@ -466,14 +466,14 @@ $$
 
 :::
 
-![](https://pic.akorin.icu/20250306191320790.png)
+![](https://pic.yurin.cc/20250306191320790.png)
 
 <div class="flex flex-col">
 <div class="flex grid-cols-2 justify-center items-center">
 
-![](https://pic.akorin.icu/20250306191224974.png)
+![](https://pic.yurin.cc/20250306191224974.png)
 
-![](https://pic.akorin.icu/20250306191232702.png)
+![](https://pic.yurin.cc/20250306191232702.png)
 
 </div>
 </div>
@@ -481,9 +481,9 @@ $$
 <div class="flex flex-col">
 <div class="flex grid-cols-2 justify-center items-center">
 
-![](https://pic.akorin.icu/20250306191351382.png)
+![](https://pic.yurin.cc/20250306191351382.png)
 
-![](https://pic.akorin.icu/20250306191358180.png)
+![](https://pic.yurin.cc/20250306191358180.png)
 
 </div>
 </div>
@@ -616,16 +616,16 @@ $$
 <div class="flex flex-col">
 <div class="flex grid-cols-2 justify-center items-center">
 
-![](https://pic.akorin.icu/20250306191115726.png)
+![](https://pic.yurin.cc/20250306191115726.png)
 
-![](https://pic.akorin.icu/20250306191125325.png)
+![](https://pic.yurin.cc/20250306191125325.png)
 
-![](https://pic.akorin.icu/20250307154416448.png)
+![](https://pic.yurin.cc/20250307154416448.png)
 
 </div>
 </div>
 
-![](https://pic.akorin.icu/20250307160823893.png)
+![](https://pic.yurin.cc/20250307160823893.png)
 
 ## 转换系统函数的类型
 ### 所需函数
@@ -690,9 +690,9 @@ $$
 <div class="flex flex-col">
 <div class="flex grid-cols-2 justify-center items-center">
 
-![](https://pic.akorin.icu/20250307193448574.png)
+![](https://pic.yurin.cc/20250307193448574.png)
 
-![](https://pic.akorin.icu/20250307193512079.png)
+![](https://pic.yurin.cc/20250307193512079.png)
 
 </div>
 </div>
@@ -721,7 +721,7 @@ $$
 
 :::
 
-![](https://pic.akorin.icu/20250307182242524.png)
+![](https://pic.yurin.cc/20250307182242524.png)
 
 ```matlab
 f=-20/2e-3:40/2e-3/N:20/2e-3;   % 20次谐波的频谱范围
@@ -761,4 +761,4 @@ $$
 
 :::
 
-![](https://pic.akorin.icu/20250327212742259.png)
+![](https://pic.yurin.cc/20250327212742259.png)

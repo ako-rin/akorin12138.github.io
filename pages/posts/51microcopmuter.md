@@ -8,7 +8,7 @@ tags:
   - 51单片机
   - C
 codeHeightLimit: 350
-cover: 'https://pic.akorin.icu/20250315185018179.png'
+cover: 'https://pic.yurin.cc/20250315185018179.png'
 end: true
 time_warning: true
 ---
