@@ -1,16 +1,16 @@
 import { defineSiteConfig } from 'valaxy'
 
 export default defineSiteConfig({
-  url: "https://akorin.icu",
+  url: "https://yurin.cc",
   lang: "zh-CN",
-  title: "AkoRin's home",
+  title: "YuRin's home",
   subtitle: "列车定会驶向下一站 那么舞台呢 我们呢",
 
   mediumZoom: { enable: true },
 
   favicon: "https://pic.akorin.icu/20250822000714280.webp",
   author: {
-    name: "akorin",
+    name: "yurin",
     avatar: "https://pic.akorin.icu/20250822182421523.webp",
     status: {
       emoji: "🌸",

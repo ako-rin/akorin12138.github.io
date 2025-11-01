@@ -45,7 +45,7 @@ export default defineValaxyConfig<ThemeUserConfig>({
       },
     },
     hero: {
-      title: 'AKORIN\'s HOME',
+      title: 'YURIN\'s HOME',
       motto: 'You got to put the past behind you before you can move on.',
       urls: [
         'https://pic.akorin.icu/20250821235738973.webp',
@@ -127,9 +127,9 @@ export default defineValaxyConfig<ThemeUserConfig>({
         link: '/album',
       },
       {
-        text: "AkoRin",
+        text: "YuRin",
         icon: 'i-line-md-heart-twotone-half',
-        link: "https://akorin.icu",
+        link: "https://yurin.cc",
         target: '_blank',
       },
       {
@@ -162,7 +162,7 @@ export default defineValaxyConfig<ThemeUserConfig>({
       },
     ],
     navbarOptions: {
-      title: ['AkoRin\'s Home'],
+      title: ['YuRin\'s Home'],
       offset: 0,
       invert: ['home'],
       showMarker: false,
@@ -201,9 +201,9 @@ export default defineValaxyConfig<ThemeUserConfig>({
         link: '/album',
       },
       {
-        text: "AkoRin",
+        text: "YuRin",
         icon: 'i-line-md-heart-twotone-half',
-        link: "https://akorin.icu",
+        link: "https://yurin.cc",
         target: '_blank',
       },
       {
@@ -242,7 +242,7 @@ export default defineValaxyConfig<ThemeUserConfig>({
         img: '/favicon-16x16.ico',
         animated: true,
         url: 'https://icp.gov.moe/?keyword=20252010',
-        title: 'AkoRin',
+        title: 'YuRin',
       },
       powered: true,
       icp: '萌ICP备20252010号',
