@@ -3,7 +3,7 @@ import { defineSiteConfig } from 'valaxy'
 export default defineSiteConfig({
   url: "https://yurin.cc",
   lang: "zh-CN",
-  title: "YuRin's home",
+  title: "摇曳风铃",
   subtitle: "列车定会驶向下一站 那么舞台呢 我们呢",
 
   mediumZoom: { enable: true },
@@ -32,7 +32,7 @@ export default defineSiteConfig({
     },
     {
       name: "E-Mail",
-      link: "mailto:love@yurin.cc",
+      link: "mailto:yurin@yurin.cc",
       icon: "i-ri-mail-line",
       color: "#89ffe4ff",
     },
