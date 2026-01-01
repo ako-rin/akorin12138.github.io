@@ -44,7 +44,6 @@ declare module 'vue-router/auto-routes' {
     '/posts/二叉树': RouteRecordInfo<'/posts/二叉树', '/posts/二叉树', Record<never, never>, Record<never, never>>,
     '/posts/似然': RouteRecordInfo<'/posts/似然', '/posts/似然', Record<never, never>, Record<never, never>>,
     '/posts/信号Matlab': RouteRecordInfo<'/posts/信号Matlab', '/posts/信号Matlab', Record<never, never>, Record<never, never>>,
-    '/posts/动态规划': RouteRecordInfo<'/posts/动态规划', '/posts/动态规划', Record<never, never>, Record<never, never>>,
     '/posts/哈希表': RouteRecordInfo<'/posts/哈希表', '/posts/哈希表', Record<never, never>, Record<never, never>>,
     '/posts/回溯算法': RouteRecordInfo<'/posts/回溯算法', '/posts/回溯算法', Record<never, never>, Record<never, never>>,
     '/posts/图': RouteRecordInfo<'/posts/图', '/posts/图', Record<never, never>, Record<never, never>>,
@@ -175,10 +174,6 @@ declare module 'vue-router/auto-routes' {
     }
     'pages/posts/信号Matlab.md': {
       routes: '/posts/信号Matlab'
-      views: never
-    }
-    'pages/posts/动态规划.md': {
-      routes: '/posts/动态规划'
       views: never
     }
     'pages/posts/哈希表.md': {
