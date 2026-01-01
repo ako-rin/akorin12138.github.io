@@ -197,6 +197,124 @@ html, body, .app-container {
     --sakura-sidebar-offset: 0 !important;
 }
 
+/* 去掉代码块左上角的红橙绿三个点 */
+.markdown-body div[class*='language-']::after {
+    display: none !important;
+}
+
+/* 将语言标签移到右侧，避免遮挡代码，同时配合代码块上移 */
+.markdown-body div[class*='language-'] .lang {
+    left: auto !important;
+    right: 50px !important; /* 放在复制按钮左侧 */
+    top: 10px !important;
+    transform: none !important;
+    font-weight: bold;
+    color: var(--sakura-color-text-deep);
+    opacity: 0.6;
+    font-size: 0.85em;
+}
+
+/* 去掉代码块顶部的白色背景条 */
+.markdown-body div[class*='language-']::before {
+    display: none !important;
+}
+
+/* 代码块内容上移，减小顶部留白 */
+.markdown-body div[class*='language-'] {
+    padding-top: 10px !important;
+    /* 添加高度过渡动画 */
+    transition: max-height 0.5s ease-in-out, height 0.5s ease-in-out;
+}
+
+/* 修复复制按钮颜色：跟随主题背景，去除白色背景 */
+.markdown-body div[class*='language-'] button.copy {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    color: var(--sakura-color-text) !important;
+}
+
+/* 暗黑模式下，增加复制按钮图标亮度，使其更清晰 */
+html.dark .markdown-body div[class*='language-'] button.copy {
+    filter: brightness(2);
+}
+
+/* 优化代码块折叠/展开按钮（加载箭头） */
+.markdown-body [class*='language-']>button.code-block-unfold-btn {
+    height: 48px !important; /* 增加高度，更容易点击 */
+    /* 用户要求去掉折叠时的“白色条”（即渐变背景），改为完全透明 */
+    background-image: none !important;
+    background-color: transparent !important;
+    border: none !important;
+    transition: all 0.3s;
+}
+
+.markdown-body [class*='language-']>button.code-block-unfold-btn::before {
+    background-size: 24px !important; /* 放大箭头图标 */
+    opacity: 0.6;
+    transition: all 0.3s;
+}
+
+/* 暗黑模式下，强制箭头变白，提高对比度 */
+html.dark .markdown-body [class*='language-']>button.code-block-unfold-btn::before {
+    filter: brightness(0) invert(1);
+}
+
+.markdown-body [class*='language-']>button.code-block-unfold-btn:hover::before {
+    opacity: 1;
+    transform: translateY(3px); /* 悬停时微动 */
+}
+
+/* --- 新增：支持代码块重新折叠 --- */
+
+/* 1. 强制按钮在展开状态下也显示 */
+.markdown-body [class*='language-'] > button.code-block-unfold-btn {
+    display: flex !important;
+    visibility: visible !important;
+}
+
+/* 2. 展开状态下（没有 .folded 类）的样式调整 */
+.markdown-body [class*='language-']:not(.folded) {
+    padding-bottom: 40px !important; /* 底部留出空间给按钮，防止遮挡代码 */
+}
+
+.markdown-body [class*='language-']:not(.folded) > button.code-block-unfold-btn {
+    /* 用户要求去掉展开时的“灰色块” */
+    background-image: none !important;
+    background-color: transparent !important;
+    height: 32px !important; /* 展开后按钮可以稍微矮一点 */
+    border-top: none !important; /* 去掉分隔线 */
+}
+
+html.dark .markdown-body [class*='language-']:not(.folded) > button.code-block-unfold-btn {
+    background-color: transparent !important;
+}
+
+/* 3. 展开状态下箭头旋转 180 度 */
+.markdown-body [class*='language-']:not(.folded) > button.code-block-unfold-btn::before {
+    transform: rotate(180deg);
+}
+
+/* 修复展开状态下 hover 动画方向 */
+.markdown-body [class*='language-']:not(.folded) > button.code-block-unfold-btn:hover::before {
+    transform: rotate(180deg) translateY(-3px); /* 向上微动 */
+}
+
+/* 如果你也想去掉顶部的灰色背景条，可以取消注释下面这段 */
+/*
+.markdown-body div[class*='language-']::before {
+    display: none !important;
+}
+.markdown-body div[class*='language-'] {
+    padding-top: 10px !important;
+}
+.markdown-body div[class*='language-'] .lang {
+    top: 10px !important;
+    transform: none !important;
+    right: 10px !important;
+    left: auto !important;
+}
+*/
+
 .app-container {
     margin-left: 0 !important;
     margin-right: 0 !important;
