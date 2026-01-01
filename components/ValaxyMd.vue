@@ -68,54 +68,89 @@ function useCollapseCodeCustom() {
         }
       }
 
+      const contentHeight = parent.scrollHeight
+      if (!isFolded && contentHeight <= limitHeight) {
+        return
+      }
+
       if (isFolded) {
         // --- 展开操作 ---
+        // 1. 捕获起始高度
         const startHeight = parent.getBoundingClientRect().height
-        const endHeight = parent.scrollHeight
-        parent.style.maxHeight = ''
+        
+        // 2. 计算目标高度（在修改 DOM 之前）
+        const endHeight = getExpandedHeight(parent)
+        
+        // 3. 禁用 transition，锁定当前高度
+        parent.style.transition = 'none'
         parent.style.height = startHeight + 'px'
         parent.style.overflow = 'hidden'
+        parent.style.maxHeight = 'none'
 
+        // 4. 移除限制类（此时高度被锁定，不会跳动）
         if (maxHClass && parent.classList.contains(maxHClass)) {
           parent.classList.remove(maxHClass)
           parent.dataset.removedMaxH = maxHClass
         }
-
         parent.classList.remove('folded')
-        void parent.offsetHeight
-        parent.style.height = endHeight + 'px'
+        
+        // 5. 使用双重 RAF 确保浏览器完成一帧渲染
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            // 6. 启用 transition 并设置目标高度
+            parent.style.transition = 'height 0.5s ease-in-out'
+            parent.style.height = endHeight + 'px'
 
-        const onExpandEnd = (event: TransitionEvent) => {
-          if (event.propertyName !== 'height') return
-          if (!parent.classList.contains('folded')) {
-            parent.style.height = ''
-            parent.style.overflow = ''
-          }
-          parent.removeEventListener('transitionend', onExpandEnd)
-        }
-        parent.addEventListener('transitionend', onExpandEnd)
+            const onExpandEnd = (event: TransitionEvent) => {
+              if (event.propertyName !== 'height') return
+              parent.removeEventListener('transitionend', onExpandEnd)
+              
+              if (!parent.classList.contains('folded')) {
+                parent.style.transition = 'none'
+                parent.style.height = ''
+                parent.style.overflow = ''
+                parent.style.maxHeight = ''
+              }
+            }
+            parent.addEventListener('transitionend', onExpandEnd)
+          })
+        })
       } else {
         // --- 折叠操作 ---
+        // 1. 捕获起始高度
         const startHeight = parent.getBoundingClientRect().height
-        parent.style.maxHeight = ''
+        
+        // 2. 禁用 transition，锁定当前高度
+        parent.style.transition = 'none'
         parent.style.height = startHeight + 'px'
         parent.style.overflow = 'hidden'
-        void parent.offsetHeight
-        parent.style.height = limitHeight + 'px'
+        parent.style.maxHeight = 'none'
+        
+        // 3. 使用双重 RAF 确保浏览器完成一帧渲染
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            // 4. 启用 transition 并设置目标高度
+            parent.style.transition = 'height 0.5s ease-in-out'
+            parent.style.height = limitHeight + 'px'
 
-        const onCollapseEnd = (event: TransitionEvent) => {
-          if (event.propertyName !== 'height') return
-          if (!parent.classList.contains('folded')) {
-            parent.classList.add('folded')
-            if (parent.dataset.removedMaxH) {
-              parent.classList.add(parent.dataset.removedMaxH)
+            const onCollapseEnd = (event: TransitionEvent) => {
+              if (event.propertyName !== 'height') return
+              parent.removeEventListener('transitionend', onCollapseEnd)
+              
+              if (!parent.classList.contains('folded')) {
+                parent.classList.add('folded')
+                if (parent.dataset.removedMaxH) {
+                  parent.classList.add(parent.dataset.removedMaxH)
+                }
+                parent.style.transition = 'none'
+                parent.style.height = ''
+                parent.style.overflow = ''
+                parent.style.maxHeight = ''
+              }
             }
-            parent.style.height = ''
-            parent.style.overflow = ''
-          }
-          parent.removeEventListener('transitionend', onCollapseEnd)
-        }
-        parent.addEventListener('transitionend', onCollapseEnd)
+            parent.addEventListener('transitionend', onCollapseEnd)
+          })
+        })
       }
     }
   })
@@ -125,8 +160,12 @@ function useCollapseCodeCustom() {
     const els = document.querySelectorAll('div[class*="language-"]')
     for (const el of Array.from(els)) {
       const elHeight = getHeightViaClone(el as HTMLElement)
-      if (elHeight > codeHeightLimit)
+      if (elHeight > codeHeightLimit) {
+        el.setAttribute('data-collapsible', 'true')
         el.classList.add('folded')
+      } else {
+        el.removeAttribute('data-collapsible')
+      }
     }
   })
 }
@@ -138,6 +177,24 @@ function getHeightViaClone(el: HTMLElement) {
       visibility: hidden;
       display: block;
       left: -9999px;
+  `
+  document.body.appendChild(clone)
+  const height = clone.scrollHeight
+  document.body.removeChild(clone)
+  return height
+}
+
+function getExpandedHeight(el: HTMLElement) {
+  const clone = el.cloneNode(true) as HTMLElement
+  clone.classList.remove('folded')
+  clone.style.cssText = `
+      position: absolute;
+      visibility: hidden;
+      display: block;
+      left: -9999px;
+      max-height: none;
+      height: auto;
+      overflow: visible;
   `
   document.body.appendChild(clone)
   const height = clone.scrollHeight

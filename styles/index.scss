@@ -223,7 +223,7 @@ html, body, .app-container {
 .markdown-body div[class*='language-'] {
     padding-top: 10px !important;
     /* 添加高度过渡动画 */
-    transition: max-height 0.5s ease-in-out, height 0.5s ease-in-out;
+    transition: max-height 0.8s ease-in-out, height 0.8s ease-in-out;
 }
 
 /* 修复复制按钮颜色：跟随主题背景，去除白色背景 */
@@ -266,8 +266,13 @@ html.dark .markdown-body [class*='language-']>button.code-block-unfold-btn::befo
 
 /* --- 新增：支持代码块重新折叠 --- */
 
-/* 1. 强制按钮在展开状态下也显示 */
+/* 1. 只在折叠状态显示按钮 */
 .markdown-body [class*='language-'] > button.code-block-unfold-btn {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+.markdown-body [class*='language-'][data-collapsible='true'] > button.code-block-unfold-btn {
     display: flex !important;
     visibility: visible !important;
 }
