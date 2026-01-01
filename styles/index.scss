@@ -279,7 +279,7 @@ html.dark .markdown-body [class*='language-']>button.code-block-unfold-btn::befo
 
 /* 2. 展开状态下（没有 .folded 类）的样式调整 */
 .markdown-body [class*='language-']:not(.folded) {
-    padding-bottom: 40px !important; /* 底部留出空间给按钮，防止遮挡代码 */
+    padding-bottom: 20px !important; /* 底部留出空间给按钮，防止遮挡代码 */
 }
 
 .markdown-body [class*='language-']:not(.folded) > button.code-block-unfold-btn {
