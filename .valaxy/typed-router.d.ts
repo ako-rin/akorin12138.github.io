@@ -38,6 +38,7 @@ declare module 'vue-router/auto-routes' {
     '/posts/B树': RouteRecordInfo<'/posts/B树', '/posts/B树', Record<never, never>, Record<never, never>>,
     '/posts/gccSimpleLearn': RouteRecordInfo<'/posts/gccSimpleLearn', '/posts/gccSimpleLearn', Record<never, never>, Record<never, never>>,
     '/posts/JapanTravel': RouteRecordInfo<'/posts/JapanTravel', '/posts/JapanTravel', Record<never, never>, Record<never, never>>,
+    '/posts/UE5前置知识': RouteRecordInfo<'/posts/UE5前置知识', '/posts/UE5前置知识', Record<never, never>, Record<never, never>>,
     '/posts/zenbrowser': RouteRecordInfo<'/posts/zenbrowser', '/posts/zenbrowser', Record<never, never>, Record<never, never>>,
     '/posts/一致性哈希算法': RouteRecordInfo<'/posts/一致性哈希算法', '/posts/一致性哈希算法', Record<never, never>, Record<never, never>>,
     '/posts/九个二叉树常见问题': RouteRecordInfo<'/posts/九个二叉树常见问题', '/posts/九个二叉树常见问题', Record<never, never>, Record<never, never>>,
@@ -150,6 +151,10 @@ declare module 'vue-router/auto-routes' {
     }
     'pages/posts/JapanTravel.md': {
       routes: '/posts/JapanTravel'
+      views: never
+    }
+    'pages/posts/UE5前置知识.md': {
+      routes: '/posts/UE5前置知识'
       views: never
     }
     'pages/posts/zenbrowser.md': {

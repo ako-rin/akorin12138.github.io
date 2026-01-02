@@ -1,25 +1,25 @@
 [
-  // 逐字删除（后退）
-{
-  "key": "ctrl+backspace",
-  "command": "-deleteWordLeft"
-},
-{
-  "key": "ctrl+backspace",
-  "command": "deleteLeft",
-  "when": "textInputFocus && !editorReadonly"
-},
+    // 逐字删除（后退）
+  {
+    "key": "ctrl+backspace",
+    "command": "-deleteWordLeft"
+  },
+  {
+    "key": "ctrl+backspace",
+    "command": "deleteLeft",
+    "when": "textInputFocus && !editorReadonly"
+  },
 
-// 逐字删除（向前）
-{
-  "key": "ctrl+delete",
-  "command": "-deleteWordRight"
-},
-{
-  "key": "ctrl+delete",
-  "command": "deleteRight",
-  "when": "textInputFocus && !editorReadonly"
-},
+  // 逐字删除（向前）
+  {
+    "key": "ctrl+delete",
+    "command": "-deleteWordRight"
+  },
+  {
+    "key": "ctrl+delete",
+    "command": "deleteRight",
+    "when": "textInputFocus && !editorReadonly"
+  },
   {
     // 在 Markdown 中将 Ctrl+Delete 改成按“词片段”向右删除
     "key": "ctrl+delete",
@@ -33,5 +33,13 @@
     "when": "editorTextFocus && editorLangId == markdown && !editorReadonly",
     "args": {},
     "enablement": "false" // 设为 true 或删除此字段来启用
+  },
+  {
+    "key": "ctrl+b",
+    "command": "editor.action.insertSnippet",
+    "when": "editorTextFocus",
+    "args": {
+      "snippet": "**${TM_SELECTED_TEXT}$0**"
+    }
   }
 ]

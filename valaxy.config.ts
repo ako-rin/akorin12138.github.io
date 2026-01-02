@@ -296,6 +296,13 @@ export default defineValaxyConfig<ThemeUserConfig>({
       include: [
         'd3',
         'lodash-es',
+        '@braintree/sanitize-url',
+        'mermaid',
+      ],
+    },
+    ssr: {
+      noExternal: [
+        '@braintree/sanitize-url',
       ],
     },
   },
