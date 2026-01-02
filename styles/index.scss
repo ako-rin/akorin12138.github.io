@@ -43,8 +43,22 @@
     font-size: 16px;
 }
 
+.markdown-body blockquote {
+    background-color: #f0f0f0;
+    border-left: 6px solid var(--va-primary-color-soft);
+    border-radius: 6px;
+    padding: 6px 10px;
+}
+
 .markdown-body blockquote p {
     font-size: 16px;
+    margin: 0;
+}
+
+html.dark .markdown-body blockquote {
+    background-color: #2a2a2a;
+    color: var(--sakura-color-text);
+    border-left-color: var(--va-primary-color-soft);
 }
 
 .prose blockquote p:last-of-type::after {
@@ -70,7 +84,7 @@
 
 .markdown-body .prose ul,
 .markdown-body .prose ol {
-    border: 2px dashed var(--sakura-color-divider);
+    border: none;
     padding: 5px 10px 5px 30px;
     color: var(--sakura-color-text);
     margin-left: 0;
