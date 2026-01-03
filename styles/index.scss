@@ -113,13 +113,73 @@ html.dark .markdown-body blockquote {
     /* 横向滚动条 */
 }
 
-/* 行内 code：允许换行 */
-.markdown-body p code,
-.markdown-body li code {
-    white-space: pre-wrap;
-    /* 保留空格，允许换行 */
-    word-break: break-word;
-    /* 长单词强制断行 */
+/* --- Inline Code Beautification --- */
+
+/* 1. 普通行内 code：紫色系 (主题色) */
+.markdown-body :not(pre) > code {
+    color: var(--va-c-primary) !important; /* 主题紫 */
+    background-color: rgba(104, 109, 191, 0.1) !important; /* 浅紫背景 */
+    padding: 0.2em 0.5em;
+    border-radius: 6px;
+    margin: 0 0.2em;
+    font-family: var(--va-font-mono);
+    font-size: 0.9em;
+    border: 1px solid rgba(104, 109, 191, 0.15);
+    vertical-align: middle;
+}
+
+/* 2. 链接内的 code：橙色系 (跟随链接) */
+.markdown-body a > code {
+    color: #ea580c !important; /* 深橙色 */
+    background-color: rgba(255, 237, 213, 0.6) !important; /* 浅橙色背景 */
+    border-color: rgba(234, 88, 12, 0.1) !important;
+    cursor: pointer;
+    text-decoration: inherit;
+}
+
+/* 暗黑模式适配 */
+html.dark .markdown-body :not(pre) > code {
+    color: #ffffffe8 !important; /* 改为白色，提高对比度 */
+    background-color: rgba(104, 109, 191, 0.4) !important; /* 加深背景透明度，使其更明显 */
+    border-color: rgba(104, 109, 191, 0.6);
+}
+
+html.dark .markdown-body a > code {
+    color: #fb923c !important; /* 亮橙色 */
+    background-color: rgba(234, 88, 12, 0.15) !important;
+    border-color: rgba(234, 88, 12, 0.2) !important;
+}
+
+/* --- Hyperlink Beautification --- */
+/* 超链接：橙色荧光笔风格 */
+.markdown-body a {
+    color: #ea580c; /* 深橙色 */
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0 2px;
+    
+    /* 底部实线装饰 */
+    border-bottom: 2px solid rgba(234, 88, 12, 0.3); 
+    transition: all 0.2s ease;
+}
+
+.markdown-body a:hover {
+    color: #ea580c;
+    background-color: rgba(234, 88, 12, 0.15);
+    border-bottom-color: #ea580c;
+    border-radius: 4px;
+}
+
+/* 暗黑模式链接适配 */
+html.dark .markdown-body a {
+    color: #fb923c;
+    border-bottom-color: rgba(251, 146, 60, 0.3);
+}
+
+html.dark .markdown-body a:hover {
+    color: #fb923c;
+    background-color: rgba(251, 146, 60, 0.15);
+    border-bottom-color: #fb923c;
 }
 
 .custom-block p+p {
@@ -349,4 +409,132 @@ body.sidebar-open, body.is-sidebar-open {
   .md\:hidden {
     display: flex;
   }
+}
+
+/* --- Custom Block Beautification --- */
+.custom-block {
+    margin: 1.5rem 0;
+    padding: 1rem 1.5rem;
+    border-radius: 0.5rem;
+    border-left: 5px solid;
+    transition: transform 0.2s;
+    position: relative;
+    overflow: hidden;
+
+    .custom-block-title {
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        font-size: 1.1em;
+    }
+
+    /* Tip Block */
+    &.tip {
+        background-color: #f3f5f7;
+        border-color: #42b983;
+
+        .custom-block-title {
+            color: #42b983;
+        }
+        
+        /* Optional: Add icon before title */
+        .custom-block-title::before {
+            content: "💡";
+            margin-right: 0.5em;
+        }
+    }
+
+    /* Warning Block */
+    &.warning {
+        background-color: #fff7d0;
+        border-color: #e7c000;
+
+        .custom-block-title {
+            color: #b29400;
+        }
+
+        .custom-block-title::before {
+            content: "⚠️";
+            margin-right: 0.5em;
+        }
+    }
+
+    /* Danger Block */
+    &.danger {
+        background-color: #ffe6e6;
+        border-color: #c00;
+
+        .custom-block-title {
+            color: #900;
+        }
+
+        .custom-block-title::before {
+            content: "🚨";
+            margin-right: 0.5em;
+        }
+    }
+
+    /* Info Block */
+    &.info {
+        background-color: #eef9fd;
+        border-color: #2080f0;
+
+        .custom-block-title {
+            color: #2080f0;
+        }
+
+        .custom-block-title::before {
+            content: "ℹ️";
+            margin-right: 0.5em;
+        }
+    }
+    
+    /* Details Block */
+    &.details {
+        background-color: #f9f9f9;
+        border: 1px solid #eee;
+        border-left: 5px solid #ccc;
+        
+        summary {
+            font-weight: 700;
+            cursor: pointer;
+            color: var(--sakura-color-text-deep);
+        }
+    }
+}
+
+/* Dark mode adjustments for custom blocks */
+html.dark .custom-block {
+    &.tip {
+        background-color: rgba(66, 185, 131, 0.1);
+        border-color: #42b983;
+    }
+
+    &.warning {
+        background-color: rgba(231, 192, 0, 0.1);
+        border-color: #e7c000;
+        .custom-block-title {
+            color: #e7c000;
+        }
+    }
+
+    &.danger {
+        background-color: rgba(204, 0, 0, 0.1);
+        border-color: #c00;
+        .custom-block-title {
+            color: #ff4d4f;
+        }
+    }
+
+    &.info {
+        background-color: rgba(32, 128, 240, 0.1);
+        border-color: #2080f0;
+    }
+    
+    &.details {
+        background-color: #1e1e1e;
+        border-color: #333;
+        border-left-color: #555;
+    }
 }

@@ -99,3 +99,72 @@ class AMyActor : public AActor
 创建的 C++ Actor 类默认没有根组件，通过蓝图继承的 C++ Actor 类会自动创建一个 `DefaultSceneRoot` 作为根组件。
 
 有根组件才能够**拖动 Actor、旋转 Actor 和缩放 Actor**。
+
+## FString 的运算符重载
+
+[`FString`](https://dev.epicgames.com/documentation/en-us/unreal-engine/API/Runtime/Core/FString#operators) 类重载了一些运算符，使得字符串操作更加方便：
+- `+` 运算符：用于连接两个 `FString` 对象，返回一个新的 `FString` 对象。
+- `==` 运算符：用于比较两个 `FString` 对象是否相等，返回一个布尔值。
+- `!=` 运算符：用于比较两个 `FString` 对象是否不相等，返回一个布尔值。
+- `*` 运算符：返回一个字符数组，也就是 C 风格的字符串。
+
+```C++
+FString Str1 = TEXT("Hello, ");
+FString Str2 = TEXT("World!");
+FString Str3 = Str1 + Str2; // Str3 现在是 "Hello, World!"
+FString Name = TEXT("UE5");
+FString::Printf(TEXT("ItemName: %s"), *Name);
+```
+
+## GEngine
+
+`GEngine` 是一个全局指针，管理引擎的核心功能。通过 `GEngine`，可以访问引擎的各种子系统，例如渲染、音频、输入等。
+
+为了防止崩溃，在使用 `GEngine` 之前，最好先检查它是否为 `nullptr`。
+
+```C++
+if (GEngine)
+{
+    GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Hello, UE5!"));
+}
+```
+如果指向空 (nullptr)： 则说明引擎还没有启动或已被销毁。
+
+## 几个 DEBUG 可视化
+
+在虚幻引擎中，使用 `DrawDebugHelpers.h` 提供的函数可以在场景中绘制可视化的调试图形，用于辅助判断逻辑（如射线检测、范围判定、向量方向等）。
+
+```C++
+DrawDebugXXXX(GetWorld(), .......);
+```
+
+- `DrawDebugLine`：绘制一条线段。可以表示物体的行进方向或射线。
+- `DrawDebugBox`：绘制一个立方体。可以表示物体的边界框或碰撞体积。
+- `DrawDebugCylinder`：绘制一个圆柱体。可以表示物体的范围或路径。
+- `DrawDebugSphere`：绘制一个球体。可以绘制隐藏的物体位置或范围。
+- `DrawDebugPoint`：绘制一个点。可以表示特定位置，或者射线的箭头，通常用于标记射线检测的击中点，它在屏幕上显示为一个正方形的小块。
+
+| 参数名 | 类型 | 说明 | 推荐值 |
+| :--- | :--- | :--- | :--- |
+| **bPersistentLines** | `bool` | 是否永久保留。如果为 true，画出来的东西永远不消失（除非手动 Flush）。 | `false` |
+| **LifeTime** | `float` | 存活时间（秒）。如果是 -1，则只显示一帧（用于 Tick 中实时刷新）。 | `2.0f` (调试时) / `-1.f` (Tick中) |
+| **Segments** | `int32` | (仅球体) 面数/段数。决定球体有多圆。 | `12` 或 `24` |
+| **Thickness** | `float` | (仅线/球) 线条的厚度。 | `1.0f` |
+| **DepthPriority** | `uint8` | 深度优先级。决定是否被物体遮挡。0 表示会被墙挡住，1 表示透视显示。 | `0` |
+
+## 几种向量
+在 UE5 中，常用的向量类型有以下几种：
+- `FVector`：三维向量，表示空间中的位置或方向，包含 X、Y、Z 三个分量。
+- `FVector2D`：二维向量，表示平面上的位置或方向，包含 X、Y 两个分量。
+- `FVector4`：四维向量，通常用于表示齐次坐标或颜色，包含 X、Y、Z、W 四个分量。
+- `FRotator`：表示旋转，包含俯仰角（Pitch）、偏航角（Yaw）、滚转角（Roll）三个分量。
+- `FQuat`：四元数，用于表示旋转，避免万向锁问题。
+  ::: danger 万向锁
+  万向锁（Gimbal Lock）是指在使用欧拉角表示旋转时，某些旋转组合会导致一个自由度的丧失，从而无法表示某些旋转状态。四元数通过使用四个分量来表示旋转，避免了这种问题。
+
+  欧拉角变换是**从初始坐标系开始，依次绕固定的轴旋转指定的角度**。
+
+  由于欧拉角是设定了三个轴的变换顺序，内部的轴无法带动外部的轴旋转，因此当 Y 轴旋转 90 度时，X 轴和 Z 轴会重合，此时增大 X 轴旋转也仅仅是在原来的 X 轴上旋转，从直观意义上来看是按照 Z 轴旋转的，这就导致了一个自由度的丧失。
+
+  参考视频：[无伤理解欧拉角中的“万向死锁”现象](https://www.bilibili.com/video/BV1Nr4y1j7kn/?share_source=copy_web&vd_source=25a9a10c6f978860f97af02e1668351a)
+  :::
