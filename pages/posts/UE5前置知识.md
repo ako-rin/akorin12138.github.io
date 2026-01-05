@@ -2,7 +2,7 @@
 layout: post
 title: UE5前置知识
 date: 2026-01-02 14:16:54
-updated: 2026-01-05 16:21:18
+updated: 2026-01-05 17:55:13
 tags:
   - UE5
   - 笔记
@@ -190,7 +190,7 @@ DrawDebugXXXX(GetWorld(), .......);
 
 | 说明符 | 模式/含义 | 适用场景 |
 | :--- | :--- | :--- |
-| **`BlueprintReadWrite`** | **读写权限**<br>蓝图中既有 `Get` 节点也有 `Set` 节点。 | 逻辑主要在 C++，但允许蓝图策划随意获取或修改它的值（如：角色是否死亡的布尔值）。 |
+| **`BlueprintReadWrite`** | **读写权限**<br>蓝图中既有 `Get` 节点也有 `Set` 节点。<br> 同时 | 逻辑主要在 C++，但允许蓝图策划随意获取或修改它的值（如：角色是否死亡的布尔值）。 且必须放在 `protected` 或 `public` 中，让蓝图可见|
 | **`BlueprintReadOnly`** | **只读权限**<br>蓝图中只有 `Get` 节点，没有 `Set` 节点。 | 核心数据（如：当前生命值），只允许 C++ 修改，蓝图只能拿去显示UI，防止蓝图乱改出Bug。 |
 | **`BlueprintAssignable`** | **可绑定事件**<br>专用于 **多播委托 (Multicast Delegates)**。 | 让蓝图可以绑定事件（Event Dispatcher）。比如 C++ 触发 `OnHealthChanged`，蓝图里能拖出这个事件做 UI 更新。 |
 
@@ -245,3 +245,56 @@ DrawDebugXXXX(GetWorld(), .......);
 | **`DisplayName="NewName"`** | **别名**。蓝图节点显示的名字可以和 C++ 函数名不一样（支持中文）。 |
 | **`ExpandEnumAsExecs="Param"`** | **枚举分流**。根据枚举参数自动展开多个输出引脚。<br>场景：`MoveResult` 自动变成 `Success` 和 `Fail` 两个执行流。 |
 | **`WorldContext="WorldContextObject"`** | **自动获取 World**。主要用于蓝图函数库（FunctionLibrary），让静态函数能自动获取 `GetWorld()` 上下文。 | 
+
+## 组件和默认子对象
+
+每个 `Actor` 都必带一个 `DefaultSceneRoot` 根组件。根组件能做的事比较有限，主要是变换位置、旋转和缩放。通过 `GetActorLocation()` 等函数实际获取的是根组件中存储的位置信息。
+
+根组件允许附加其他组件，从而扩展 `Actor` 的功能。场景组件附加到根组件后，与根组件一起移动并保持相对距离不变。
+
+在 UE5 中，常用继承自组件的类为 `UStaticMeshComponent`（静态网格组件），用于显示 3D 模型。同时，继承的子类组件可以覆盖根组件，成为新的根组件。**（父类指针可以指向子类）**
+![alt text](https://pic.yurin.cc/05d12feaa44e79f185ef1832897b61b4.webp)
+
+在 UE5 中，常常为了逻辑与表现分离（解耦合），**创建新的组件类时要先创建一个默认子对象**。
+
+:::tip 默认子对象(CDO ,Class Default Object)
+**默认子对象**是对象的原型，存在于虚幻引擎的反射系统里。它保存着默认值，反射系统可以用这些默认值，来初始化**世界里基于这个类创建的蓝图对象的属性**。
+![alt text](https://pic.yurin.cc/57971a300189dbd1f29c8f9e17839c40.webp)
+引擎初始化时，会为每个类创建这些类默认对象，然后它会执行每个类的构造函数，设置默认值用于蓝图实例化。
+:::
+
+因此在在创建组件时，通常也会先创建一个默认子对象，蓝图就能**从这个默认子对象继承属性值**，并在蓝图中可以看到这个组件了。
+
+在虚幻引擎中，一般不用 `new` 来创建组件，而是使用 `CreateDefaultSubobject<>()` 函数来创建组件的默认子对象。
+
+:::code-group
+```C++ [MyActor.h]
+// 头文件 MyActor.h
+#include "CoreMinimal.h"
+#include "GameFramework/Actor.h"
+#include "MyActor.generated.h"
+
+UCLASS()
+class AMyActor : public AActor
+{
+    GENERATED_BODY()
+public:
+    AMyActor();
+    UPROPERTY(VisibleAnywhere, Category="Components")
+    UStaticMeshComponent* MyMeshComponent;
+};
+```
+```C++ [MyActor.cpp]
+// 源文件 MyActor.cpp
+#include "MyActor.h"
+AMyActor::AMyActor()
+{
+    // 创建默认子对象
+    MyMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MyMeshComponent"));
+    // 将组件附加到根组件
+    RootComponent = MyMeshComponent;
+}
+```
+:::
+
+简而言之就是 `Actor` 在构造时**创建组件的默认子对象**，这样就触发了默认子对象的构造函数，进而初始化组件的属性值，最后 `Actor` 就能控制该组件了。
