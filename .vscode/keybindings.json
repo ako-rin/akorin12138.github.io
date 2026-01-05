@@ -41,5 +41,13 @@
     "args": {
       "snippet": "**${TM_SELECTED_TEXT}$0**"
     }
+  },
+  {
+    "key": "shift+enter",
+    "command": "type",
+    "when": "textInputFocus && editorLangId == markdown && !editorReadonly && !suggestWidgetVisible",
+    "args": {
+      "text": "<br> "
+    }
   }
 ]

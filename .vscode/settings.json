@@ -21,6 +21,9 @@
   "svg.preview.background": "editor",
   "sarif-viewer.connectToGithubCodeScanning": "off",
 
+  // 关闭 LaTeX Utilities 的实时片段替换：避免在 Markdown 数学模式里把 <> 自动替换成 \diamond
+  "latex-utilities.liveReformat.enabled": false,
+
   "[markdown]": {
     // 自动换行，写笔记不用自己回车
     "editor.wordWrap": "on",

@@ -34,7 +34,7 @@
 // }
 
 .prose table{
-    font-size: 1.05em;
+    font-size: 1em;
     margin-top: 1em;
     margin-bottom: 1em;
 }
@@ -111,6 +111,13 @@ html.dark .markdown-body blockquote {
 .markdown-body pre {
     overflow-x: auto;
     /* 横向滚动条 */
+    
+    /* 隐藏滚动条但保留滚动功能 */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+    &::-webkit-scrollbar {
+        display: none; /* Chrome Safari */
+    }
 }
 
 /* --- Inline Code Beautification --- */
@@ -135,6 +142,12 @@ html.dark .markdown-body blockquote {
     border-color: rgba(234, 88, 12, 0.1) !important;
     cursor: pointer;
     text-decoration: inherit;
+}
+
+/* 3. 表格内的 code：不强制换行，保持原样 */
+.markdown-body table code {
+    white-space: pre;
+    word-break: normal;
 }
 
 /* 暗黑模式适配 */
@@ -227,8 +240,17 @@ html.dark .markdown-body a:hover {
 .prose table {
     margin-left: auto;
     margin-right: auto;
-    display: table;
+    display: block;
+    overflow-x: auto;
     text-align: center;
+    max-width: 100%;
+    
+    /* 隐藏滚动条但保留滚动功能 */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+    &::-webkit-scrollbar {
+        display: none; /* Chrome Safari */
+    }
 }
 
 .markdown-body .prose code,
