@@ -2,7 +2,7 @@
 layout: post
 title: UE5前置知识
 date: 2026-01-02 14:16:54
-updated: 2026-01-05 22:32:11
+updated: 2026-01-05 23:21:29
 tags:
   - UE5
   - 笔记
@@ -314,6 +314,9 @@ AMyActor::AMyActor()
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "MyActor.generated.h"
+
+class UStaticMeshComponent; // [!code warning] 前向声明 UStaticMeshComponent 类
+
 UCLASS()
 class AMyActor : public AActor
 {
@@ -321,9 +324,7 @@ class AMyActor : public AActor
 public:
     AMyActor();
     UPROPERTY(VisibleAnywhere, Category="Components")
-
-    // 前向声明 UStaticMeshComponent 类
-    class UStaticMeshComponent* MyMeshComponent; // [!code warning
+    UStaticMeshComponent* MyMeshComponent; 
 };
 ```
 ```C++ [MyActor.cpp]
