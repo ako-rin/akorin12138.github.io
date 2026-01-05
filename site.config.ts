@@ -8,15 +8,15 @@ export default defineSiteConfig({
 
   mediumZoom: { enable: true },
 
-  favicon: "https://pic.yurin.cc/20250822000714280.webp",
+  favicon: "https://pic.yurin.cc/ea25b70c1c0052ec8753d73e5fdda243.webp",
   author: {
     name: "yurin",
-    avatar: "https://pic.yurin.cc/20250822182421523.webp",
+    avatar: "https://pic.yurin.cc/80fef497e168ad8b23051a1c550d119e.webp",
     status: {
-      emoji: "🌸",
+      emoji: "🍡",
     },
   },
-  description: "随心记录 ",
+  description: "写写笔记",
   social: [
     {
       name: "RSS",

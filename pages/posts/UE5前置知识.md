@@ -2,7 +2,7 @@
 layout: post
 title: UE5前置知识
 date: 2026-01-02 14:16:54
-updated: 2026-01-05 17:55:13
+updated: 2026-01-05 22:32:11
 tags:
   - UE5
   - 笔记
@@ -298,3 +298,42 @@ AMyActor::AMyActor()
 :::
 
 简而言之就是 `Actor` 在构造时**创建组件的默认子对象**，这样就触发了默认子对象的构造函数，进而初始化组件的属性值，最后 `Actor` 就能控制该组件了。
+
+## 头文件前向声明
+
+前向声明（Forward Declaration）是指在使用某个类之前，先声明该类的存在，而不需要包含其完整的头文件。这样可以减少编译时间和依赖关系。
+
+- 解决循环依赖：当两个类互相引用时，前向声明仅需声明类名而不 `#include` 头文件，避免循环包含。
+- 减少编译时间：减少不必要的头文件包含，降低编译时间。
+
+在 UE5 编程中，常常尽量**把头文件包含 `#include` 放在源文件 `.cpp` 中**，而不是直接放到头文件 `.h ` 中。这样可以减少头文件之间的依赖关系，提高编译效率。
+
+:::code-group
+```C++ [MyActor.h]
+// 头文件 MyActor.h
+#include "CoreMinimal.h"
+#include "GameFramework/Actor.h"
+#include "MyActor.generated.h"
+UCLASS()
+class AMyActor : public AActor
+{
+    GENERATED_BODY()
+public:
+    AMyActor();
+    UPROPERTY(VisibleAnywhere, Category="Components")
+
+    // 前向声明 UStaticMeshComponent 类
+    class UStaticMeshComponent* MyMeshComponent; // [!code warning
+};
+```
+```C++ [MyActor.cpp]
+// 源文件 MyActor.cpp
+#include "MyActor.h"
+#include "Components/StaticMeshComponent.h" // 在源文件中包含头文件
+AMyActor::AMyActor()
+{
+    MyMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MyMeshComponent"));
+    RootComponent = MyMeshComponent;
+}
+```
+:::
