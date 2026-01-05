@@ -55,7 +55,8 @@ export default defineValaxyConfig<ThemeUserConfig>({
         'https://pic.yurin.cc/20250821234944713.webp',
         'https://pic.yurin.cc/20250821235633395.webp',
         'https://pic.yurin.cc/20250822000002560.webp',
-        'https://pic.yurin.cc/20250822000430257.webp'
+        'https://pic.yurin.cc/20250822000430257.webp',
+        'https://pic.yurin.cc/c7ee3c39e6f8a169aae6abc8f4436bdd.webp'
 
       ],
       randomUrls: true,
