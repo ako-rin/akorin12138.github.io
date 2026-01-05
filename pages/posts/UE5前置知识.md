@@ -2,7 +2,7 @@
 layout: post
 title: UE5前置知识
 date: 2026-01-02T14:16:54.000Z
-updated: '2026-01-05 16:11:02'
+updated: '2026-01-05 16:13:12'
 tags:
   - UE5
   - 笔记
@@ -244,5 +244,4 @@ DrawDebugXXXX(GetWorld(), .......);
 | **`Category="Name"`** | **分类**。让函数在蓝图右键菜单中更好找。 |
 | **`DisplayName="NewName"`** | **别名**。蓝图节点显示的名字可以和 C++ 函数名不一样（支持中文）。 |
 | **`ExpandEnumAsExecs="Param"`** | **枚举分流**。根据枚举参数自动展开多个输出引脚。<br>场景：`MoveResult` 自动变成 `Success` 和 `Fail` 两个执行流。 |
-| **`WorldContext="WorldContextObject"`** | **自动获取 World**。主要用于蓝图函数库（FunctionLibrary），让静态函数能自动获取 `GetWorld()` 上下文。 |  
-
+| **`WorldContext="WorldContextObject"`** | **自动获取 World**。主要用于蓝图函数库（FunctionLibrary），让静态函数能自动获取 `GetWorld()` 上下文。 |
