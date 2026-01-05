@@ -1,14 +1,13 @@
 ---
 title: 零碎的知识点
-date: 2025-03-13 00:00:00
-updated: 2025-03-21 00:58:53
+date: 2025-03-13T00:00:00.000Z
+updated: '2026-01-05 16:07:13'
 categories: 笔记
 tags:
   - 复试
   - 问答
 cover: 'https://pic.yurin.cc/cover2.png'
 end: false
-password: rinko1017
 ---
 
 零散的知识点，看两眼回忆死去的记忆

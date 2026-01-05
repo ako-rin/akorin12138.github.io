@@ -1,7 +1,7 @@
 ---
 title: C++学习记录
-date: 2025-07-10 00:00:00
-updated: 2025-08-25 19:41:37
+date: 2025-07-10T00:00:00.000Z
+updated: '2026-01-05 16:07:13'
 categories: 笔记
 tags:
   - 学习
@@ -1164,6 +1164,39 @@ if (mp.count(2)) cout << "存在 key=2" << endl;
 - `erase`：删除指定的key，或者迭代器。
 - `clear`：清空。
 
+### `inline` 内联
+
+`inline` 关键字用来建议编译器将所有调用该函数的地方，直接替换为函数体的代码，从而减少栈空间的开销。
+
+```C++
+inline int add(int a, int b) {
+    return a + b;
+}
+int main() {
+    int result = add(3, 5); // 编译器会将此处替换为 return 3 + 5;
+    return 0;
+}
+```
+
+### 模板 `template`
+
+`template` 是C++中的一种泛型编程机制，允许编写与类型无关的代码，从而实现代码的重用。模板可以分为**函数模板**和**类模板**。
+
+```C++
+template<typename T>
+T add(T a, T b) {
+    return a + b;
+}
+
+template <class T>
+class Box {
+private:
+    T value;
+public:
+    Box(T val) : value(val) {}
+    T getValue() const { return value; }
+};
+```
 
 ## 补充
 

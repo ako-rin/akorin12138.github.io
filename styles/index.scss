@@ -253,6 +253,11 @@ html.dark .markdown-body a:hover {
     }
 }
 
+.prose table th,
+.prose table td {
+    min-width: 80px; /* 设置最小宽度，防止内容被过度挤压 */
+}
+
 .markdown-body .prose code,
 .prose code,
 pre,

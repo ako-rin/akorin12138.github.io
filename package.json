@@ -9,7 +9,8 @@
     "build:ssg": "valaxy build --ssg",
     "dev": "valaxy",
     "rss": "valaxy rss",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "update:ts": "node scripts/update-timestamp.mjs"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
@@ -28,6 +29,10 @@
     "@iconify-json/hugeicons": "^1.2.3",
     "@iconify-json/line-md": "^1.2.8",
     "typescript": "^5.8.3",
+    "simple-git-hooks": "^2.13.1",
     "vite": "^7.0.5"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm run update:ts"
   }
 }
