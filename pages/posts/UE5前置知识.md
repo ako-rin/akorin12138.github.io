@@ -2,7 +2,7 @@
 layout: post
 title: UE5前置知识
 date: 2026-01-02 14:16:54
-updated: 2026-01-06 17:21:56
+updated: 2026-01-07 00:24:31
 tags:
   - UE5
   - 笔记
@@ -339,5 +339,13 @@ AMyActor::AMyActor()
 ```
 :::
 
-## C++ 
+## UE5 基类和派生类
+
+基类主要是保存基本的属性和功能，而派生类是在基类上进行扩展和定制。
+
+例如 `RootComponent` 是 `AActor` 的基类属性，而 `UStaticMeshComponent` 是 `USceneComponent` 的派生类。
+
+`RootComponent` 仅保存位置、旋转和缩放等基本变换信息，而 `UStaticMeshComponent` 则扩展了显示 3D 模型的功能。`USkeletalMeshComponent` 也是 `USceneComponent` 的派生类，但它扩展了显示骨骼动画模型的功能。
+
+因此在进行设计时，通过所需的功能先选择合适的基类，再在上面连接派生类组件来实现具体的功能。
 

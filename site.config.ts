@@ -28,7 +28,7 @@ export default defineSiteConfig({
       name: "GitHub",
       link: "https://github.com/ako-rin",
       icon: "i-ri-github-line",
-      color: "#b2b2ffff",
+      color: "#52f3ffe5",
     },
     {
       name: "E-Mail",
