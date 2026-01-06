@@ -279,7 +279,7 @@ export default defineValaxyConfig<ThemeUserConfig>({
       addonBangumi({
         api: 'https://yi_xiao_jiu-bangumi.web.val.run',
         bilibiliUid: '335244948',
-        bgmUid: '1196734',
+        bgmUid: 'yurin',
         bgmEnabled: true,
         bilibiliEnabled: false
       }),
