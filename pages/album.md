@@ -1,4 +1,5 @@
 ---
+updated: 2026-01-08 00:46:30
 layout: album
 title: 影像集
 hideBody: true
@@ -28,7 +29,6 @@ albums:
       - src: 'https://pic.yurin.cc/20250828164105327.webp'
       - src: 'https://pic.yurin.cc/20250828164105327.webp'
       - src: 'https://pic.yurin.cc/20250828164105327.webp'
-updated: 2026-01-08 00:44:53
 ---
 
 
