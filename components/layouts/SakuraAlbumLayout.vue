@@ -688,50 +688,58 @@ function upgradeToFull(img: HTMLImageElement) {
   transform: scale(1);
 }
 
-/* 遮罩 - Avant-garde Minimal Tag Design */
+/* 遮罩 - Modern Art Label Design */
 .album-info {
   position: absolute;
-  bottom: 8px; /* 稍微悬浮，不贴底 */
-  left: 8px;
-  width: auto;
-  max-width: calc(100% - 16px);
-  padding: 4px 10px;
-  border-radius: 4px; /* 小圆角 */
+  bottom: 0;
+  left: 0; 
+  width: 100%;
   
-  /* Glassy Tech Look - More Transparent */
-  background: rgba(255, 255, 255, 0.45);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  color: #000;
+  /* Reset box model from previous Glassmorphism */
+  background: transparent;
+  backdrop-filter: none;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
   
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 0.75rem;
-  letter-spacing: 0.5px;
-  font-weight: 800;
-  text-transform: uppercase;
-  
-  opacity: 0;
-  transform: translateY(10px) scale(0.95);
-  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); /* 有一点弹跳感 */
-  
+  padding: 10px;
   pointer-events: none;
   z-index: 2;
-  display: inline-flex;
-  align-items: center;
+  
+  display: flex;
+  align-items: flex-end;
+  
+  /* Gradient overlay for readability */
+  background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-/* Dark mode adaptation */
-:global(.dark) .album-info {
-   background: rgba(0, 0, 0, 0.5);
-   color: #fff;
-   border: 1px solid rgba(255,255,255,0.15);
-   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+.album-text {
+  /* Minimalist Text Style */
+  color: #fff;
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  
+  /* Decorative Line */
+  border-left: 3px solid #fff;
+  padding-left: 8px;
+  margin-left: 5px;
+  margin-bottom: 5px;
+  
+  /* Animation from bottom */
+  transform: translateY(10px);
+  transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .album-item:hover .album-info {
   opacity: 1;
-  transform: translateY(0) scale(1);
+}
+.album-item:hover .album-text {
+  transform: translateY(0);
 }
 
 @keyframes entrance {
