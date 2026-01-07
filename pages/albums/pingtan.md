@@ -3,7 +3,8 @@ layout: album
 title: ISLAND DREAM
 desc: "福建·平潭 / 2025.08"
 date: 2025-08-28
-updated: 2026-01-08 01:02:31
+columns: 4
+updated: 2026-01-08 01:15:20
 cover: https://pic.yurin.cc/20250828164105327.webp
 photos:
   - src: 'https://pic.yurin.cc/20250828164105327.webp'

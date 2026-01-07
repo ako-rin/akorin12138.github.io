@@ -497,7 +497,9 @@ function upgradeToFull(img: HTMLImageElement) {
 }
 
 .album-folder:hover .folder-cover-wrapper {
-  box-shadow: 15px 15px 0 var(--sakura-c-brand); /* 悬停变色 */
+  /* box-shadow: 15px 15px 0 var(--sakura-c-brand); */
+  /* 改为灰色阴影，避免夜间模式过亮或颜色冲突 */
+  box-shadow: 15px 15px 0 rgba(128, 128, 128, 0.4); 
 }
 
 .folder-cover-inner {
@@ -643,9 +645,14 @@ function upgradeToFull(img: HTMLImageElement) {
   z-index: 1;
   transition: z-index 0s 0.3s;
   
+  /* 去除超链接默认的下划线/边框 */
+  border-bottom: none !important;
+  text-decoration: none !important;
+  
   &:hover {
     z-index: 10;
     transition: z-index 0s 0s;
+    border-bottom: none !important; /* 确保悬停时也不出现 */
   }
 }
 
@@ -672,7 +679,8 @@ function upgradeToFull(img: HTMLImageElement) {
 
 .album-item:hover .album-img-wrapper {
   border-radius: 4px; /* 悬停变方，复古科技感 */
-  box-shadow: 5px 5px 0px var(--sakura-text-2); /* 实体阴影 */
+  /* box-shadow: 5px 5px 0px var(--sakura-text-2); */
+  box-shadow: 5px 5px 0px rgba(128, 128, 128, 0.4); /* 改为统一的灰色阴影 */
   transform: translateY(-4px) translateX(-2px);
 }
 .album-item:hover .album-img {
