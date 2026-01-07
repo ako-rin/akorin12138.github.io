@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch, watchEffect, nextTick } from 'vue'
 import { useFrontmatter } from 'valaxy'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import lightGallery from 'lightgallery'
 // 独立使用时需手动引入样式（之前插件已自动注入）
 import 'lightgallery/css/lightgallery.css'
@@ -17,6 +17,7 @@ import lgThumbnail from 'lightgallery/plugins/thumbnail'
 // title/description 仍由页面控制
 const frontmatter = useFrontmatter<any>()
 const route = useRoute()
+const router = useRouter()
 
 interface PhotoItem { src: string; alt?: string; thumb?: string }
 interface AlbumSection {
@@ -24,6 +25,8 @@ interface AlbumSection {
   desc?: string
   columns?: number
   photos: PhotoItem[]
+  path?: string      // Link to album page
+  cover?: string     // Cover image for folder
 }
 
 const sections = ref<AlbumSection[]>([])
@@ -47,41 +50,90 @@ const activeSection = computed(() => {
   return sections.value[activeSectionIndex.value]
 })
 
+// Check if we are in a leaf page (single album mode)
+const isSingleAlbumPage = computed(() => {
+  // If we have 1 section and it has no path (meaning it's loaded from current page's photos)
+  // And it's NOT an explicit 'albums' list mode with just 1 item (logic #1)
+  // Actually simpler: if frontmatter has `photos` but not `albums`, it's a leaf.
+  const fmAny: any = frontmatter.value
+  return !!(fmAny?.photos && Array.isArray(fmAny.photos) && !fmAny.albums)
+})
+
 function openAlbum(index: number) {
+  const section = sections.value[index]
+  // Navigate if it's a link
+  if (section.path) {
+    router.push(section.path)
+    return
+  }
   activeSectionIndex.value = index
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
 function closeAlbum() {
-  activeSectionIndex.value = null
-  if (galleryInstance) {
-    galleryInstance.destroy(true)
-    galleryInstance = null
-    galleryInited = false
+  // If we are on a single album page, "Back" means go to parent gallery
+  if (isSingleAlbumPage.value) {
+    router.push('/album')
+  } else {
+    activeSectionIndex.value = null
+    if (galleryInstance) {
+      galleryInstance.destroy(true)
+      galleryInstance = null
+      galleryInited = false
+    }
+  }
+}
+
+const parseData = () => {
+  const fmAny: any = frontmatter.value || (route.meta as any)?.frontmatter
+  
+  // 情况1: albums 数组 (明确手动指定的列表)
+  if (fmAny?.albums && Array.isArray(fmAny.albums)) {
+    sections.value = fmAny.albums
+    activeSectionIndex.value = null
+  }
+  // 情况2: photos 数组 (单相册详情页)
+  else if (fmAny?.photos && Array.isArray(fmAny.photos)) {
+    sections.value = [{ 
+      photos: fmAny.photos,
+      title: fmAny.title,
+      desc: fmAny.desc,
+    }]
+    // 强制直接打开，跳过列表页
+    activeSectionIndex.value = 0
+  }
+  // 情况3: 自动扫描 /pages/albums/ 下的页面
+  else {
+    const allRoutes = router.getRoutes()
+    const albumRoutes = allRoutes.filter(r => 
+      r.path.startsWith('/albums/') && 
+      r.path !== '/albums/' && // 排除自身或其他索引
+      r.meta.frontmatter && 
+      (r.meta.frontmatter as any).layout === 'album'
+    )
+
+    if (albumRoutes.length > 0) {
+      sections.value = albumRoutes.map(r => {
+        const fm = r.meta.frontmatter as any
+        return {
+          title: fm.title,
+          desc: fm.desc || fm.subtitle,
+          cover: fm.cover || (fm.photos?.[0]?.src),
+          photos: fm.photos || [],
+          path: r.path
+        }
+      })
+      activeSectionIndex.value = null
+    }
   }
 }
 
 onMounted(() => {
   if (typeof window === 'undefined') return
   
-  // 兼容逻辑：优先读取 albums，其次读取 photos
-  const parseData = () => {
-    const fmAny: any = frontmatter.value || (route.meta as any)?.frontmatter
-    // 情况1: albums 数组
-    if (fmAny?.albums && Array.isArray(fmAny.albums)) {
-      sections.value = fmAny.albums
-    }
-    // 情况2: photos 数组 (兼容旧版)
-    else if (fmAny?.photos && Array.isArray(fmAny.photos)) {
-      sections.value = [{ photos: fmAny.photos }]
-    }
-  }
-
   parseData()
-  // 首次不自动初始化 gallery，需要等打开相册
-  // initGalleryIfReady()
   
-  // 轮询兜底
+  // 轮询兜底 (Valaxy 有时 frontmatter 延迟加载)
   if (!sections.value.length) {
     let tries = 0
     const timer = setInterval(() => {
@@ -95,14 +147,9 @@ onMounted(() => {
   }
 })
 
-// 监听数据变化
-watch(() => [frontmatter.value, route.meta], () => {
-  const fmAny: any = frontmatter.value || (route.meta as any)?.frontmatter
-  if (fmAny?.albums && Array.isArray(fmAny.albums)) {
-    sections.value = fmAny.albums
-  } else if (fmAny?.photos && Array.isArray(fmAny.photos)) {
-    sections.value = [{ photos: fmAny.photos }]
-  }
+// 监听路由/数据变化，确保在导航时重新解析状态
+watch(() => [frontmatter.value, route.path], () => {
+    parseData()
 }, { deep: true })
 
 // 监听 activeSection 变化来初始化 gallery
@@ -280,8 +327,8 @@ function upgradeToFull(img: HTMLImageElement) {
         <template #main-content-after>
           <div class="sakura-album-layout">
             
-            <!-- 新设计的潮流标题 -->
-            <div class="page-header-neo" v-if="!activeSection"> <!-- 仅在列表模式或顶层显示，进入详情后可选择隐藏或保留，这里保留但在详情页可能会显得重复，不过用户没说详情页主要标题的问题，先保留 -->
+            <!-- 新设计的潮流标题: 仅在索引页显示 -->
+            <div class="page-header-neo" v-if="!activeSection && !isSingleAlbumPage">
                <div class="header-inner">
                  <div class="neo-subtitle">VISUAL COLLECTION</div>
                  <h1 class="neo-title" data-text="影像集">影像集</h1>
@@ -306,8 +353,8 @@ function upgradeToFull(img: HTMLImageElement) {
                     <div class="folder-cover-wrapper">
                       <div class="folder-cover-inner">
                         <img 
-                          v-if="section.photos && section.photos[0]" 
-                          :src="section.photos[0].thumb || section.photos[0].src" 
+                          v-if="section.cover || (section.photos && section.photos[0])"
+                          :src="section.cover || section.photos[0].src" 
                           class="folder-cover-img"
                           loading="lazy"
                         />

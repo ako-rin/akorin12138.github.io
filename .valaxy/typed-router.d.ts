@@ -24,7 +24,8 @@ declare module 'vue-router/auto-routes' {
     '/about/': RouteRecordInfo<'/about/', '/about', Record<never, never>, Record<never, never>>,
     '/about/site': RouteRecordInfo<'/about/site', '/about/site', Record<never, never>, Record<never, never>>,
     '/album': RouteRecordInfo<'/album', '/album', Record<never, never>, Record<never, never>>,
-    '/albums/': RouteRecordInfo<'/albums/', '/albums', Record<never, never>, Record<never, never>>,
+    '/albums/guiyang': RouteRecordInfo<'/albums/guiyang', '/albums/guiyang', Record<never, never>, Record<never, never>>,
+    '/albums/pingtan': RouteRecordInfo<'/albums/pingtan', '/albums/pingtan', Record<never, never>, Record<never, never>>,
     '/anime/': RouteRecordInfo<'/anime/', '/anime', Record<never, never>, Record<never, never>>,
     '/archives/': RouteRecordInfo<'/archives/', '/archives', Record<never, never>, Record<never, never>>,
     '/categories/': RouteRecordInfo<'/categories/', '/categories', Record<never, never>, Record<never, never>>,
@@ -97,8 +98,12 @@ declare module 'vue-router/auto-routes' {
       routes: '/album'
       views: never
     }
-    'pages/albums/index.md': {
-      routes: '/albums/'
+    'pages/albums/guiyang.md': {
+      routes: '/albums/guiyang'
+      views: never
+    }
+    'pages/albums/pingtan.md': {
+      routes: '/albums/pingtan'
       views: never
     }
     'pages/anime/index.md': {
