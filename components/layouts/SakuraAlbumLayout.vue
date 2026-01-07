@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watch, watchEffect, nextTick } from 'vue'
+import { computed, onMounted, ref, watch, nextTick } from 'vue'
 import { useFrontmatter } from 'valaxy'
 import { useRoute, useRouter } from 'vue-router'
 import lightGallery from 'lightgallery'
