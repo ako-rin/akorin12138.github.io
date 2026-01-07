@@ -188,15 +188,27 @@ function upgradeToFull(img: HTMLImageElement) {
           <div class="sakura-album-layout" :style="{ '--album-columns': columns, '--album-gap': gap }">
             <div v-if="photos.length" class="album-body">
               <div ref="galleryRef" class="album-masonry" data-lg="true">
-                <a v-for="p in photos" class="album-item" :key="p.src" :href="p.src" :data-sub-html="p.alt || ''">
-                  <img
-                    :src="p.thumb || p.src"
-                    :data-full="p.src"
-                    :alt="p.alt || p.src"
-                    loading="lazy"
-                    class="album-img"
-                    :class="{ 'has-thumb': !!p.thumb }"
-                  >
+                <a
+                  v-for="(p, i) in photos"
+                  :key="p.src"
+                  class="album-item group"
+                  :href="p.src"
+                  :data-sub-html="p.alt || ''"
+                  :style="{ '--delay': `${i * 0.05}s` }"
+                >
+                  <div class="album-img-wrapper">
+                    <img
+                      :src="p.thumb || p.src"
+                      :data-full="p.src"
+                      :alt="p.alt || p.src"
+                      loading="lazy"
+                      class="album-img"
+                      :class="{ 'has-thumb': !!p.thumb }"
+                    >
+                    <div v-if="p.alt" class="album-info">
+                      <span class="album-text">{{ p.alt }}</span>
+                    </div>
+                  </div>
                 </a>
               </div>
             </div>
@@ -210,30 +222,117 @@ function upgradeToFull(img: HTMLImageElement) {
 
 <style scoped lang="scss">
 .sakura-album-layout {
-  padding: 1.2rem 1rem 2.5rem;
-  max-width: 1080px;
+  padding: 1.5rem 1rem 3rem;
+  max-width: 1200px;
   margin: 0 auto;
 }
 .album-body { margin-top: 1rem; }
 /* Masonry 布局 */
 .album-masonry {
   column-count: var(--album-columns, 4);
-  column-gap: var(--album-gap, 12px);
+  column-gap: var(--album-gap, 16px);
 }
-.album-item { break-inside: avoid; margin-bottom: var(--album-gap, 12px); width: 100%; display: block; position: relative; }
-.album-item img { width: 100%; border-radius: 14px; object-fit: cover; display: block; transition: filter .3s, transform .3s; }
-.album-item:hover img { filter: brightness(.92); }
+.album-item {
+  break-inside: avoid;
+  margin-bottom: var(--album-gap, 16px);
+  width: 100%;
+  display: block;
+  position: relative;
+  border-radius: 12px;
+  /* 初始状态：透明且下沉 */
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation-delay: var(--delay, 0s);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 
-/* 渐进式模糊占位：thumb 时初始模糊、轻微放大；加载完成移除 */
-.album-item img.has-thumb { filter: blur(12px); transform: scale(1.04); opacity: .85; }
-.album-item img.has-thumb.is-loaded { filter: blur(0); transform: scale(1); opacity: 1; transition: filter .6s ease, transform .6s ease, opacity .6s ease; }
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px -3px rgba(0, 0, 0, 0.15), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+  }
+}
+
+.album-img-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  /* 消除图片底部空隙 */
+  line-height: 0;
+}
+
+.album-img {
+  width: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+  will-change: transform;
+}
+
+.album-item:hover .album-img {
+  transform: scale(1.05);
+}
+
+/* 说明文字遮罩 */
+.album-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 50px 12px 12px;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: flex-end;
+  pointer-events: none;
+  /* 确保遮罩有圆角 */
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.album-text {
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+  line-height: 1.4;
+}
+
+.album-item:hover .album-info {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 渐进式模糊占位 */
+.album-img.has-thumb { filter: blur(12px); transform: scale(1.1); opacity: .85; }
+.album-img.has-thumb.is-loaded { filter: blur(0); transform: scale(1); opacity: 1; transition: filter .6s ease, transform .6s ease, opacity .6s ease; }
+/* loaded后 hover 效果 */
+.album-item:hover .album-img.has-thumb.is-loaded { transform: scale(1.05); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
 @media (max-width: 1100px) { .album-masonry { column-count: calc(var(--album-columns, 4) - 1); } }
 @media (max-width: 800px) { .album-masonry { column-count: 2; } }
 @media (max-width: 520px) { .album-masonry { column-count: 1; } }
-/* 简单响应式：缩小时让图片占满宽 */
+/* 移动端优化 */
 @media (max-width: 640px) {
   .sakura-album-layout { padding: .8rem .75rem 2rem; }
+  /* 移动端始终显示部分遮罩，或者不显示 */
+  .album-info {
+    opacity: 1;
+    transform: translateY(0);
+    padding: 30px 10px 10px;
+    background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+  }
+  .album-text { font-size: 0.85rem; }
 }
+
 .album-hide-body .sakura-page-content > :first-child .prose { display: none; }
 </style>
