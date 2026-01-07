@@ -25,8 +25,10 @@ albums:
       - src: 'https://pic.yurin.cc/20250828163725594.webp'
         alt: 测试图1
       - src: 'https://pic.yurin.cc/20250828164105327.webp'
-        alt: 测试图2
-updated: 2026-01-07 23:40:53
+      - src: 'https://pic.yurin.cc/20250828164105327.webp'
+      - src: 'https://pic.yurin.cc/20250828164105327.webp'
+      - src: 'https://pic.yurin.cc/20250828164105327.webp'
+updated: 2026-01-08 00:44:53
 ---
 
 

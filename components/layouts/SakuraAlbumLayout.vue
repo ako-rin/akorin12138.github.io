@@ -125,12 +125,14 @@ watch(activeSection, async (val) => {
 // 兜底：如果用户在初始化前就点击图片，阻止默认跳转并立即初始化+打开对应索引
 watch(galleryRef, (el) => {
   if (!el) return
-  el.addEventListener('click', (e) => {
+  el.addEventListener('click', async (e) => {
     const target = (e.target as HTMLElement)?.closest('a.album-item') as HTMLAnchorElement | null
     if (!target) return
     if (!galleryInited) {
       e.preventDefault()
-      initGalleryIfReady()
+      e.stopImmediatePropagation()
+      await initGalleryIfReady()
+
       // 计算索引并打开
       if (galleryInstance) {
         const anchors = Array.from(el.querySelectorAll('a.album-item'))
@@ -141,56 +143,81 @@ watch(galleryRef, (el) => {
         })
       }
     }
-  }, { passive: false })
+  }, { passive: false, capture: true })
 }, { immediate: true })
 
 
 
-function initGalleryIfReady() {
-  if (galleryInited || isInitializing) return
-  if (!activeSection.value) return // 仅在有激活相册时初始化
-  if (!galleryRef.value) return
-  
-  isInitializing = true
-  try {
-    // 销毁旧实例
-    if (galleryInstance) {
-      galleryInstance.destroy(true)
-      galleryInstance = null
+function initGalleryIfReady(): Promise<void> {
+  return new Promise((resolve) => {
+    if (galleryInited) {
+      resolve()
+      return
     }
-  
-    // 延迟一帧，确保 v-for 渲染完毕
-    requestAnimationFrame(() => {
-      if (!galleryRef.value) {
-        isInitializing = false
-        return
+    // 如果正在初始化，轮询等待
+    if (isInitializing) {
+      const waitTimer = setInterval(() => {
+        if (!isInitializing) {
+          clearInterval(waitTimer)
+          resolve()
+        }
+      }, 50)
+      return
+    }
+
+    if (!activeSection.value) { // 仅在有激活相册时初始化
+      resolve()
+      return 
+    }
+    if (!galleryRef.value) {
+      resolve()
+      return
+    }
+    
+    isInitializing = true
+    try {
+      // 销毁旧实例
+      if (galleryInstance) {
+        galleryInstance.destroy(true)
+        galleryInstance = null
       }
-      galleryInstance = lightGallery(galleryRef.value as HTMLElement, {
-        selector: '.album-item', // 明确选择器
-        plugins: [lgZoom, lgThumbnail],
-        speed: 400,
-        licenseKey: '0000-0000-000-0000',
-        mode: 'lg-fade',
-        download: true,
-        zoom: true,
-        thumbnail: true,
-        allowMediaOverlap: false,
-        mobileSettings: {
-          controls: true,
-          showCloseIcon: true,
+    
+      // 延迟一帧，确保 v-for 渲染完毕
+      requestAnimationFrame(() => {
+        if (!galleryRef.value) {
+          isInitializing = false
+          resolve()
+          return
+        }
+        galleryInstance = lightGallery(galleryRef.value as HTMLElement, {
+          selector: '.album-item', // 明确选择器
+          plugins: [lgZoom, lgThumbnail],
+          speed: 400,
+          licenseKey: '0000-0000-000-0000',
+          mode: 'lg-fade',
           download: true,
-          rotate: false,
-        },
+          zoom: true,
+          thumbnail: true,
+          allowMediaOverlap: false,
+          mobileSettings: {
+            controls: true,
+            showCloseIcon: true,
+            download: true,
+            rotate: false,
+          },
+        })
+        galleryInited = true
+        isInitializing = false
+        console.log('[album] lightGallery initialized')
+        resolve()
       })
-      galleryInited = true
+    }
+    catch (e) {
+      console.warn('[album] init lightGallery failed', e)
       isInitializing = false
-      console.log('[album] lightGallery initialized')
-    })
-  }
-  catch (e) {
-    console.warn('[album] init lightGallery failed', e)
-    isInitializing = false
-  }
+      resolve()
+    }
+  })
 }
 
 function setupLazyLoad() {
@@ -242,7 +269,12 @@ function upgradeToFull(img: HTMLImageElement) {
 </script>
 
 <template>
-  <SakuraPage :class="{ 'album-hide-body': hideBody }">
+  <SakuraPage class="sakura-album-page" :class="{ 'album-hide-body': hideBody }">
+    <!-- 隐藏原主题的详情页标题 -->
+    <template #header>
+      <div class="hidden-header" style="display:none;"></div>
+    </template>
+
     <RouterView v-slot="{ Component }">
       <component :is="Component">
         <template #main-content-after>
@@ -601,28 +633,50 @@ function upgradeToFull(img: HTMLImageElement) {
   transform: scale(1);
 }
 
-/* 遮罩 */
+/* 遮罩 - Avant-garde Minimal Tag Design */
 .album-info {
   position: absolute;
-  top: 10px;
-  left: 10px;
-  padding: 4px 8px;
-  background: var(--sakura-c-bg);
-  border: 1px solid var(--sakura-text-1);
-  color: var(--sakura-text-1);
+  bottom: 8px; /* 稍微悬浮，不贴底 */
+  left: 8px;
+  width: auto;
+  max-width: calc(100% - 16px);
+  padding: 4px 10px;
+  border-radius: 4px; /* 小圆角 */
+  
+  /* Glassy Tech Look - More Transparent */
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  color: #000;
+  
+  font-family: 'Courier New', Courier, monospace;
   font-size: 0.75rem;
-  font-weight: bold;
+  letter-spacing: 0.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  
   opacity: 0;
-  transform: translateY(-10px);
-  transition: all 0.3s ease;
+  transform: translateY(10px) scale(0.95);
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); /* 有一点弹跳感 */
+  
   pointer-events: none;
   z-index: 2;
-  box-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Dark mode adaptation */
+:global(.dark) .album-info {
+   background: rgba(0, 0, 0, 0.5);
+   color: #fff;
+   border: 1px solid rgba(255,255,255,0.15);
+   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
 .album-item:hover .album-info {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 @keyframes entrance {
@@ -660,7 +714,7 @@ function upgradeToFull(img: HTMLImageElement) {
 /* 新标题区域 */
 .page-header-neo {
   text-align: center;
-  margin: 1rem 0 3rem;
+  margin: 6rem 0 3rem; /* 增加顶部间距，避免贴近导航栏 */
   padding-bottom: 2rem;
   font-family: 'Courier New', Courier, monospace;
   position: relative;
@@ -713,10 +767,16 @@ function upgradeToFull(img: HTMLImageElement) {
   letter-spacing: 0.1em;
 }
 
-/* 限制全局评论组件宽度 */
-:global(.valaxy-comment), :global(#valaxy-comment) {
+/* 评论组件宽度强行修正 */
+:global(.sakura-album-page .sakura-comment),
+:global(.sakura-album-page .valaxy-comment),
+:global(.sakura-album-page #valaxy-comment),
+:global(.sakura-album-page .comment-container) {
   max-width: 860px !important;
-  margin: 0 auto !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 100% !important;
+  box-sizing: border-box;
   padding: 0 1rem;
 }
 
