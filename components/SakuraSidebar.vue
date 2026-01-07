@@ -34,13 +34,20 @@ useCloseSidebarOnEscape(isSidebarOpen, sakuraAppStore.sidebar.close)
       aria-label="侧边栏"
     >
       <slot>
-        <SakuraSiteInfo />
-        <SakuraSocialLinks />
-        <SakuraSidebarLink class="mt-4" />
+        <div class="sakura-sidebar__header">
+          <SakuraSiteInfo />
+          <SakuraSocialLinks />
+        </div>
+
+        <div class="sakura-sidebar__body">
+          <SakuraSidebarLink class="mt-4" />
+        </div>
       </slot>
 
       <slot name="copyright">
-        <SakuraCopyright />
+        <div class="sakura-sidebar__footer">
+          <SakuraCopyright />
+        </div>
       </slot>
     </aside>
   </div>
@@ -70,6 +77,38 @@ useCloseSidebarOnEscape(isSidebarOpen, sakuraAppStore.sidebar.close)
   /* 可读性增强：额外半透明叠加层（统一控制透明度变量） */
   --sakura-sidebar-overlay-color: rgba(255, 255, 255, 0.68);
   --sakura-sidebar-overlay-blur: 14px;
+
+  .sakura-sidebar__header {
+    flex: 0 0 auto;
+  }
+
+  .sakura-sidebar__body {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .sakura-sidebar__footer {
+    flex: 0 0 auto;
+  }
+
+  /* 移动端：只让菜单区域滚动，避免拖着头像一起滑 */
+  @media (max-width: 959px) {
+    overflow: hidden;
+
+    .sakura-sidebar__body {
+      overflow-y: auto;
+      overscroll-behavior: contain;
+
+      /* 隐藏滚动条但保留滚动能力 */
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE/Edge legacy */
+    }
+
+    .sakura-sidebar__body::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+  }
 
   &::before {
     content: '';
