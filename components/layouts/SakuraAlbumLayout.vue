@@ -410,14 +410,14 @@ function upgradeToFull(img: HTMLImageElement) {
                     :key="p.src"
                     class="album-item group"
                     :href="p.src"
-                    :data-sub-html="p.alt || ''"
+                    :data-sub-html="p.alt || '&nbsp;'"
                     :style="{ '--delay': `${i * 0.05}s` }"
                   >
                     <div class="album-img-wrapper">
                       <img
                         :src="p.thumb || p.src"
                         :data-full="p.src"
-                        :alt="p.alt || p.src"
+                        :alt="p.alt || '   '"
                         loading="lazy"
                         class="album-img"
                         :class="{ 'has-thumb': !!p.thumb }"
