@@ -72,6 +72,34 @@ const isSingleAlbumPage = computed(() => {
   return !!(fmAny?.photos && Array.isArray(fmAny.photos) && !fmAny.albums)
 })
 
+// 计算当前相册在全局所有相册中的真实索引
+const globalAlbumIndex = computed(() => {
+  if (!isSingleAlbumPage.value) {
+    // 非单相册模式，直接返回 activeSectionIndex
+    return activeSectionIndex.value
+  }
+  
+  // 单相册模式：在所有相册路由中找到当前页面的位置
+  const allRoutes = router.getRoutes()
+  const albumRoutes = allRoutes
+    .filter(r => 
+      r.path.startsWith('/albums/') && 
+      r.path !== '/albums/' &&
+      r.meta.frontmatter && 
+      (r.meta.frontmatter as any).layout === 'album'
+    )
+    .sort((a, b) => {
+      // 按日期排序（与列表页逻辑一致）
+      const dateA = (a.meta.frontmatter as any)?.date || ''
+      const dateB = (b.meta.frontmatter as any)?.date || ''
+      return new Date(dateB).getTime() - new Date(dateA).getTime()
+    })
+  
+  const currentPath = route.path
+  const idx = albumRoutes.findIndex(r => r.path === currentPath)
+  return idx >= 0 ? idx : 0
+})
+
 function openAlbum(index: number) {
   const section = sections.value[index]
   // Navigate if it's a link
@@ -398,9 +426,11 @@ function upgradeToFull(img: HTMLImageElement) {
                 <div v-if="isSplitView" class="split-view-container">
                     <div class="split-header">
                        <div class="header-left">
-                          <h1 class="split-title">{{ activeSection.title }}</h1>
-                          <div class="split-date" v-if="albumDate">{{ albumDate }}</div>
-                          <div class="split-desc">{{ activeSection.desc }}</div>
+                          <h1 class="split-title">{{ activeSection.title }}<span class="split-index">#{{ String((globalAlbumIndex ?? 0) + 1).padStart(2, '0') }}</span></h1>
+                          <div class="split-meta-group">
+                             <div class="split-date" v-if="albumDate">{{ albumDate }}</div>
+                             <div class="split-desc" v-if="activeSection.desc">{{ activeSection.desc }}</div>
+                          </div>
                        </div>
                        
                        <div class="header-line-wrapper">
@@ -426,7 +456,7 @@ function upgradeToFull(img: HTMLImageElement) {
                   <div class="detail-header">
                     <h2 class="detail-title-lg">
                       {{ activeSection.title || 'UNTITLED' }}
-                      <span class="detail-index">#{{ String(activeSectionIndex! + 1).padStart(2, '0') }}</span>
+                      <span class="detail-index">#{{ String((globalAlbumIndex ?? 0) + 1).padStart(2, '0') }}</span>
                     </h2>
                     <div class="detail-desc" v-if="activeSection.desc">{{ activeSection.desc }}</div>
                   </div>
@@ -626,19 +656,29 @@ function upgradeToFull(img: HTMLImageElement) {
   text-align: center;
 }
 .detail-title-lg {
-  font-size: 3.5rem;
+  font-size: 4.5rem;
   font-weight: 900;
   margin: 0;
-  line-height: 1.1;
-  letter-spacing: -2px;
+  line-height: 0.9;
+  letter-spacing: -3px;
   color: var(--sakura-text-1);
+  font-family: 'Impact', 'Arial Black', sans-serif;
+  text-transform: uppercase;
+  font-style: italic;
+  transform: skewX(-10deg);
+  transform-origin: 50% 50%;
+  text-shadow: 4px 4px 0px rgba(128,128,128, 0.3);
+  animation: slideInLeft 0.6s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
 }
 .detail-index {
   font-size: 1rem;
   vertical-align: super;
   opacity: 0.4;
-  margin-left: 5px;
+  margin-left: 8px;
   letter-spacing: 0;
+  font-style: normal;
+  transform: skewX(10deg);
+  display: inline-block;
 }
 .detail-desc {
   margin-top: 1rem;
@@ -923,62 +963,123 @@ function upgradeToFull(img: HTMLImageElement) {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  align-items: flex-end; 
   padding-top: 0.2rem;
-  text-align: right; /* 左侧栏右对齐，靠近分割线 */
+  padding-right: 0; 
+  text-align: right; 
 }
 
 /* 竖线容器 */
 .header-line-wrapper {
   display: flex;
   justify-content: center;
+  position: relative;
 }
 .header-line {
-  width: 1px;
-  min-height: 100px;
-  /* 使用当前文本颜色，确保可见 */
-  background: currentColor; 
-  opacity: 0.2;
+  width: 2px;
+  background: var(--sakura-text-1);
+  opacity: 0.6; 
 }
 
 .header-right {
-  padding-top: 0.4rem; /* 微微下沉，视错觉对齐标题 */
+  padding-top: 0.8rem;
+  animation: fadeInRight 0.8s ease-out 0.2s backwards;
 }
 
 .split-title {
-  font-size: 2.8rem;
-  font-weight: 800;
-  line-height: 1.1;
-  margin: 0 0 0.8rem 0;
+  font-size: 4.5rem; 
+  font-weight: 900;
+  line-height: 0.9;
+  /* 增加标题下方的间距，让它独立出来 */
+  margin: 0 0 2.5rem 0; 
   color: var(--sakura-text-1);
-  letter-spacing: -1px;
+  letter-spacing: -3px;
+  font-family: 'Impact', 'Arial Black', sans-serif; 
+  text-transform: uppercase;
+  
+  font-style: italic;
+  transform: skewX(-10deg);
+  transform-origin: 100% 50%;
+  text-shadow: 4px 4px 0px rgba(128,128,128, 0.3);
+  
+  animation: slideInLeft 0.6s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+}
+
+.split-index {
+  font-size: 1rem;
+  vertical-align: super;
+  opacity: 0.4;
+  margin-left: 8px;
+  letter-spacing: 0;
+  font-style: normal;
+  transform: skewX(10deg); /* 抵消父元素的倾斜 */
+  display: inline-block;
+}
+
+/* 新的信息组合容器 */
+.split-meta-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem; /* 统一行间距 */
+  
+  /* 右侧装饰线，增加设计感 */
+  border-right: 3px solid var(--sakura-c-brand);
+  padding-right: 1.2rem;
+  
+  animation: slideInLeftNoSkew 0.6s cubic-bezier(0.18, 0.89, 0.32, 1.28) 0.1s backwards;
 }
 
 .split-date {
-  font-family: monospace;
-  font-size: 0.85rem;
-  color: var(--sakura-text-2);
-  margin-bottom: 0.5rem;
-  opacity: 0.7;
-  letter-spacing: 1px;
+  /* 更现代的无衬线字体 */
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 1.2rem; /* 加大 */
+  font-weight: 700;  /* 加粗 */
+  font-style: italic;
+  color: var(--sakura-text-1); 
+  margin: 0;
+  opacity: 0.9;
+  line-height: 1;
 }
 
 .split-desc {
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: var(--sakura-text-2);
-  margin-top: 0.5rem;
+  margin: 0;
+  padding: 0;
+  background: none;
+  font-weight: 500;
   font-style: italic;
-  font-family: serif;
-  opacity: 0.6;
+  letter-spacing: 1px;
+  font-family: sans-serif;
+  text-transform: uppercase;
+  transform: none; /* 取消倾斜，保持稳重 */
 }
 
+/* 右侧文本美化 */
 .note-text {
-  font-family: serif;
-  font-size: 1.05rem;
-  line-height: 1.75;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-size: 1.1rem;
+  line-height: 1.8;
   color: var(--sakura-text-1);
   white-space: pre-wrap;
-  text-align: left; /* 保持左对齐阅读舒适 */
+  text-align: left;
   opacity: 0.9;
+}
+/* 移除首字下沉 */
+
+/* 动效 Keyframes */
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-30px) skewX(-10deg); }
+  to { opacity: 1; transform: translateX(0) skewX(-10deg); }
+}
+@keyframes slideInLeftNoSkew {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
 /* 响应式调整 */
@@ -989,6 +1090,26 @@ function upgradeToFull(img: HTMLImageElement) {
     padding-bottom: 2rem;
     text-align: center;
   }
+  .header-left {
+    text-align: center;
+    align-items: center;
+  }
+  /* 移动端取消倾斜，回归正常 */
+  .split-title {
+    font-size: 2.5rem;
+    transform: none;
+    text-shadow: none;
+    letter-spacing: -1px;
+    margin-bottom: 0.5rem;
+  }
+  .split-date {
+    justify-content: center;
+    &::after { display: none; }
+    &::before { /* 移动端两边加线 */
+       content: ''; display: block; width: 20px; height: 1px; background: currentColor;
+    }
+  }
+  
   .header-left, .header-right {
     align-items: center;
     padding-top: 0;
@@ -999,6 +1120,7 @@ function upgradeToFull(img: HTMLImageElement) {
   .note-text {
     text-align: left;
     margin: 0 auto;
+    font-size: 1rem;
   }
 }
 </style>
