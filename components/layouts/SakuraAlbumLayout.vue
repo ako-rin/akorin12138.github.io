@@ -34,6 +34,19 @@ const sections = ref<AlbumSection[]>([])
 const hasPhotos = computed(() => sections.value.some(s => s.photos && s.photos.length > 0))
 const hideBody = computed(() => !!frontmatter.value?.hideBody && hasPhotos.value)
 
+// Check for Custom Split View (Note mode)
+const isSplitView = computed(() => {
+  // Only enable split view if we are in a single album context and have a note
+  return activeSection.value && !!frontmatter.value?.note
+})
+const noteContent = computed(() => frontmatter.value?.note || '')
+const albumDate = computed(() => {
+  const d = frontmatter.value?.date
+  if (!d) return ''
+  try { return new Date(d).toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' }) }
+  catch { return '' }
+})
+
 // 全局默认列数
 const defaultColumns = computed(() => Number(frontmatter.value?.columns) || 3) // 默认为3列
 const defaultGap = computed(() => frontmatter.value?.gap || '20px')
@@ -380,28 +393,52 @@ function upgradeToFull(img: HTMLImageElement) {
 
               <!-- 模式2: 详情模式 -->
               <div v-else-if="activeSection" key="detail" class="album-detail-container" ref="galleryRef">
-                <!-- 导航栏 -->
-                <div class="detail-nav">
-                  <button class="back-btn" @click="closeAlbum">
-                    <span class="icon">←</span> BACK
-                  </button>
-                  <div class="nav-title">{{ activeSection.title || 'ALBUM' }}</div>
+                
+                <!-- Sub-Mode A: Split View (Note Mode) -->
+                <div v-if="isSplitView" class="split-view-container">
+                    <div class="split-header">
+                       <div class="header-left">
+                          <h1 class="split-title">{{ activeSection.title }}</h1>
+                          <div class="split-date" v-if="albumDate">{{ albumDate }}</div>
+                          <div class="split-desc">{{ activeSection.desc }}</div>
+                       </div>
+                       
+                       <div class="header-line-wrapper">
+                         <div class="header-line"></div>
+                       </div>
+                       
+                       <div class="header-right">
+                          <div class="note-text">{{ noteContent }}</div>
+                       </div>
+                    </div>
                 </div>
 
-                <div class="detail-header">
-                  <h2 class="detail-title-lg">
-                    {{ activeSection.title || 'UNTITLED' }}
-                    <span class="detail-index">#{{ String(activeSectionIndex! + 1).padStart(2, '0') }}</span>
-                  </h2>
-                  <div class="detail-desc" v-if="activeSection.desc">{{ activeSection.desc }}</div>
-                </div>
+                <!-- Sub-Mode B: Standard Header (Masonry Mode) -->
+                <template v-else>
+                  <!-- 导航栏 -->
+                  <div class="detail-nav">
+                    <button class="back-btn" @click="closeAlbum">
+                      <span class="icon">←</span> BACK
+                    </button>
+                    <div class="nav-title">{{ activeSection.title || 'ALBUM' }}</div>
+                  </div>
 
-                <!-- 瀑布流/Masonry -->
+                  <div class="detail-header">
+                    <h2 class="detail-title-lg">
+                      {{ activeSection.title || 'UNTITLED' }}
+                      <span class="detail-index">#{{ String(activeSectionIndex! + 1).padStart(2, '0') }}</span>
+                    </h2>
+                    <div class="detail-desc" v-if="activeSection.desc">{{ activeSection.desc }}</div>
+                  </div>
+                </template>
+
+                <!-- Shared Photo Grid (Masonry or Grid) -->
                 <div 
                   class="album-masonry" 
+                  :class="{ 'split-grid-mode': isSplitView }"
                   data-lg="true"
                   :style="{ 
-                    '--album-columns': activeSection.columns || defaultColumns, 
+                    '--album-columns': isSplitView ? 3 : (activeSection.columns || defaultColumns), 
                     '--album-gap': defaultGap 
                   }"
                 >
@@ -853,5 +890,115 @@ function upgradeToFull(img: HTMLImageElement) {
 /* 针对特定可能的 Sakura 主题标题结构 */
 :global(h1.text-4xl.font-bold.mb-4.text-center) {
   display: none !important; /* 暴力隐藏可能的 Tailwind 类名标题 */
+}
+
+/* =========================================
+   Split View Note Mode Sub-layout
+   ========================================= */
+
+.split-view-container {
+  width: 100%;
+  margin-bottom: 2rem;
+  animation: slideInUp 0.6s ease-out;
+}
+
+.split-header {
+  max-width: 1000px;
+  /* 增加顶部间距 (8rem)，防止被顶部导航栏遮挡 */
+  margin: 8rem auto 3rem;
+  
+  display: grid;
+  /* 调整比例 */
+  grid-template-columns: 0.7fr auto 1.1fr;
+  gap: 3rem;
+  
+  align-items: stretch; 
+  
+  text-align: left;
+  border-bottom: 1px solid rgba(128,128,128,0.1);
+  padding-bottom: 2.5rem;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 0.2rem;
+  text-align: right; /* 左侧栏右对齐，靠近分割线 */
+}
+
+/* 竖线容器 */
+.header-line-wrapper {
+  display: flex;
+  justify-content: center;
+}
+.header-line {
+  width: 1px;
+  min-height: 100px;
+  /* 使用当前文本颜色，确保可见 */
+  background: currentColor; 
+  opacity: 0.2;
+}
+
+.header-right {
+  padding-top: 0.4rem; /* 微微下沉，视错觉对齐标题 */
+}
+
+.split-title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin: 0 0 0.8rem 0;
+  color: var(--sakura-text-1);
+  letter-spacing: -1px;
+}
+
+.split-date {
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: var(--sakura-text-2);
+  margin-bottom: 0.5rem;
+  opacity: 0.7;
+  letter-spacing: 1px;
+}
+
+.split-desc {
+  font-size: 0.95rem;
+  color: var(--sakura-text-2);
+  margin-top: 0.5rem;
+  font-style: italic;
+  font-family: serif;
+  opacity: 0.6;
+}
+
+.note-text {
+  font-family: serif;
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--sakura-text-1);
+  white-space: pre-wrap;
+  text-align: left; /* 保持左对齐阅读舒适 */
+  opacity: 0.9;
+}
+
+/* 响应式调整 */
+@media (max-width: 900px) {
+  .split-header {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding-bottom: 2rem;
+    text-align: center;
+  }
+  .header-left, .header-right {
+    align-items: center;
+    padding-top: 0;
+  }
+  .header-line { display: none; }
+  .header-line-wrapper { display: none; }
+  
+  .note-text {
+    text-align: left;
+    margin: 0 auto;
+  }
 }
 </style>
