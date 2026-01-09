@@ -27,6 +27,7 @@ interface AlbumSection {
   photos: PhotoItem[]
   path?: string      // Link to album page
   cover?: string     // Cover image for folder
+  date?: string | Date
 }
 
 const sections = ref<AlbumSection[]>([])
@@ -125,6 +126,15 @@ function closeAlbum() {
   }
 }
 
+const formatDate = (date: string | Date | undefined) => {
+  if (!date) return ''
+  const d = new Date(date)
+  if (isNaN(d.getTime())) return ''
+  const year = d.getFullYear()
+  const month = String(d.getMonth() + 1).padStart(2, '0')
+  return `${year}.${month}`
+}
+
 const parseData = () => {
   const fmAny: any = frontmatter.value || (route.meta as any)?.frontmatter
   
@@ -161,7 +171,8 @@ const parseData = () => {
           desc: fm.desc || fm.subtitle,
           cover: fm.cover || (fm.photos?.[0]?.src),
           photos: fm.photos || [],
-          path: r.path
+          path: r.path,
+          date: fm.date
         }
       })
       activeSectionIndex.value = null
@@ -413,6 +424,8 @@ function upgradeToFull(img: HTMLImageElement) {
                         <span class="count">{{ section.photos?.length || 0 }} ITEMS</span>
                         <span class="divider">/</span>
                         <span class="desc">{{ section.desc || 'NO DESCRIPTION' }}</span>
+                        <span v-if="section.date" class="divider">/</span>
+                        <span v-if="section.date" class="date">{{ formatDate(section.date) }}</span>
                       </div>
                     </div>
                   </div>

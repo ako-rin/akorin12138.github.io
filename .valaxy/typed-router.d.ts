@@ -25,7 +25,10 @@ declare module 'vue-router/auto-routes' {
     '/about/site': RouteRecordInfo<'/about/site', '/about/site', Record<never, never>, Record<never, never>>,
     '/album': RouteRecordInfo<'/album', '/album', Record<never, never>, Record<never, never>>,
     '/albums/guiyang': RouteRecordInfo<'/albums/guiyang', '/albums/guiyang', Record<never, never>, Record<never, never>>,
+    '/albums/kyota': RouteRecordInfo<'/albums/kyota', '/albums/kyota', Record<never, never>, Record<never, never>>,
     '/albums/pingtan': RouteRecordInfo<'/albums/pingtan', '/albums/pingtan', Record<never, never>, Record<never, never>>,
+    '/albums/tokyo': RouteRecordInfo<'/albums/tokyo', '/albums/tokyo', Record<never, never>, Record<never, never>>,
+    '/albums/uji': RouteRecordInfo<'/albums/uji', '/albums/uji', Record<never, never>, Record<never, never>>,
     '/anime/': RouteRecordInfo<'/anime/', '/anime', Record<never, never>, Record<never, never>>,
     '/archives/': RouteRecordInfo<'/archives/', '/archives', Record<never, never>, Record<never, never>>,
     '/categories/': RouteRecordInfo<'/categories/', '/categories', Record<never, never>, Record<never, never>>,
@@ -102,8 +105,20 @@ declare module 'vue-router/auto-routes' {
       routes: '/albums/guiyang'
       views: never
     }
+    'pages/albums/kyota.md': {
+      routes: '/albums/kyota'
+      views: never
+    }
     'pages/albums/pingtan.md': {
       routes: '/albums/pingtan'
+      views: never
+    }
+    'pages/albums/tokyo.md': {
+      routes: '/albums/tokyo'
+      views: never
+    }
+    'pages/albums/uji.md': {
+      routes: '/albums/uji'
       views: never
     }
     'pages/anime/index.md': {
