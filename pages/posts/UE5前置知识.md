@@ -2,7 +2,7 @@
 layout: post
 title: UE5前置知识
 date: 2026-01-02 14:16:54
-updated: 2026-01-07 00:24:31
+updated: 2026-01-11 00:41:52
 tags:
   - UE5
   - 笔记
@@ -349,3 +349,52 @@ AMyActor::AMyActor()
 
 因此在进行设计时，通过所需的功能先选择合适的基类，再在上面连接派生类组件来实现具体的功能。
 
+## 委托
+
+UE5 通过委托系统来实现事件的回调和事件广播。委托类似于 C++ 中的函数指针，但更强大和灵活。
+
+UE5 引擎中已定义好了几种常用的委托，举个例子来说：
+
+```C++
+// 声明一个多播委托类型
+DECLARE_DYNAMIC_MULTICAST_SPARSE_DELEGATE_SixParams(
+  SparseDelegateClass,
+  OwningClass,
+  DelegateName,
+  ParamType1, ParamName1,
+  ParamType2, ParamName2,
+  ParamType3, ParamName3,
+  ParamType4, ParamName4,
+  ParamType5, ParamName5,
+  ParamType6, ParamName6
+  );
+```
+
+上面的代码声明了一个带有六个参数的多播委托类型 `DelegateName`。可以在类中使用这个委托类型来定义事件，并允许其他类绑定回调函数。
+
+那一大串宏定义其实是对委托类型的描述：
+- `DECLARE` 表示声明
+- `DYNAMIC` 表示支持动态绑定即**蓝图可见**
+- `MULTICAST` 表示支持**多播**，可以绑定多个回调函数
+- `SPARSE` 表示**稀疏存储**，只有绑定了回调函数时才会分配内存
+- `SixParams` 表示有六个参数
+
+而宏中的参数：
+- `SparseDelegateClass` 表示**委托签名**，表示这种函数的参数数量以及返回值类型（通常是 void）。（用这个签名来限定委托需要回调的函数的“长相”）
+- `OwningClass` 表示所属类，
+- `DelegateName` 表示委托名称，
+- `ParamTypeX` 和 `ParamNameX` 分别表示第 X 个参数的类型和名称。
+
+最后这个宏能够生成一个名称为 `SparseDelegateClass` 的类，一般在创建委托的类上**实例化一个对象**，通过调用这个对象的 `AddDynamic` 方法，可以将回调函数绑定到这个委托上。
+
+> 一般来说委托的回调函数没有返回值，如果要有返回值一般也不用于**多播**上，且宏名上需要加上 `_RetVal`。
+
+<div class="flex flex-col">
+<div class="flex grid-cols-2 justify-center items-center">
+
+![alt text](https://pic.yurin.cc/3c7778284b58a04417915f43fabf42e9.webp)
+
+![球类](https://pic.yurin.cc/807e28dce53c3e572de1741f04b9a693.webp)
+
+</div>
+</div>
