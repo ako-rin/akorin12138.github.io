@@ -2,7 +2,7 @@
 layout: post
 title: UE5前置知识
 date: 2026-01-02 14:16:54
-updated: 2026-01-11 00:41:52
+updated: 2026-01-16 00:15:11
 tags:
   - UE5
   - 笔记
@@ -13,7 +13,13 @@ end: false
 
 # UE5前置知识
 
-在使用 UE5 之前需要学习的一些前置知识。
+在使用 UE5 之前需要学习的一些前置知识点，都是较为浅层的内容。
+
+[UE5 源码参考](https://github.com/EpicGames/UnrealEngine)
+
+- 需要 github 账号
+- 需要 Epic 账号并绑定 github 账号
+- 加入 EpicGames organization
 
 <!-- more -->
 
@@ -398,3 +404,27 @@ DECLARE_DYNAMIC_MULTICAST_SPARSE_DELEGATE_SixParams(
 
 </div>
 </div>
+
+## Tracing 追踪
+
+Tracing 是用于检测场景中物体碰撞和交互的技术。可以是射线也可以是球体。
+
+以球体追踪为例，设定好起始位置与终点后，检测球就会按照路径发射过去直到碰到路径上有碰撞体的物体为止。然后会得到结果 `FHitResult`，里面包含了碰撞点、撞击位置、法线等信息。
+
+Tracing 一般是通过扫描函数来实现的，比如 `UKismetSystemLibrary::SphereTraceSingle`。
+
+:::warnning 这里就要注意撞击位置和撞击点的区别
+- **撞击位置 (Impact Point)**： 表示撞击球正好停在碰撞体表面时，**撞击球的中心点位置。**
+- **撞击点 (Hit Point)**：表示撞击球与碰撞体接触的**实际接触点位置**，通常在碰撞体表面。
+![alt text](https://pic.yurin.cc/2bc300b384f979092d5d1407878a34b8.webp)
+:::
+
+## `Actor` 通道类型
+
+在 UE5 中，`Actor` 通道类型用于定义不同类型的物体之间的碰撞行为。每个 `Actor` 都有一个通道类型，决定了它与其他通道类型的物体如何交互。
+常见的通道类型包括：
+- **WorldStatic**：用于静态物体，如地面、墙壁等。
+- **WorldDynamic**：用于动态物体，如移动的箱子、车辆等。
+- **Pawn**：用于角色和生物体。
+- **Camera**：用于摄像机相关的物体。
+- **Visibility**：用于可见性检测，可见的所有物体。
