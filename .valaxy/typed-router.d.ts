@@ -42,6 +42,9 @@ declare module 'vue-router/auto-routes' {
     '/posts/B树': RouteRecordInfo<'/posts/B树', '/posts/B树', Record<never, never>, Record<never, never>>,
     '/posts/gccSimpleLearn': RouteRecordInfo<'/posts/gccSimpleLearn', '/posts/gccSimpleLearn', Record<never, never>, Record<never, never>>,
     '/posts/JapanTravel': RouteRecordInfo<'/posts/JapanTravel', '/posts/JapanTravel', Record<never, never>, Record<never, never>>,
+    '/posts/UE5_DotProduct': RouteRecordInfo<'/posts/UE5_DotProduct', '/posts/UE5_DotProduct', Record<never, never>, Record<never, never>>,
+    '/posts/UE5_LifeTime': RouteRecordInfo<'/posts/UE5_LifeTime', '/posts/UE5_LifeTime', Record<never, never>, Record<never, never>>,
+    '/posts/UE5_Overlapping': RouteRecordInfo<'/posts/UE5_Overlapping', '/posts/UE5_Overlapping', Record<never, never>, Record<never, never>>,
     '/posts/UE5前置知识': RouteRecordInfo<'/posts/UE5前置知识', '/posts/UE5前置知识', Record<never, never>, Record<never, never>>,
     '/posts/zenbrowser': RouteRecordInfo<'/posts/zenbrowser', '/posts/zenbrowser', Record<never, never>, Record<never, never>>,
     '/posts/一致性哈希算法': RouteRecordInfo<'/posts/一致性哈希算法', '/posts/一致性哈希算法', Record<never, never>, Record<never, never>>,
@@ -171,6 +174,18 @@ declare module 'vue-router/auto-routes' {
     }
     'pages/posts/JapanTravel.md': {
       routes: '/posts/JapanTravel'
+      views: never
+    }
+    'pages/posts/UE5_DotProduct.md': {
+      routes: '/posts/UE5_DotProduct'
+      views: never
+    }
+    'pages/posts/UE5_LifeTime.md': {
+      routes: '/posts/UE5_LifeTime'
+      views: never
+    }
+    'pages/posts/UE5_Overlapping.md': {
+      routes: '/posts/UE5_Overlapping'
       views: never
     }
     'pages/posts/UE5前置知识.md': {

@@ -40,6 +40,8 @@ const headerKey = computed(() => route.fullPath)
   .has-cover .sakura-header-container {
     position: relative;
     z-index: 1;
+    /* Add text shadow for better readability on light covers */
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
   }
 }
 </style>

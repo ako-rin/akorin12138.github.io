@@ -213,12 +213,21 @@ useVanillaLazyLoad()
 
 <template>
   <article v-if="$slots.default" :class="frontmatter.markdownClass || 'markdown-body'">
+    <div v-if="frontmatter.time_warning" class="warning-bar text-center m-5 p-2 bg-orange-100 text-orange-600 dark:bg-orange-900 dark:text-orange-200 rounded-lg border border-orange-200 dark:border-orange-800">
+      <div class="i-fa6-solid-triangle-exclamation inline-block mr-2" />
+      <span>本文发布于较长时间前，文中所述内容可能已发生改变，请注意甄别。</span>
+    </div>
+
     <slot ref="contentRef" @vue:updated="runContentUpdated" />
+
+    <slot name="main-content-after" />
 
     <div v-if="frontmatter.url" text="center">
       <a class="link" :href="frontmatter.url" target="_blank">
         View the original article: {{ frontmatter.url }}
       </a>
     </div>
+
+    <slot name="footer" />
   </article>
 </template>

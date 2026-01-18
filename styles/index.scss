@@ -565,3 +565,116 @@ html.dark .custom-block {
         border-left-color: #555;
     }
 }
+
+/* Custom override for text shadows */
+.sakura-post-header .sakura-header-container, 
+.sakura-post-header .sakura-post-header-meta,
+.sakura-post-header h1,
+.sakura-post-header .meta-info {
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Header meta icons shadow (font icons / svg) */
+.sakura-post-header .sakura-header-container i,
+.sakura-post-header .sakura-header-container svg,
+.sakura-post-header .sakura-post-header-meta i,
+.sakura-post-header .sakura-post-header-meta svg {
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8));
+}
+
+/* For Prev/Next Post Navigation */
+.valaxy-post-nav .post-nav-text,
+.valaxy-post-nav .post-nav-title,
+.post-nav .nav-title, 
+.post-nav .nav-text,
+.sakura-post-navigation .title,
+.sakura-post-navigation span,
+[class*="sakura-post-nav"] span,
+[class*="sakura-post-nav"] a {
+     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Prev/Next nav icons shadow */
+.valaxy-post-nav i,
+.valaxy-post-nav svg,
+.post-nav i,
+.post-nav svg,
+.sakura-post-navigation i,
+.sakura-post-navigation svg,
+[class*="sakura-post-nav"] i,
+[class*="sakura-post-nav"] svg {
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8));
+}
+
+/* Like/heart spacing + simple animation */
+.valaxy-post-like,
+.post-like,
+.sakura-post-like,
+.post-like-wrapper {
+    margin-top: 18px;
+    margin-bottom: 18px;
+}
+
+.valaxy-post-like .like-icon,
+.post-like .like-icon,
+.sakura-post-like .like-icon,
+.post-like-wrapper .like-icon,
+.valaxy-post-like i,
+.post-like i,
+.sakura-post-like i {
+    transition: transform 0.2s ease, filter 0.2s ease;
+    filter: drop-shadow(0 2px 4px rgba(255, 105, 135, 0.5));
+}
+
+.valaxy-post-like .like-icon:hover,
+.post-like .like-icon:hover,
+.sakura-post-like .like-icon:hover,
+.post-like-wrapper .like-icon:hover,
+.valaxy-post-like i:hover,
+.post-like i:hover,
+.sakura-post-like i:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 8px rgba(255, 105, 135, 0.9));
+}
+
+.valaxy-post-like .like-icon:active,
+.post-like .like-icon:active,
+.sakura-post-like .like-icon:active,
+.post-like-wrapper .like-icon:active,
+.valaxy-post-like i:active,
+.post-like i:active,
+.sakura-post-like i:active {
+    transform: scale(1.2);
+}
+
+/* Sponsor (heart) spacing & effect */
+.sakura-post .flex-center.flex-col > button {
+    margin-top: 16px;
+}
+
+.sakura-post .flex-center.flex-col > button + .qrcode-container {
+    margin-top: 12px;
+}
+
+.sakura-post .flex-center.flex-col > button .animation-hvr-bounce-in,
+.sakura-post .flex-center.flex-col > button [class*="heart"] {
+    filter: drop-shadow(0 2px 4px rgba(255, 105, 135, 0.55));
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.sakura-post .flex-center.flex-col > button:hover .animation-hvr-bounce-in,
+.sakura-post .flex-center.flex-col > button:hover [class*="heart"] {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 10px rgba(255, 105, 135, 0.9));
+}
+
+.sakura-post .flex-center.flex-col:has(.qrcode-container.show) > button .animation-hvr-bounce-in,
+.sakura-post .flex-center.flex-col:has(.qrcode-container.show) > button [class*="heart"] {
+    animation: sakura-heart-pop 0.6s ease;
+}
+
+@keyframes sakura-heart-pop {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.25); }
+    100% { transform: scale(1.05); }
+}
