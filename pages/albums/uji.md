@@ -5,7 +5,6 @@ desc: "宇治"
 note: "京吹圣地巡礼"
 columns: 4
 date: 2025-02-05
-updated: 2026-01-10 03:05:00
 cover: https://pic.yurin.cc/b8ac7dd082fcfa2c6a9d94e644967716.webp
 photos:
   - src: "https://pic.yurin.cc/1759a9a6cb376796ba98324ec7adfb0e.webp"

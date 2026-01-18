@@ -4,7 +4,6 @@ title: KYOTA
 desc: "京都"
 note: "京阿尼"
 date: 2025-02-06
-updated: 2026-01-10 03:05:00
 cover: https://pic.yurin.cc/7dfaabd4a83a3086fa5545594fbc5fe2.webp
 photos:
   - src: "https://pic.yurin.cc/3635aa9c2fd09b2f386100e2cbb43c44.webp"

@@ -4,7 +4,6 @@ title: WILD WIND
 desc: "贵阳·高坡"
 note: "测试"
 date: 2025-08-28
-updated: 2026-01-10 03:05:00
 cover: https://pic.yurin.cc/20250828163725594.webp
 photos:
   - src: "https://pic.yurin.cc/20250828163725594.webp"
