@@ -1,12 +1,10 @@
 <script lang="ts" setup>
 import { useCategories, useSiteStore } from 'valaxy'
 import { computed } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 
 const site = useSiteStore()
 
-const { t } = useI18n()
 const route = useRoute()
 const curCategory = computed(() => (route.query.category || '') as string)
 const categories = useCategories()
@@ -36,18 +34,27 @@ const posts = computed(() => {
       <component :is="Component">
         <template #main-content>
           <slot name="content">
-            <div>
-              <div text="center" class="yun-text-light" p="2">
-                {{ t('counter.categories', Array.from(categories.children).length) }}
+            <div class="categories-header">
+              <div class="categories-stats">
+                <span class="stats-number">{{ Array.from(categories.children).length }}</span>
+                <span class="stats-label">个分类</span>
               </div>
-              <SakuraCategories :categories="categories.children" />
+              <p class="categories-hint">点击分类卡片查看该分类下的文章</p>
             </div>
+            <SakuraCategories :categories="categories.children" />
           </slot>
         </template>
 
         <template #main-nav-before>
           <slot name="posts">
             <div v-if="curCategory" class="sakura-categories-post-list">
+              <div class="current-category-header">
+                <div class="category-breadcrumb">
+                  <span class="breadcrumb-icon" i-ri-folder-open-line />
+                  <span class="breadcrumb-text">{{ curCategory }}</span>
+                </div>
+                <span class="post-count">共 {{ posts.length }} 篇文章</span>
+              </div>
               <!-- 使用 SakuraMultiColumns 包裹 PostList，确保宽度约束 -->
               <SakuraMultiColumns class="sakura-safe-padding sakura-categories-layout" base>
                 <SakuraPostList :key="postListKey" w="full" :posts />
@@ -65,9 +72,87 @@ const posts = computed(() => {
 
 .sakura-categories-page {
   .sakura-triple-columns {
-    // Preventing TimeLine component distortion
     width: 100%;
   }
+}
+
+// 分类页面头部样式
+.categories-header {
+  text-align: center;
+  padding: 1rem 0 1.5rem;
+}
+
+.categories-stats {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.stats-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--sakura-c-primary) 0%, #f093fb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.stats-label {
+  font-size: 1.1rem;
+  color: var(--sakura-color-text);
+  font-weight: 500;
+}
+
+.categories-hint {
+  font-size: 0.875rem;
+  color: var(--sakura-color-text-light);
+  margin: 0;
+}
+
+// 当前分类头部
+.current-category-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 800px;
+  margin: 2rem auto 1rem;
+  padding: 1rem 1.5rem;
+  background: var(--sakura-color-background);
+  border-radius: 12px;
+  border: 1px solid var(--sakura-color-divider);
+  
+  @media (max-width: 840px) {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+}
+
+.category-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.breadcrumb-icon {
+  font-size: 20px;
+  color: var(--sakura-c-primary);
+}
+
+.breadcrumb-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--sakura-color-text-deep);
+}
+
+.post-count {
+  font-size: 0.875rem;
+  color: var(--sakura-color-text-light);
+  background: var(--sakura-color-divider);
+  padding: 6px 14px;
+  border-radius: 20px;
+  margin-left: 16px;
+  white-space: nowrap;
 }
 
 // 分类页面的布局约束，与首页保持一致
@@ -100,7 +185,8 @@ const posts = computed(() => {
 .sakura-categories-post-list {
   width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   
   .sakura-post-list {
     width: 100%;
