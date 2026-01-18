@@ -678,3 +678,27 @@ html.dark .custom-block {
     40% { transform: scale(1.25); }
     100% { transform: scale(1.05); }
 }
+
+/* --- Categories Page Post List Width Fix --- */
+// 分类页面的布局约束，与首页保持一致
+.sakura-categories-page {
+  .sakura-categories-post-list {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    
+    .sakura-post-list {
+      width: 100%;
+      max-width: 800px;
+    }
+  }
+  
+  // 分类页面的 MultiColumns 布局
+  .sakura-categories-layout {
+    &.sakura-one-columns {
+      grid-template-columns: minmax(0, 800px);
+      justify-content: center;
+    }
+  }
+}
+
