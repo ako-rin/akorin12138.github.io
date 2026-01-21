@@ -509,10 +509,17 @@ function upgradeToFull(img: HTMLImageElement) {
                   </a>
                 </div>
                 
-                <!-- 底部返回 -->
+                <!-- 底部返回 (Bottom Flow Button) -->
                 <div class="detail-footer">
                    <button class="back-btn-lg" @click="closeAlbum">CLOSE ALBUM</button>
                 </div>
+
+                <!-- 浮动返回按钮 (Floating FAB) -->
+                <!-- 仅在进入详情页时显示，且不与顶部返回冲突 -->
+                <SakuraAlbumBack 
+                  v-if="activeSection" 
+                  @click="closeAlbum" 
+                />
               </div>
 
               <!-- 模式3: 空态 -->
