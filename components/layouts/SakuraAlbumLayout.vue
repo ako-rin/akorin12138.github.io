@@ -56,11 +56,12 @@ const defaultGap = computed(() => frontmatter.value?.gap || '20px')
 // JavaScript Masonry Logic for Lazy Load Optimization
 const { width: windowWidth } = useWindowSize()
 const currentColumns = computed(() => {
-  if (isSplitView.value) return 3 // Split view fixed to 3
-  // Match CSS media queries
-  if (windowWidth.value <= 520) return 1
-  if (windowWidth.value <= 800) return 2
-  // if (windowWidth.value <= 1100) return 3 // Original logic
+  // 响应式断点优先级最高
+  if (windowWidth.value <= 520) return 1  // 手机端：1列
+  if (windowWidth.value <= 800) return 2  // 平板端：2列
+  
+  // 电脑端：根据配置或默认3列
+  if (isSplitView.value) return 3 // Split view fixed to 3 on desktop
   return activeSection.value?.columns || defaultColumns.value
 })
 
