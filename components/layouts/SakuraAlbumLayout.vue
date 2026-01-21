@@ -2,6 +2,7 @@
 import { computed, onMounted, ref, watch, nextTick } from 'vue'
 import { useFrontmatter } from 'valaxy'
 import { useRoute, useRouter } from 'vue-router'
+import { useWindowSize } from '@vueuse/core'
 import lightGallery from 'lightgallery'
 // 独立使用时需手动引入样式（之前插件已自动注入）
 import 'lightgallery/css/lightgallery.css'
@@ -51,6 +52,30 @@ const albumDate = computed(() => {
 // 全局默认列数
 const defaultColumns = computed(() => Number(frontmatter.value?.columns) || 3) // 默认为3列
 const defaultGap = computed(() => frontmatter.value?.gap || '20px')
+
+// JavaScript Masonry Logic for Lazy Load Optimization
+const { width: windowWidth } = useWindowSize()
+const currentColumns = computed(() => {
+  if (isSplitView.value) return 3 // Split view fixed to 3
+  // Match CSS media queries
+  if (windowWidth.value <= 520) return 1
+  if (windowWidth.value <= 800) return 2
+  // if (windowWidth.value <= 1100) return 3 // Original logic
+  return activeSection.value?.columns || defaultColumns.value
+})
+
+const masonryGroups = computed(() => {
+  const groups: PhotoItem[][] = Array.from({ length: currentColumns.value }, () => [])
+  const photos = activeSection.value?.photos || []
+  if (photos.length === 0) return []
+  
+  photos.forEach((photo, index) => {
+    // Round-robin distribution
+    const colIndex = index % currentColumns.value
+    groups[colIndex].push(photo)
+  })
+  return groups
+})
 
 const galleryRef = ref<HTMLElement | null>(null)
 let galleryInited = false
@@ -475,38 +500,41 @@ function upgradeToFull(img: HTMLImageElement) {
                   </div>
                 </template>
 
-                <!-- Shared Photo Grid (Masonry or Grid) -->
+                <!-- Shared Photo Grid (JS-Driven Masonry) -->
                 <div 
                   class="album-masonry" 
                   :class="{ 'split-grid-mode': isSplitView }"
                   data-lg="true"
-                  :style="{ 
-                    '--album-columns': isSplitView ? 3 : (activeSection.columns || defaultColumns), 
-                    '--album-gap': defaultGap 
-                  }"
+                  :style="{ '--album-gap': defaultGap }"
                 >
-                  <a
-                    v-for="(p, i) in activeSection.photos"
-                    :key="p.src"
-                    class="album-item group"
-                    :href="p.src"
-                    :data-sub-html="p.alt || '&nbsp;'"
-                    :style="{ '--delay': `${i * 0.05}s` }"
+                  <div 
+                    v-for="(group, colIndex) in masonryGroups" 
+                    :key="colIndex" 
+                    class="masonry-col"
                   >
-                    <div class="album-img-wrapper">
-                      <img
-                        :src="p.thumb || p.src"
-                        :data-full="p.src"
-                        :alt="p.alt || '   '"
-                        loading="lazy"
-                        class="album-img"
-                        :class="{ 'has-thumb': !!p.thumb }"
-                      >
-                      <div v-if="p.alt" class="album-info">
-                        <span class="album-text">{{ p.alt }}</span>
+                    <a
+                      v-for="(p, i) in group"
+                      :key="p.src"
+                      class="album-item group"
+                      :href="p.src"
+                      :data-sub-html="p.alt || '&nbsp;'"
+                      :style="{ '--delay': `${(i + colIndex) * 0.05}s` }"
+                    >
+                      <div class="album-img-wrapper">
+                        <img
+                          :src="p.thumb || p.src"
+                          :data-full="p.src"
+                          :alt="p.alt || '   '"
+                          loading="lazy"
+                          class="album-img"
+                          :class="{ 'has-thumb': !!p.thumb }"
+                        >
+                        <div v-if="p.alt" class="album-info">
+                          <span class="album-text">{{ p.alt }}</span>
+                        </div>
                       </div>
-                    </div>
-                  </a>
+                    </a>
+                  </div>
                 </div>
                 
                 <!-- 底部返回 (Bottom Flow Button) -->
@@ -723,14 +751,24 @@ function upgradeToFull(img: HTMLImageElement) {
   font-weight: bold;
   font-size: 1.2rem;
 }
-/* Masonry 布局 (复用之前逻辑，微调参数) */
+/* Js-Driven Masonry */
 .album-masonry {
-  column-count: var(--album-columns, 3); /* 默认3列 */
-  column-gap: 20px;
+  display: flex !important;
+  align-items: flex-start;
+  gap: 20px; /* Force sync with defaultGap */
+  width: 100%;
+  margin: 0 auto;
+}
+.masonry-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
 }
 .album-item {
-  break-inside: avoid;
-  margin-bottom: 20px;
+  /* break-inside: avoid; */
+  margin-bottom: 0px; /* Use gap */
   width: 100%;
   display: block;
   position: relative;
@@ -761,8 +799,10 @@ function upgradeToFull(img: HTMLImageElement) {
   background: #f0f0f0;
 }
 /* 几何裁切：更温和一点，防止过于夸张 */
-.album-item:nth-child(odd) .album-img-wrapper { border-radius: 16px 2px 16px 2px; }
-.album-item:nth-child(even) .album-img-wrapper { border-radius: 2px 16px 2px 16px; }
+.masonry-col:nth-child(odd) .album-item:nth-child(odd) .album-img-wrapper { border-radius: 16px 2px 16px 2px; }
+.masonry-col:nth-child(odd) .album-item:nth-child(even) .album-img-wrapper { border-radius: 2px 16px 2px 16px; }
+.masonry-col:nth-child(even) .album-item:nth-child(odd) .album-img-wrapper { border-radius: 2px 16px 2px 16px; }
+.masonry-col:nth-child(even) .album-item:nth-child(even) .album-img-wrapper { border-radius: 16px 2px 16px 2px; }
 
 .album-img {
   width: 100%;
@@ -845,16 +885,16 @@ function upgradeToFull(img: HTMLImageElement) {
 }
 
 @media (max-width: 1100px) { 
-  .album-masonry { column-count: 3 !important; } 
+  /* .album-masonry { column-count: 3 !important; } */
   .section-title { font-size: 2.2rem; }
 }
 @media (max-width: 800px) { 
-  .album-masonry { column-count: 2 !important; } 
+  /* .album-masonry { column-count: 2 !important; } */
   .album-header { margin-bottom: 1.5rem; }
   .section-title { font-size: 1.8rem; }
 }
 @media (max-width: 520px) { 
-  .album-masonry { column-count: 1 !important; } 
+  /* .album-masonry { column-count: 1 !important; } */
   .header-main { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
   .section-meta { text-align: left; max-width: 100%; border-left: 2px solid var(--sakura-c-brand); padding-left: 0.8rem; margin-top: 0.5rem; }
   
