@@ -2,7 +2,7 @@
 layout: post
 title: UE5前置知识
 date: 2026-01-02 14:16:54
-updated: 2026-01-19 00:24:05
+updated: 2026-03-05 17:37:30
 categories: UE5
 tags:
   - UE5
@@ -174,6 +174,8 @@ DrawDebugXXXX(GetWorld(), .......);
   由于欧拉角是设定了三个轴的变换顺序，内部的轴无法带动外部的轴旋转，因此当 Y 轴旋转 90 度时，X 轴和 Z 轴会重合，此时增大 X 轴旋转也仅仅是在原来的 X 轴上旋转，从直观意义上来看是按照 Z 轴旋转的，这就导致了一个自由度的丧失。
 
   参考视频：[无伤理解欧拉角中的“万向死锁”现象](https://www.bilibili.com/video/BV1Nr4y1j7kn/?share_source=copy_web&vd_source=25a9a10c6f978860f97af02e1668351a)
+
+  [四元数参考文章](/posts/games101.md#四元数)
   :::
 
 ## UPROPERTY 的常用属性
