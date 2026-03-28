@@ -43,10 +43,10 @@ declare module 'vue-router/auto-routes' {
     '/posts/games101': RouteRecordInfo<'/posts/games101', '/posts/games101', Record<never, never>, Record<never, never>>,
     '/posts/gccSimpleLearn': RouteRecordInfo<'/posts/gccSimpleLearn', '/posts/gccSimpleLearn', Record<never, never>, Record<never, never>>,
     '/posts/JapanTravel': RouteRecordInfo<'/posts/JapanTravel', '/posts/JapanTravel', Record<never, never>, Record<never, never>>,
-    '/posts/UE5_DotProduct': RouteRecordInfo<'/posts/UE5_DotProduct', '/posts/UE5_DotProduct', Record<never, never>, Record<never, never>>,
-    '/posts/UE5_LifeTime': RouteRecordInfo<'/posts/UE5_LifeTime', '/posts/UE5_LifeTime', Record<never, never>, Record<never, never>>,
-    '/posts/UE5_Overlapping': RouteRecordInfo<'/posts/UE5_Overlapping', '/posts/UE5_Overlapping', Record<never, never>, Record<never, never>>,
+    '/posts/UE5_GAS': RouteRecordInfo<'/posts/UE5_GAS', '/posts/UE5_GAS', Record<never, never>, Record<never, never>>,
+    '/posts/UE5_UObject': RouteRecordInfo<'/posts/UE5_UObject', '/posts/UE5_UObject', Record<never, never>, Record<never, never>>,
     '/posts/UE5前置知识': RouteRecordInfo<'/posts/UE5前置知识', '/posts/UE5前置知识', Record<never, never>, Record<never, never>>,
+    '/posts/VirtualFunction': RouteRecordInfo<'/posts/VirtualFunction', '/posts/VirtualFunction', Record<never, never>, Record<never, never>>,
     '/posts/zenbrowser': RouteRecordInfo<'/posts/zenbrowser', '/posts/zenbrowser', Record<never, never>, Record<never, never>>,
     '/posts/一致性哈希算法': RouteRecordInfo<'/posts/一致性哈希算法', '/posts/一致性哈希算法', Record<never, never>, Record<never, never>>,
     '/posts/九个二叉树常见问题': RouteRecordInfo<'/posts/九个二叉树常见问题', '/posts/九个二叉树常见问题', Record<never, never>, Record<never, never>>,
@@ -62,6 +62,7 @@ declare module 'vue-router/auto-routes' {
     '/posts/大数据查重': RouteRecordInfo<'/posts/大数据查重', '/posts/大数据查重', Record<never, never>, Record<never, never>>,
     '/posts/数字信号处理': RouteRecordInfo<'/posts/数字信号处理', '/posts/数字信号处理', Record<never, never>, Record<never, never>>,
     '/posts/数字信号处理Matlab': RouteRecordInfo<'/posts/数字信号处理Matlab', '/posts/数字信号处理Matlab', Record<never, never>, Record<never, never>>,
+    '/posts/智能指针': RouteRecordInfo<'/posts/智能指针', '/posts/智能指针', Record<never, never>, Record<never, never>>,
     '/posts/栈与队列': RouteRecordInfo<'/posts/栈与队列', '/posts/栈与队列', Record<never, never>, Record<never, never>>,
     '/posts/红黑树': RouteRecordInfo<'/posts/红黑树', '/posts/红黑树', Record<never, never>, Record<never, never>>,
     '/posts/通信原理': RouteRecordInfo<'/posts/通信原理', '/posts/通信原理', Record<never, never>, Record<never, never>>,
@@ -181,20 +182,20 @@ declare module 'vue-router/auto-routes' {
       routes: '/posts/JapanTravel'
       views: never
     }
-    'pages/posts/UE5_DotProduct.md': {
-      routes: '/posts/UE5_DotProduct'
+    'pages/posts/UE5_GAS.md': {
+      routes: '/posts/UE5_GAS'
       views: never
     }
-    'pages/posts/UE5_LifeTime.md': {
-      routes: '/posts/UE5_LifeTime'
-      views: never
-    }
-    'pages/posts/UE5_Overlapping.md': {
-      routes: '/posts/UE5_Overlapping'
+    'pages/posts/UE5_UObject.md': {
+      routes: '/posts/UE5_UObject'
       views: never
     }
     'pages/posts/UE5前置知识.md': {
       routes: '/posts/UE5前置知识'
+      views: never
+    }
+    'pages/posts/VirtualFunction.md': {
+      routes: '/posts/VirtualFunction'
       views: never
     }
     'pages/posts/zenbrowser.md': {
@@ -255,6 +256,10 @@ declare module 'vue-router/auto-routes' {
     }
     'pages/posts/数字信号处理Matlab.md': {
       routes: '/posts/数字信号处理Matlab'
+      views: never
+    }
+    'pages/posts/智能指针.md': {
+      routes: '/posts/智能指针'
       views: never
     }
     'pages/posts/栈与队列.md': {
