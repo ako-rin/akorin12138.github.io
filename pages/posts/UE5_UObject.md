@@ -2,7 +2,7 @@
 layout: post
 title: UE5 UObject
 date: 2026-03-25 21:00:34
-updated: 2026-03-29 22:44:23
+updated: 2026-03-30 00:49:23
 categories: UE5
 tags:
   - UE5
@@ -27,7 +27,9 @@ end: false
 
 <!-- more -->
 
-## 
+## UObject 继承树
+
+首先是总览：
 
 ```mermaid
 classDiagram
@@ -107,17 +109,26 @@ graph TD
     %% ================= 核心 4 指针连线 =================
     
     %% 1. Outer (我归谁管)
-    Obj_Player -->|"1. Outer指针<br/>(决定生存周期)"| Obj_Level
+    Obj_Player -->|"Outer指针<br/>(决定生存周期)"| Obj_Level
     
     %% 2. ClassPrivate (我是谁)
-    Obj_Player -->|"2. ClassPrivate指针<br/>(寻找自身定义)"| Meta_Class
+    Obj_Player -->|"ClassPrivate指针<br/>(寻找自身定义)"| Meta_Class
     
     %% 3. SuperStruct (祖先是谁)
-    Meta_Class -->|"3. SuperStruct指针<br/>(向上查找继承链)"| Meta_ParentClass
+    Meta_Class -->|"SuperStruct指针<br/>(向上查找继承链)"| Meta_ParentClass
     
     %% 4. Children (肚子里有什么)
-    Meta_Class -->|"4. Children指针<br/>(获取类成员)"| Prop_Health
+    Meta_Class -->|"Children指针<br/>(获取类成员)"| Prop_Health
 
     %% 顺带展示一下链表是怎么工作的
     Prop_Health -.->|"Next指针"| Prop_Shield
 ```
+
+## UObject 生命周期
+
+## 反射系统
+
+## GC
+
+## 序列化
+
