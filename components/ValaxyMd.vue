@@ -2,7 +2,6 @@
 import type { Post } from 'valaxy'
 import { onContentUpdated, runContentUpdated, useAplayer, useCodePen, useCopyCode, useMediumZoom, wrapTable, useSiteConfig, useFrontmatter } from 'valaxy'
 import { onMounted, onUpdated, ref } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useCodeGroups } from 'valaxy/client/composables/codeGroups.ts'
 import { useVanillaLazyLoad } from 'valaxy/client/composables/features/vanilla-lazyload.ts'
 import { useEventListener } from '@vueuse/core'
@@ -11,8 +10,6 @@ const props = defineProps<{
   frontmatter: Post
   excerpt?: string
 }>()
-
-const { t } = useI18n()
 
 const contentRef = ref()
 onContentUpdated(() => {

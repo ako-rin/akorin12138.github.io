@@ -2,7 +2,7 @@
 layout: post
 title: UE5 UObject
 date: 2026-03-25 21:00:34
-updated: 2026-03-29 01:14:38
+updated: 2026-03-29 22:44:23
 categories: UE5
 tags:
   - UE5
@@ -28,3 +28,96 @@ end: false
 <!-- more -->
 
 ## 
+
+```mermaid
+classDiagram
+    direction BT
+    %% 采用 Bottom-To-Top (从下向上) 排版，最符合 C++ 认爹的视觉直觉
+
+    %% --- 第一层：宏观包 ---
+    class UPackage {
+        +UMetaData* MetaData
+    }
+    UPackage --|> UObject
+
+    %% --- 第二层：反射基类 ---
+    class UField {
+        +UField* Next
+    }
+    UField --|> UObject
+
+    %% --- 第三层：具体反射类型 ---
+    class UEnum {
+        +TArray~FNameData~ Names
+    }
+    UEnum --|> UField
+
+    class UStruct {
+        +UStruct* SuperStruct
+        +UField* Children
+        +FProperty* PropertyLink
+    }
+    UStruct --|> UField
+
+    %% --- 第四层：终极图纸实体 ---
+    class UClass {
+        +UObject* ClassDefaultObject
+        +TMap~FName, UFunction*~ FuncMap
+    }
+    UClass --|> UStruct
+
+    class UScriptStruct {
+        +ICppStructOps* CppStructOps
+    }
+    UScriptStruct --|> UStruct
+
+    class UFunction {
+        +FNativeFuncPtr Func
+        +EFunctionFlags FunctionFlags
+    }
+    UFunction --|> UStruct
+
+    %% --- 样式与注释 ---
+    note for UObject "万物起源"
+    note for UStruct "具备『嵌套』能力的复合元数据"
+    note for UClass "带有虚表、受 GC 保护的类的说明书"
+    
+```
+
+```mermaid
+graph TD
+    %% 定义样式
+    classDef instance fill:#1e3a8a,stroke:#3b82f6,stroke-width:2px,color:#fff
+    classDef meta fill:#064e3b,stroke:#10b981,stroke-width:2px,color:#fff
+    classDef property fill:#7c2d12,stroke:#f97316,stroke-width:2px,color:#fff
+
+    subgraph InstanceWorld [游戏运行时的内存实例世界]
+        Obj_Level[关卡实例: ULevel]:::instance
+        Obj_Player[玩家实例: ABlasterCharacter]:::instance
+    end
+
+    subgraph MetaWorld [引擎底层的反射图纸世界]
+        Meta_ParentClass[父类图纸: ACharacter 的 UClass]:::meta
+        Meta_Class[当前类图纸: ABlasterCharacter 的 UClass]:::meta
+        
+        Prop_Health[属性链表头: Health FProperty]:::property
+        Prop_Shield[链表第二项: Shield FProperty]:::property
+    end
+
+    %% ================= 核心 4 指针连线 =================
+    
+    %% 1. Outer (我归谁管)
+    Obj_Player -->|"1. Outer指针<br/>(决定生存周期)"| Obj_Level
+    
+    %% 2. ClassPrivate (我是谁)
+    Obj_Player -->|"2. ClassPrivate指针<br/>(寻找自身定义)"| Meta_Class
+    
+    %% 3. SuperStruct (祖先是谁)
+    Meta_Class -->|"3. SuperStruct指针<br/>(向上查找继承链)"| Meta_ParentClass
+    
+    %% 4. Children (肚子里有什么)
+    Meta_Class -->|"4. Children指针<br/>(获取类成员)"| Prop_Health
+
+    %% 顺带展示一下链表是怎么工作的
+    Prop_Health -.->|"Next指针"| Prop_Shield
+```

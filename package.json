@@ -13,6 +13,7 @@
     "update:ts": "node scripts/update-timestamp.mjs"
   },
   "dependencies": {
+    "@panzoom/panzoom": "^4.6.1",
     "gray-matter": "^4.0.3",
     "lightgallery": "2.9.0-beta.1",
     "valaxy": "0.26.3",
@@ -28,8 +29,8 @@
     "@iconify-json/fa6-solid": "^1.2.3",
     "@iconify-json/hugeicons": "^1.2.3",
     "@iconify-json/line-md": "^1.2.8",
-    "typescript": "^5.8.3",
     "simple-git-hooks": "^2.13.1",
+    "typescript": "^5.8.3",
     "vite": "^7.0.5"
   },
   "simple-git-hooks": {

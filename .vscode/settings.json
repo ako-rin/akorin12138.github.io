@@ -55,5 +55,8 @@
 "markdown.preview.breaks": true, // VSCode 自带预览换行
 "files.trimTrailingWhitespace": false,
 "prettier.trimTrailingWhitespace": false,
+"chat.tools.terminal.autoApprove": {
+  "type": true
+},
 // 允许 Markdown 中的行尾空格（由 markdownlint 配置禁用 MD009 实现）
 }
