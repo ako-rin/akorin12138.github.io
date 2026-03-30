@@ -2,7 +2,7 @@
 layout: post
 title: UE5 UObject
 date: 2026-03-25 21:00:34
-updated: 2026-03-31 01:41:49
+updated: 2026-03-31 01:53:05
 categories: UE5
 tags:
   - UE5
@@ -140,135 +140,88 @@ classDiagram
 
 ```mermaid
 graph TD
-    %% 定义样式
-    classDef instance fill:#1e3a8a,stroke:#3b82f6,stroke-width:2px,color:#fff
-    classDef meta fill:#064e3b,stroke:#10b981,stroke-width:2px,color:#fff
-    classDef property fill:#7c2d12,stroke:#f97316,stroke-width:2px,color:#fff
-
-    subgraph InstanceWorld [游戏运行时的内存实例世界]
-        Obj_Level[关卡实例: ULevel]:::instance
-        Obj_Player[玩家实例: ABlasterCharacter]:::instance
+    subgraph Phase1 [第一阶段 引擎启动期 UObject底层注册]
+        A[OS加载模块DLL] --> B[C++静态初始化 压入待注册队列]
+        B --> C[触发委托 ProcessNewlyLoadedUObjects]
+        C --> D[构造UClass 图纸解析与依赖链接]
+        D --> E[注册收尾与批量构造CDO]
+        E --> F[底层实例化 CreateDefaultObject]
+        F --> G[内存分配与数据继承 从父类Memcpy]
+        G --> H[执行C++默认无参构造函数]
     end
 
-    subgraph MetaWorld [引擎底层的反射图纸世界]
-        Meta_ParentClass[父类图纸: ACharacter 的 UClass]:::meta
-        Meta_Class[当前类图纸: ABlasterCharacter 的 UClass]:::meta
-        
-        Prop_Health[属性链表头: Health FProperty]:::property
-        Prop_Shield[链表第二项: Shield FProperty]:::property
-    end
+    H --> I{AActor进入游戏世界的方式}
 
-    %% ================= 核心 4 指针连线 =================
-    
-    %% 1. Outer (我归谁管)
-    Obj_Player -->|"Outer指针<br/>(决定生存周期)"| Obj_Level
-    
-    %% 2. ClassPrivate (我是谁)
-    Obj_Player -->|"ClassPrivate指针<br/>(寻找自身定义)"| Meta_Class
-    
-    %% 3. SuperStruct (祖先是谁)
-    Meta_Class -->|"SuperStruct指针<br/>(向上查找继承链)"| Meta_ParentClass
-    
-    %% 4. Children (肚子里有什么)
-    Meta_Class -->|"Children指针<br/>(获取类成员)"| Prop_Health
+    subgraph Phase2 [第二阶段 运行期流转 AActor为例]
+        I -->|常规关卡或磁盘加载| L[Load Actors From Disk]
+        L --> M[PostLoad 加载后处理]
+        M --> N[InitializeActorsForPlay 运行前初始化]
+        N --> S0[RouteActorInitialize 组件初始化总指挥]
+        S0 --> SL[PreInitializeComponents]
+        SL --> TL[InitializeComponents]
+        TL --> UL[PostInitializeComponents]
+        UL --> VL((BeginPlay))
 
-    %% 顺带展示一下链表是怎么工作的
-    Prop_Health -.->|"Next指针"| Prop_Shield
-```
+        I -->|Play In Editor| PIE1[Play In Editor入口]
+        PIE1 --> PIE2[所有Actor被复制到一个新世界]
+        PIE2 --> PIE3[PostDuplicate]
+        PIE3 --> N
 
-## UObject 生命周期
-
-```mermaid
-graph TD
-    subgraph Phase1 [第一阶段: 引擎启动期 - UObject底层注册]
-        A[OS 加载模块 DLL] --> B[C++ 静态初始化: 压入待注册队列]
-        B --> C[触发委托: ProcessNewlyLoadedUObjects]
-        C --> D[构造 UClass: 图纸解析与依赖链接]
-        D --> E[注册收尾与批量构造 CDO]
-        E --> F[底层实例化: CreateDefaultObject]
-        F --> G[内存分配与数据拷贝: 从父类 Memcpy]
-        G --> H[执行 C++ 默认无参构造函数]
-    end
-
-    H --> I{AActor 进入世界的方式}
-
-    subgraph Phase2 [第二阶段: 运行期流转 以AActor为例]
-        %% 磁盘加载分支 (靠左排布，为底部的复用绿线留出通道)
-        I -->|关卡/磁盘加载| L[从磁盘读取 Actor 数据]
-        L --> M[PostLoad: 加载后处理]
-        M --> N[InitializeActorsForPlay: 运行前初始化]
-        N --> S0[RouteActorInitialize: 组件路由总管]
-        S0 --> S_L[PreInitializeComponents]
-        S_L --> T_L[InitializeComponents]
-        T_L --> U_L[PostInitializeComponents]
-        U_L --> V_L((BeginPlay))
-
-        %% 常规生成分支 (居中)
         I -->|常规动态生成| J[SpawnActor]
         J --> O[PostSpawnInitialize]
-        O --> O1[PostActorCreated: C++ 专属早期回调]
-        O1 --> O2[ExecuteConstruction: 跨界调用]
-        O2 --> P[OnConstruction: 执行蓝图构造脚本]
+        O --> O1[PostActorCreated C++早期回调]
+        O1 --> O2[ExecuteConstruction 底层封装]
+        O2 --> P[OnConstruction 蓝图构造]
         P --> P1[PostActorConstruction]
-        P1 --> S_S[PreInitializeComponents]
-        S_S --> T_S[InitializeComponents]
-        T_S --> U_S[PostInitializeComponents]
-        U_S --> V1[OnActorSpawned: 生成完毕事件]
-        V1 --> V_S((BeginPlay))
+        P1 --> SS[PreInitializeComponents]
+        SS --> TS[InitializeComponents]
+        TS --> US[PostInitializeComponents]
+        US --> V1[OnActorSpawned 生成完毕事件]
+        V1 --> VS((BeginPlay))
 
-        %% 延迟生成分支 (靠右)
         I -->|延迟动态生成| K[SpawnActorDeferred]
         K --> Q1[PostSpawnInitialize]
-        Q1 --> Q2[PostActorCreated: 此时内存已分配]
-        Q2 -.->|挂起流程: 开放暴露变量赋值| R[手动调用 FinishSpawningActor]
+        Q1 --> Q2[PostActorCreated 此时内存已分配]
+        Q2 -.->|挂起流程 在此阶段塞入暴露变量| R[手动调用FinishSpawningActor]
         R --> O2
 
-        %% 殊途同归
-        V_L --> W[游戏正常运行: Actor 执行 Tick]
-        V_S --> W
+        VL --> W[游戏正常运行 Actor开始Tick]
+        VS --> W
     end
 
     W --> X{触发销毁或休眠条件}
 
-    subgraph Phase3 [第三阶段: 毁灭 休眠与回收 - GC机制]
-        X -->|调用 Destroy 或关卡退出| Y[EndPlay: 退出游戏逻辑]
-        Y --> Z[UninitializeComponents: 组件休眠与反注册]
+    subgraph Phase3 [第三阶段 回收 与 GC机制]
+        X -->|调用Destroy或关卡退出| Y[EndPlay 退出游戏逻辑]
+        Y --> Z[UninitializeComponents 组件休眠反注册]
 
-        %% 完美从左侧包抄的流加载复用连线
-        Z -.->|大世界流加载: 唤醒并复用内存| S0
-
-        Z --> AA[从 ULevel 的 Actor 数组中剔除]
-        AA --> AB[标记为垃圾: Actor Marked RF_PendingKill]
-
-        AB -.->|等待下一次 GC 扫描周期| AC[BeginDestroy: 异步释放原生资源]
-        AC --> AD[IsReadyForFinishDestroy: 引擎轮询确认]
-        AD --> AE((FinishDestroy: 彻底析构交还内存池))
+        %% 核心改动：先声明向下走的主线，让引擎优先排布
+        Z --> AA[从ULevel的Actor数组中移除]
+        AA --> AB[Actor被标记为垃圾 RF PendingKill]
+        
+        %% 后声明向上的虚线，诱导引擎向左侧避让
+        Z -.->|大世界流加载 唤醒并复用Actor| S0
+        
+        AB -.->|等待下一次GC扫描周期| AC[BeginDestroy 异步释放原生资源]
+        AC --> AD[IsReadyForFinishDestroy 引擎轮询确认]
+        AD --> AE((FinishDestroy 彻底析构交还内存池))
     end
-
-    %% --- 语义化教学配色 ---
-    %% 灰色系：底层无感情的初始化
+    
     classDef phase1 fill:#f8f9fa,stroke:#adb5bd,stroke-width:2px;
-    %% 浅蓝系：平稳的磁盘读取
     classDef loadBranch fill:#e3f2fd,stroke:#64b5f6,stroke-width:2px;
-    %% 浅绿系：生机勃勃的动态生成
+    classDef pieBranch fill:#fffde7,stroke:#fbc02d,stroke-width:2px;
     classDef spawnBranch fill:#e8f5e9,stroke:#81c784,stroke-width:2px;
-    %% 橙色系：需要注意的挂起操作
     classDef deferBranch fill:#fff3e0,stroke:#ffb74d,stroke-width:2px;
-    %% 红色系：危险的销毁流程
     classDef destroyPhase fill:#ffebee,stroke:#e57373,stroke-width:2px;
-
-    %% 🌟 面试必考里程碑高亮 (亮黄色加粗框) 🌟
     classDef milestone fill:#fff9c4,stroke:#fbc02d,stroke-width:3px,color:#000;
 
-    %% 应用 Class
     class A,B,C,D,E,F,G,H phase1;
-    class L,M,N,S0,S_L,T_L,U_L loadBranch;
-    class O,O1,O2,P,P1,S_S,T_S,U_S,V1 spawnBranch;
-    class Q1,Q2 deferBranch;
+    class L,M,N,S0,SL,TL,UL loadBranch;
+    class PIE1,PIE2,PIE3 pieBranch;
+    class J,O,O1,O2,P,P1,SS,TS,US,V1 spawnBranch;
+    class K,Q1,Q2 deferBranch;
     class Y,Z,AA,AB,AC,AD,AE destroyPhase;
-
-    %% 高亮关键节点
-    class I,J,K,R,V_L,V_S,W milestone;
+    class I,J,K,R,VL,VS,W,PIE1 milestone;
 ```
 
 ## 反射系统
