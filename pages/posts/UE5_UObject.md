@@ -2,7 +2,7 @@
 layout: post
 title: UE5 UObject
 date: 2026-03-25 21:00:34
-updated: 2026-03-31 01:53:05
+updated: 2026-03-31 01:56:32
 categories: UE5
 tags:
   - UE5
@@ -137,6 +137,8 @@ classDiagram
     ```
     - 对于 `UCLASS` 和 `USTRUCT`，UHT 不会为它们生成额外的包装结构体。因为它们的内存布局（占用字节、成员顺序）在 C++ 编译时就已固定。UHT 仅利用 STRUCT_OFFSET 宏，提取并记录每个 UPROPERTY 相对于对象首地址的内存偏移量。运行时引擎直接依靠这些偏移量进行内存寻址。
 3. 当引擎启动时，开始执行这些 `.gen.cpp` 代码。实例化 `UFucntion`、`UClass` 等反射对象，将它们串联成树（建立继承链和属性链表）。在这个过程中，构建类本身的构造函数包装器也会被记录下来。当 `UClass` 实例完全被创建出来后，引擎再通过 `UClass` 中记录的信息实例化 **类本身这个实体** （即创建 CDO 对象）。
+
+## UObject 生命周期
 
 ```mermaid
 graph TD
