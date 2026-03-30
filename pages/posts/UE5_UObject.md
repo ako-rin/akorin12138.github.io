@@ -2,7 +2,7 @@
 layout: post
 title: UE5 UObject
 date: 2026-03-25 21:00:34
-updated: 2026-03-30 18:23:54
+updated: 2026-03-31 01:34:20
 categories: UE5
 tags:
   - UE5
@@ -115,19 +115,24 @@ classDiagram
         static UFunction* ReturnFunction = nullptr;
         if (!ReturnFunction)
         {
-            UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_ABlasterCharacter_ShowSniperScopeWidget_Statics::FuncParams);
+            UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_ABlasterCharacter_ShowSniperScopeWidget_Statics::FuncParams);  // FuncParams 为前面构造的参数结构体，里面包含了参数、大小、偏移量等信息
         }
         return ReturnFunction;
     }
     ```
+
     此外，UHT 还会为纯蓝图实现的函数通过 `ProcessEvent` 接口来让C++访问。顺带一提，RPC 拦截器拦截到需网络同步的函数时，也会通过这种方式来找反射表中的函数进行调用。
     ```cpp
+    struct BlasterCharacter_eventShowSniperScopeWidget_Parms
+    {
+        bool bShowScope;
+    };
     void ABlasterCharacter::ShowSniperScopeWidget(bool bShowScope)
     {
-        BlasterCharacter_eventShowSniperScopeWidget_Parms Parms; // 前面构造的参数结构体
+        BlasterCharacter_eventShowSniperScopeWidget_Parms Parms;
         Parms.bShowScope=bShowScope ? true : false;
         UFunction* Func = FindFunctionChecked(NAME_ABlasterCharacter_ShowSniperScopeWidget);
-        ProcessEvent(Func,&Parms); // 在这里传入
+        ProcessEvent(Func,&Parms);
     }
     ```
     - 对于 `UCLASS` 和 `USTRUCT`，UHT 不会为它们生成额外的包装结构体。因为它们的内存布局（占用字节、成员顺序）在 C++ 编译时就已固定。UHT 仅利用 STRUCT_OFFSET 宏，提取并记录每个 UPROPERTY 相对于对象首地址的内存偏移量。运行时引擎直接依靠这些偏移量进行内存寻址。
@@ -173,6 +178,93 @@ graph TD
 
 ## UObject 生命周期
 
+```mermaid
+graph TD
+    subgraph Phase1 [第一阶段: 引擎启动期 UObject底层注册]
+        A[OS 加载 Module DLL] --> B[C++ 静态初始化: 压入待注册队列]
+        B --> C[触发委托: ProcessNewlyLoadedUObjects]
+        C --> D[构造 UClass: 图纸解析与依赖链接]
+        D --> E[注册收尾与批量构造 CDO]
+        E --> F[底层实例化: CreateDefaultObject]
+        F --> G[内存分配与数据继承: 从父类 Memcpy]
+        G --> H[执行 C++ 默认无参构造函数]
+    end
+
+    H --> I{AActor 进入世界的方式}
+
+    subgraph Phase2 [第二阶段: 运行期流转 AActor专属生命周期]
+        %% 将加载分支放在最前面声明，强制引擎将其排布在画布最左侧
+        I -->|磁盘加载| L[Load Actors From Disk]
+        L --> M[PostLoad]
+        M --> N[InitializeActorsForPlay]
+        N --> S0[RouteActorInitialize: 路由总管]
+        S0 --> S_L[PreInitializeComponents]
+        S_L --> T_L[InitializeComponents]
+        T_L --> U_L[PostInitializeComponents]
+        U_L --> V_L((BeginPlay))
+
+        %% 常规生成分支放中间
+        I -->|常规生成| J[SpawnActor]
+        J --> O[PostSpawnInitialize]
+        O --> O1[PostActorCreated]
+        O1 --> O2[ExecuteConstruction]
+        O2 --> P[OnConstruction: 蓝图构造]
+        P --> P1[PostActorConstruction]
+        P1 --> S_S[PreInitializeComponents]
+        S_S --> T_S[InitializeComponents]
+        T_S --> U_S[PostInitializeComponents]
+        U_S --> V1[OnActorSpawned]
+        V1 --> V_S((BeginPlay))
+
+        %% 延迟生成分支放右侧
+        I -->|延迟生成| K[SpawnActorDeferred]
+        K --> Q1[PostSpawnInitialize]
+        Q1 --> Q2[PostActorCreated]
+        Q2 -.->|挂起流程: 等待传参| R[手动调用 FinishSpawningActor]
+        R --> O2
+
+        V_L --> W[The application is running and the Actor is Ticking]
+        V_S --> W
+    end
+
+    W --> X{触发销毁或休眠条件}
+
+    subgraph Phase3 [第三阶段: 毁灭休眠与回收 GC机制]
+        X -->|调用Destroy或关卡退出| Y[EndPlay: 退出逻辑]
+        Y --> Z[UninitializeComponents: 组件休眠反注册]
+
+        %% 因为 S0 在最左侧，这条线现在会自然从左边绕上去
+        Z -.->|大世界流加载 内存复用| S0
+
+        Z --> AA[从 ULevel 的 Actor 数组中移除]
+        AA --> AB[Actor marked RF_PendingKill]
+
+        AB -.->|等待 GC 扫描| AC[BeginDestroy: 异步释放资源]
+        AC --> AD[IsReadyForFinishDestroy: 轮询确认]
+        AD --> AE((FinishDestroy: 彻底析构))
+    end
+
+    %% 1. 基础模块配色 (匹配官方)
+    classDef initNode fill:#eeeeee,stroke:#9e9e9e,stroke-width:2px;
+    classDef loadNode fill:#1976d2,stroke:#0d47a1,stroke-width:2px,color:#ffffff;
+    classDef spawnNode fill:#bbdefb,stroke:#1976d2,stroke-width:2px;
+    classDef deferNode fill:#ffcc80,stroke:#ef6c00,stroke-width:2px;
+    classDef destroyNode fill:#ffebee,stroke:#c62828,stroke-width:2px;
+    classDef loopNode fill:#f1f8e9,stroke:#33691e,stroke-width:2px;
+
+    %% 2. 关键周期点高亮特效 (金色醒目框)
+    classDef milestone fill:#fff59d,stroke:#f57f17,stroke-width:4px,color:#000000;
+
+    %% 应用基础颜色
+    class A,B,C,D,E,F,G,H initNode;
+    class L,M,N,S0,S_L,T_L,U_L loadNode;
+    class O,O1,O2,P,P1,S_S,T_S,U_S,V1 spawnNode;
+    class Q1,Q2 deferNode;
+    class Y,Z,AA,AB,AC,AD,AE destroyNode;
+
+    %% 应用关键点高亮 (生成入口、完成生成、BeginPlay、Tick)
+    class I,J,K,R,V_L,V_S,W milestone;
+```
 
 ## 反射系统
 
