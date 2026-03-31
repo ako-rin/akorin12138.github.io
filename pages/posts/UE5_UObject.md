@@ -2,7 +2,7 @@
 layout: post
 title: UE5 UObject
 date: 2026-03-25 21:00:34
-updated: 2026-03-31 01:56:32
+updated: 2026-03-31 16:20:49
 categories: UE5
 tags:
   - UE5
@@ -140,16 +140,40 @@ classDiagram
 
 ## UObject 生命周期
 
+`UObject` 的生命周期可以划分为三个大的阶段，而不仅仅只是 `BeginPlay` -> `Tick` -> `Destroy`
+
+1. 引擎启动期（UObject 底层注册与 CDO 构造）
+   此时游戏世界（World）还未创建，这个阶段主要是完成反射数据的收集以及默认模板的创建。  
+    - UClass 构造与注册：引擎运行由 UHT生成的 `.gen.cpp` 文件，构造出一个个 `UClass` 对象，并将它们注册到全局反射系统中。
+    - CDO 构造：在 `UClass` 注册完成后，底层会调用 `CreateDefaultObject` 来实例化 CDO（Class Default Object）。CDO 是一个特殊的对象，作为该类的默认模板存在。它会调用 C++ 的默认无参构造函数来进行初始化，但此时游戏世界还未创建，因此无法访问任何与游戏运行相关的功能。
+   :::warning
+    因此，**绝对不能在 C++ 构造函数中调用 `GetWorld()` 或其它与游戏运行期相关的逻辑（生成特效、寻路等）。** CDO 在创建时游戏还未启动，调用时必会触发空指针。只允许进行组件创建（`CreateDefaultSubobject`）和变量赋初始值。
+   :::
+2. 运行期流转（以 AActor 为例）
+   当调用 `NewObject` 或 `SpawnActor` 时，对象正式进入游戏世界。根据应用场景，有三种方式来生成 Actor ：
+   - 关卡加载（从磁盘中加载）：通过序列化数据反序列化恢复状态，随后由 `RouteActorInitialize` 统筹所有组件的物理和渲染注册。用于直接将 Actor 放在关卡中，或通过流加载动态加载关卡时。
+   - 常规动态生成：底层通过 `ExecuteConstruction` 跨界调用蓝图的 `Construction Script`，随后进入组件初始化，最终抛出 `OnActorSpawned` 并执行 `BeginPlay`。
+   这种方式适用于游戏运行时动态生成 Actor 的场景，如玩家通过某个交互生成一个道具，往往这种 Actor 不需要外部传参，直接生成。
+   - 延迟动态生成：常规生成的特殊方式。引擎在分配完内存、完成早期 C++ 回调（`PostActorCreated`）后会 **强制挂起（暂停）** 生成流程，返回一个半成品指针。此时开发者可以安全地对其“暴露的变量（Expose On Spawn）”进行赋值。赋值完成后，必须手动调用 `FinishSpawningActor`，引擎才会放行，让它继续走完蓝图构造和 BeginPlay。  
+   这种方式适用于 **需要在生成时传入参数的场景** ，如玩家通过某个交互生成一个道具，但这个道具的属性（类型、颜色等）需要根据玩家的选择来定。
+3. 毁灭、休眠与回收（GC）
+   - 调用 `Destroy()` 后，Actor 会执行 `EndPlay()` 退出游戏逻辑循环，剥离组件。
+   `EndPlay()` 一般用于委托解绑、停止计时器、游戏业务结算以及视效、音效与物理的停止。`EndPlay()` 还会获取到 **停止原因 `EEndPlayReason::Type`** ，可以根据不同停止原因来做不同的处理（如 `Destroyed` 代表正常销毁，`LevelTransition` 代表关卡切换，`Quit` 代表退出游戏等）。
+
+   - 底层异步GC。确定不再需要的对象会被标记为垃圾（`RF_PendingKill`），等待下一次 GC 扫描周期。GC 会调用 `BeginDestroy()` 来异步释放原生资源，随后轮询 `IsReadyForFinishDestroy()` 来确认是否可以彻底析构（`FinishDestroy()`）并回收内存。
+
+
 ```mermaid
 graph TD
     subgraph Phase1 [第一阶段 引擎启动期 UObject底层注册]
         A[OS加载模块DLL] --> B[C++静态初始化 压入待注册队列]
         B --> C[触发委托 ProcessNewlyLoadedUObjects]
-        C --> D[构造UClass 图纸解析与依赖链接]
-        D --> E[注册收尾与批量构造CDO]
-        E --> F[底层实例化 CreateDefaultObject]
-        F --> G[内存分配与数据继承 从父类Memcpy]
-        G --> H[执行C++默认无参构造函数]
+        C --> D1[StaticAllocateObject 开辟新内存，原地构造 UClass 类模板，并建立依赖链接]
+        D1 --> D2[注册收尾管线 UObjectLoadAllCompiledInDefaultProperties] 
+        D2 --> E[内部循环调用底层 API: CreateDefaultObject]
+        E --> F[懒加载父类 CDO ，StaticAllocateObject 开辟新内存，并原地构造新的 CDO 实例]
+        F --> G[执行C++默认无参构造函数 伴随父类构造栈]
+        G --> H[FObjectInitializer接管 根据反射安全深拷贝父类属性]
     end
 
     H --> I{AActor进入游戏世界的方式}
@@ -225,6 +249,25 @@ graph TD
     class Y,Z,AA,AB,AC,AD,AE destroyPhase;
     class I,J,K,R,VL,VS,W,PIE1 milestone;
 ```
+
+:::tip `StaticAllocateObject`
+`StaticAllocateObject` 除了分配内存，还会向全局对象大数组 `GUObjectArray`（由 `FUObjectArray` 驱动）申请一个全局唯一的 `InternalIndex` （对象索引），即将分配出来的内存注册到引擎的对象管理系统中。这个索引在对象的整个生命周期内保持不变，成为引擎内部追踪和管理该对象的关键标识。
+
+普通的 `malloc` 分配的内存容易产生**内存碎片**，而 `StaticAllocateObject` 则是对接自己的内存池。在引擎启动时，引擎会预先分配一大块连续的内存作为 `UObject` 的内存池。每当需要创建一个新的 `UObject` 时，`StaticAllocateObject` 就会从这个内存池中分配一块内存，并返回给调用者。
+
+`StaticAllocateObject` 在分配出内存后，会立刻在底层调用 `FMemory::Memzero`。它强制将这块内存的每一个字节全部抹零。这为后续的 Placement New（原地构造）和 `FObjectInitializer` 属性拷贝提供了绝对纯净的内部环境，确保对象的初始状态完全可预测，避免了未初始化内存可能带来的不确定行为。
+
+同时，`StaticAllocateObject` 会精准地把对象的 `FName`（名字）、`Outer`（所属的外部对象/包）、`UClass*` 以及 `EObjectFlags`（`UObject` 标志位，如 RF_Public, RF_ClassDefaultObject）直接刻录到这块内存的头部结构中。
+
+**一句话总结：**   
+`StaticAllocateObject` 的作用： `StaticAllocateObject` 使用引擎自带的 `FUObjectArray` 分块内存池来分配内存，且为 **GC 系统的前置约束**，分配内存的同时强制在全局大名单注册 `InternalIndex`。最后，它通过 `FMemory::Memzero` 保证内存纯净，并提前注入了 `Outer` `、Name` 和 `Flags` 等元数据。
+:::
+
+:::tip 原地构造
+在引擎启动期，UClass 的构造过程采用了 **原地构造** 的方式。引擎先通过 `StaticAllocateObject` 开辟一块内存，然后引擎使用 C++ 的 **定位 `new (Placement New)` ** 特性 —— 例如 `new(AllocatedMemory) UClass(...)` 来指定在刚刚开辟的内存中构建对象。
+
+这种设计将**“内存分配”**与**“对象构造”**完美解耦，从而让 `UObject` 的内存池复用、GC 垃圾回收完全由虚幻引擎底层接管，而不再受制于操作系统的堆分配。
+:::
 
 ## 反射系统
 

@@ -458,11 +458,11 @@ body.sidebar-open, body.is-sidebar-open {
 
     /* Tip Block */
     &.tip {
-        background-color: #f3f5f7;
-        border-color: #42b983;
+        background-color: var(--va-c-brand-soft);
+        border-color: var(--va-c-brand-1);
 
         .custom-block-title {
-            color: #42b983;
+            color: var(--va-c-brand-1);
         }
         
         /* Optional: Add icon before title */
@@ -534,8 +534,11 @@ body.sidebar-open, body.is-sidebar-open {
 /* Dark mode adjustments for custom blocks */
 html.dark .custom-block {
     &.tip {
-        background-color: rgba(66, 185, 131, 0.1);
-        border-color: #42b983;
+        background-color: var(--va-c-brand-soft);
+        border-color: var(--va-c-brand-1);
+        .custom-block-title {
+            color: var(--va-c-brand-1);
+        }
     }
 
     &.warning {

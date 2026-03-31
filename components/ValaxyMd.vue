@@ -2,6 +2,7 @@
 import type { Post } from 'valaxy'
 import { onContentUpdated, runContentUpdated, useAplayer, useCodePen, useCopyCode, useMediumZoom, wrapTable, useSiteConfig, useFrontmatter } from 'valaxy'
 import { onMounted, onUpdated, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useCodeGroups } from 'valaxy/client/composables/codeGroups.ts'
 import { useVanillaLazyLoad } from 'valaxy/client/composables/features/vanilla-lazyload.ts'
 import { useEventListener } from '@vueuse/core'
@@ -10,6 +11,8 @@ const props = defineProps<{
   frontmatter: Post
   excerpt?: string
 }>()
+
+const { t } = useI18n()
 
 const contentRef = ref()
 onContentUpdated(() => {
@@ -210,7 +213,7 @@ useVanillaLazyLoad()
 
 <template>
   <article v-if="$slots.default" :class="frontmatter.markdownClass || 'markdown-body'">
-    <div v-if="frontmatter.time_warning && frontmatter.layout === 'post'" class="warning-bar text-center m-5 p-2 bg-orange-100 text-orange-600 dark:bg-orange-900 dark:text-orange-200 rounded-lg border border-orange-200 dark:border-orange-800">
+    <div v-if="frontmatter.time_warning" class="warning-bar text-center m-5 p-2 bg-orange-100 text-orange-600 dark:bg-orange-900 dark:text-orange-200 rounded-lg border border-orange-200 dark:border-orange-800">
       <div class="i-fa6-solid-triangle-exclamation inline-block mr-2" />
       <span>本文发布于较长时间前，文中所述内容可能已发生改变，请注意甄别。</span>
     </div>
