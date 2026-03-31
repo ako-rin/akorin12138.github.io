@@ -729,3 +729,40 @@ html.dark .custom-block {
   }
 }
 
+/* --- Mobile View Optimizations for Deep Nesting --- */
+@media (max-width: 768px) {
+    /* 减少列表的基础左侧缩进 */
+    .markdown-body .prose ul,
+    .markdown-body .prose ol {
+        padding: 4px 8px 4px 20px !important;
+    }
+
+    /* 进一步减小多级嵌套列表的左侧缩进，防止层级太多时正文被向右严重挤压 */
+    .markdown-body .prose ul ul,
+    .markdown-body .prose ol ol,
+    .markdown-body .prose ul ol,
+    .markdown-body .prose ol ul {
+        padding-left: 14px !important;
+    }
+
+    /* 减小提示框（如 tip/warning 等）在手机端的内外边距，节省横向空间 */
+    .custom-block {
+        padding: 0.8rem 1rem !important;
+        border-left-width: 4px !important;
+    }
+
+    /* 减小引用块(blockquote)的边距 */
+    .markdown-body blockquote {
+        padding: 6px 8px !important;
+        border-left-width: 4px !important;
+    }
+    
+    /* 弱化代码块在手机端的横向间距，给代码更多的横向显示空间 */
+    .markdown-body div[class*='language-'] {
+        margin-left: -4px;
+        margin-right: -4px;
+        border-radius: 8px !important;
+    }
+}
+
+
