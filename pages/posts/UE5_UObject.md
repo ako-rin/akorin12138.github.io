@@ -2,7 +2,7 @@
 layout: post
 title: UE5 UObject
 date: 2026-03-25 21:00:34
-updated: 2026-03-31 20:59:39
+updated: 2026-04-01 00:56:55
 categories: UE5
 tags:
   - UE5
@@ -233,12 +233,12 @@ graph TD
         AD --> AE((FinishDestroy 彻底析构交还内存池))
     end
     
-    classDef phase1 fill:#f8f9fa,stroke:#adb5bd,stroke-width:2px;
-    classDef loadBranch fill:#e3f2fd,stroke:#64b5f6,stroke-width:2px;
-    classDef pieBranch fill:#fffde7,stroke:#fbc02d,stroke-width:2px;
-    classDef spawnBranch fill:#e8f5e9,stroke:#81c784,stroke-width:2px;
-    classDef deferBranch fill:#fff3e0,stroke:#ffb74d,stroke-width:2px;
-    classDef destroyPhase fill:#ffebee,stroke:#e57373,stroke-width:2px;
+    classDef phase1 fill:#f8f9fa,stroke:#adb5bd,stroke-width:2px,color:#000;
+    classDef loadBranch fill:#e3f2fd,stroke:#64b5f6,stroke-width:2px,color:#000;
+    classDef pieBranch fill:#fffde7,stroke:#fbc02d,stroke-width:2px,color:#000;
+    classDef spawnBranch fill:#e8f5e9,stroke:#81c784,stroke-width:2px,color:#000;
+    classDef deferBranch fill:#fff3e0,stroke:#ffb74d,stroke-width:2px,color:#000;
+    classDef destroyPhase fill:#ffebee,stroke:#e57373,stroke-width:2px,color:#000;
     classDef milestone fill:#fff9c4,stroke:#fbc02d,stroke-width:3px,color:#000;
 
     class A,B,C,D,E,F,G,H phase1;
