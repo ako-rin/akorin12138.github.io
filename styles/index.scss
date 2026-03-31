@@ -467,8 +467,14 @@ body.sidebar-open, body.is-sidebar-open {
         
         /* Optional: Add icon before title */
         .custom-block-title::before {
-            content: "💡";
-            margin-right: 0.5em;
+            content: "";
+            display: inline-block;
+            width: 1.2em;
+            height: 1.2em;
+            margin-right: 0.4em;
+            background-color: currentColor;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='currentColor' d='M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9z'/%3E%3C/svg%3E") no-repeat center / 100%;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='currentColor' d='M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9z'/%3E%3C/svg%3E") no-repeat center / 100%;
         }
     }
 
@@ -482,8 +488,14 @@ body.sidebar-open, body.is-sidebar-open {
         }
 
         .custom-block-title::before {
-            content: "⚠️";
-            margin-right: 0.5em;
+            content: "";
+            display: inline-block;
+            width: 1.2em;
+            height: 1.2em;
+            margin-right: 0.4em;
+            background-color: currentColor;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='currentColor' d='M1 21h22L12 2L1 21m12-3h-2v-2h2v2m0-4h-2v-4h2v4Z'/%3E%3C/svg%3E") no-repeat center / 100%;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='currentColor' d='M1 21h22L12 2L1 21m12-3h-2v-2h2v2m0-4h-2v-4h2v4Z'/%3E%3C/svg%3E") no-repeat center / 100%;
         }
     }
 
@@ -497,8 +509,14 @@ body.sidebar-open, body.is-sidebar-open {
         }
 
         .custom-block-title::before {
-            content: "🚨";
-            margin-right: 0.5em;
+            content: "";
+            display: inline-block;
+            width: 1.2em;
+            height: 1.2em;
+            margin-right: 0.4em;
+            background-color: currentColor;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='currentColor' d='M12 2C6.47 2 2 6.5 2 12s4.47 10 10 10s10-4.5 10-10S17.5 2 12 2m5 13.59L15.59 17L12 13.41L8.41 17L7 15.59L10.59 12L7 8.41L8.41 7L12 10.59L15.59 7L17 8.41L13.41 12L17 15.59z'/%3E%3C/svg%3E") no-repeat center / 100%;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='currentColor' d='M12 2C6.47 2 2 6.5 2 12s4.47 10 10 10s10-4.5 10-10S17.5 2 12 2m5 13.59L15.59 17L12 13.41L8.41 17L7 15.59L10.59 12L7 8.41L8.41 7L12 10.59L15.59 7L17 8.41L13.41 12L17 15.59z'/%3E%3C/svg%3E") no-repeat center / 100%;
         }
     }
 
@@ -512,8 +530,14 @@ body.sidebar-open, body.is-sidebar-open {
         }
 
         .custom-block-title::before {
-            content: "ℹ️";
-            margin-right: 0.5em;
+            content: "";
+            display: inline-block;
+            width: 1.2em;
+            height: 1.2em;
+            margin-right: 0.4em;
+            background-color: currentColor;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='currentColor' d='M11 17h2v-6h-2v6m1-15C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8s8 3.59 8 8s-3.59 8-8 8M11 7h2v2h-2V7z'/%3E%3C/svg%3E") no-repeat center / 100%;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='currentColor' d='M11 17h2v-6h-2v6m1-15C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8s8 3.59 8 8s-3.59 8-8 8M11 7h2v2h-2V7z'/%3E%3C/svg%3E") no-repeat center / 100%;
         }
     }
     

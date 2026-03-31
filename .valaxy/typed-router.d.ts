@@ -43,8 +43,8 @@ declare module 'vue-router/auto-routes' {
     '/posts/games101': RouteRecordInfo<'/posts/games101', '/posts/games101', Record<never, never>, Record<never, never>>,
     '/posts/gccSimpleLearn': RouteRecordInfo<'/posts/gccSimpleLearn', '/posts/gccSimpleLearn', Record<never, never>, Record<never, never>>,
     '/posts/JapanTravel': RouteRecordInfo<'/posts/JapanTravel', '/posts/JapanTravel', Record<never, never>, Record<never, never>>,
-    '/posts/UE5_GAS': RouteRecordInfo<'/posts/UE5_GAS', '/posts/UE5_GAS', Record<never, never>, Record<never, never>>,
     '/posts/UE5_UObject': RouteRecordInfo<'/posts/UE5_UObject', '/posts/UE5_UObject', Record<never, never>, Record<never, never>>,
+    '/posts/UE5_网络同步': RouteRecordInfo<'/posts/UE5_网络同步', '/posts/UE5_网络同步', Record<never, never>, Record<never, never>>,
     '/posts/UE5前置知识': RouteRecordInfo<'/posts/UE5前置知识', '/posts/UE5前置知识', Record<never, never>, Record<never, never>>,
     '/posts/VirtualFunction': RouteRecordInfo<'/posts/VirtualFunction', '/posts/VirtualFunction', Record<never, never>, Record<never, never>>,
     '/posts/zenbrowser': RouteRecordInfo<'/posts/zenbrowser', '/posts/zenbrowser', Record<never, never>, Record<never, never>>,
@@ -182,12 +182,12 @@ declare module 'vue-router/auto-routes' {
       routes: '/posts/JapanTravel'
       views: never
     }
-    'pages/posts/UE5_GAS.md': {
-      routes: '/posts/UE5_GAS'
-      views: never
-    }
     'pages/posts/UE5_UObject.md': {
       routes: '/posts/UE5_UObject'
+      views: never
+    }
+    'pages/posts/UE5_网络同步.md': {
+      routes: '/posts/UE5_网络同步'
       views: never
     }
     'pages/posts/UE5前置知识.md': {

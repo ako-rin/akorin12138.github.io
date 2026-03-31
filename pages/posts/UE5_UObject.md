@@ -2,7 +2,7 @@
 layout: post
 title: UE5 UObject
 date: 2026-03-25 21:00:34
-updated: 2026-03-31 16:20:49
+updated: 2026-03-31 20:41:18
 categories: UE5
 tags:
   - UE5
@@ -250,7 +250,7 @@ graph TD
     class I,J,K,R,VL,VS,W,PIE1 milestone;
 ```
 
-:::tip `StaticAllocateObject`
+:::tip StaticAllocateObject
 `StaticAllocateObject` 除了分配内存，还会向全局对象大数组 `GUObjectArray`（由 `FUObjectArray` 驱动）申请一个全局唯一的 `InternalIndex` （对象索引），即将分配出来的内存注册到引擎的对象管理系统中。这个索引在对象的整个生命周期内保持不变，成为引擎内部追踪和管理该对象的关键标识。
 
 普通的 `malloc` 分配的内存容易产生**内存碎片**，而 `StaticAllocateObject` 则是对接自己的内存池。在引擎启动时，引擎会预先分配一大块连续的内存作为 `UObject` 的内存池。每当需要创建一个新的 `UObject` 时，`StaticAllocateObject` 就会从这个内存池中分配一块内存，并返回给调用者。
@@ -270,6 +270,8 @@ graph TD
 :::
 
 ## 反射系统
+
+在上文的 [生命周期](#uobject-生命周期) 中
 
 ## GC
 
