@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>摇曳风铃</title>
+        <link>https://yurin.cc/</link>
+        <description>写写笔记</description>
+        <lastBuildDate>Thu, 02 Apr 2026 07:18:26 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <image>
+            <title>摇曳风铃</title>
+            <url>https://pic.yurin.cc/80fef497e168ad8b23051a1c550d119e.webp</url>
+            <link>https://yurin.cc/</link>
+        </image>
+        <copyright>CC BY-NC-SA 4.0 2026 © yurin</copyright>
+        <atom:link href="https://yurin.cc/feed.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[UE5 网络同步]]></title>
+            <link>https://yurin.cc/posts/UE5_网络同步</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/UE5_网络同步</guid>
+            <pubDate>Thu, 02 Apr 2026 15:17:26 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>前言</h1>
+<p>从 UE5.1 开始，UE5 引擎引入了一个叫 <code>Iris</code> 的全新网络同步系统，通过桥接的方式兼容原来的 <code>Replicated</code> 系统。</p>
+<p>复制的最小单位为 <code>AActor</code> ， *</p>
+<br/><p>访问 <a href="https://yurin.cc/posts/UE5_网络同步" target="_blank">https://yurin.cc/posts/UE5_网络同步</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+        <item>
+            <title><![CDATA[四叉树]]></title>
+            <link>https://yurin.cc/posts/四叉树</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/四叉树</guid>
+            <pubDate>Thu, 02 Apr 2026 15:17:26 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>前言</h1>
+<p>四叉树是一个空间划分的数据结构，常用于游戏开发中的场景管理、碰撞检测等领域。它通过递归地将空间划分为四个象限来组织对象，从而提高查询效率。</p>
+<br/><p>访问 <a href="https://yurin.cc/posts/四叉树" target="_blank">https://yurin.cc/posts/四叉树</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+        <item>
+            <title><![CDATA[似然]]></title>
+            <link>https://yurin.cc/posts/似然</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/似然</guid>
+            <pubDate>Thu, 02 Apr 2026 07:17:45 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>似然</h1>
+<p><strong>似然</strong> 是把模型参数当作未知变量来衡量 <strong>“在给定观测数据的情况下，某个参数取值有多合理”的度量。</strong></p>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>关注的对象</th>
+<th>解释</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>概率</strong></td>
+<td>数据随机、参数已知</td>
+<td>已知模型参数时，观测到某个数据的可能性</td>
+<td>已知硬币正面概率p=0.5，抛10次出现7次正面的概率</td>
+</tr>
+<tr>
+<td><strong>似然</strong></td>
+<td>数据固定、参数未知</td>
+<td>已知观测数据时，某个参数值“解释这些数据”的合理成都</td>
+<td>观测到10次中7次正面后，硬币真实的p是多少最合理</td>
+</tr>
+</tbody>
+</table>
+<p>总的来说概率是预测 <strong>数据发生的可能性</strong> ，似然是度量 <strong>参数的合理性。</strong></p>
+<br/><p>访问 <a href="https://yurin.cc/posts/似然" target="_blank">https://yurin.cc/posts/似然</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+        <item>
+            <title><![CDATA[图神经网络]]></title>
+            <link>https://yurin.cc/posts/图神经网络</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/图神经网络</guid>
+            <pubDate>Thu, 02 Apr 2026 07:17:45 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>图神经网络</h1>
+<p>图神经网络（Graph Neural Network, GNN）是一类直接在图结构数据（节点 + 边）上进行表示学习的神经网络。它通过“消息传递 / 邻域聚合”机制，把每个节点自身特征与邻居特征迭代融合，得到包含局部结构语义的嵌入向量，供分类、预测或生成等任务使用。</p>
+<br/><p>访问 <a href="https://yurin.cc/posts/图神经网络" target="_blank">https://yurin.cc/posts/图神经网络</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+        <item>
+            <title><![CDATA[UE5 UObject]]></title>
+            <link>https://yurin.cc/posts/UE5_UObject</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/UE5_UObject</guid>
+            <pubDate>Wed, 01 Apr 2026 00:56:55 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>前言</h1>
+<p><code>UObeject</code> 算是 UE5 的万物起源了，几乎所有的东西都是由 <code>UObject</code> 派生的。</p>
+<ul>
+<li>提供元数据</li>
+<li>反射生成</li>
+<li>GC垃圾回收</li>
+<li>序列化</li>
+<li>编辑器可见</li>
+</ul>
+<p><a href="https://github.com/EpicGames/UnrealEngine">UE5 源码参考</a></p>
+<br/><p>访问 <a href="https://yurin.cc/posts/UE5_UObject" target="_blank">https://yurin.cc/posts/UE5_UObject</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+        <item>
+            <title><![CDATA[虚函数和虚继承]]></title>
+            <link>https://yurin.cc/posts/VirtualFunction</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/VirtualFunction</guid>
+            <pubDate>Mon, 30 Mar 2026 00:49:23 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>前言</h1>
+<p>虚函数是 C++ 实现多态的核心机制，理解虚函数的底层实现对于深入掌握 C++ 的面向对象特性非常重要。</p>
+<br/><p>访问 <a href="https://yurin.cc/posts/VirtualFunction" target="_blank">https://yurin.cc/posts/VirtualFunction</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+        <item>
+            <title><![CDATA[智能指针]]></title>
+            <link>https://yurin.cc/posts/智能指针</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/智能指针</guid>
+            <pubDate>Sun, 29 Mar 2026 01:14:39 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>前言</h1>
+<p>C++ 中，内存的分配与释放都是由开发者自己手动实现的，但是往往会出现忘记释放内存或者多次释放内存的问题，因此 C++ 引入了智能指针。智能指针是一个类，它在析构时自动释放所管理的对象。</p>
+<p>智能指针还是一种基于 RAII （资源获取即初始化，Resource Acquisition Is Initialization）技术的应用，</p>
+<p>:::tip RAII<br>
+RAII （资源获取即初始化，Resource Acquisition Is Initialization）但是业界更倾向于叫它 SBRM (Scope-Bound Resource Management，基于作用域的资源管理)。</p>
+<p><strong>通过利用 C++ 编译期对栈上局部变量极其严苛的生命周期管理，来强行绑定并管理堆上或其它类型的裸资源。</strong></p>
+<p>:::</p>
+<br/><p>访问 <a href="https://yurin.cc/posts/智能指针" target="_blank">https://yurin.cc/posts/智能指针</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+        <item>
+            <title><![CDATA[UE5前置知识]]></title>
+            <link>https://yurin.cc/posts/UE5前置知识</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/UE5前置知识</guid>
+            <pubDate>Thu, 05 Mar 2026 17:37:30 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>UE5前置知识</h1>
+<p>在使用 UE5 之前需要学习的一些前置知识点，都是较为浅层的内容。</p>
+<p><a href="https://github.com/EpicGames/UnrealEngine">UE5 源码参考</a></p>
+<ul>
+<li>需要 github 账号</li>
+<li>需要 Epic 账号并绑定 github 账号</li>
+<li>加入 EpicGames organization</li>
+</ul>
+<br/><p>访问 <a href="https://yurin.cc/posts/UE5前置知识" target="_blank">https://yurin.cc/posts/UE5前置知识</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+        <item>
+            <title><![CDATA[Games101 课程笔记]]></title>
+            <link>https://yurin.cc/posts/games101</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/games101</guid>
+            <pubDate>Thu, 05 Mar 2026 17:37:30 GMT</pubDate>
+            <content:encoded><![CDATA[<h2>前言</h2>
+<p>Games101 课程是计算机图形学的入门基础，从 Games101 了解图形学背后的底层逻辑与数学原理，而不局限于任何特定的图形 API（如 OpenGL 或 DirectX）。</p>
+<p>在这里主要记录更偏向图形学的知识，基础内容不会全部记录。</p>
+<p>Lefture01 主要是简介，在这里跳过。</p>
+<br/><p>访问 <a href="https://yurin.cc/posts/games101" target="_blank">https://yurin.cc/posts/games101</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+        <item>
+            <title><![CDATA[C++学习记录]]></title>
+            <link>https://yurin.cc/posts/gccSimpleLearn</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/gccSimpleLearn</guid>
+            <pubDate>Mon, 05 Jan 2026 16:14:55 GMT</pubDate>
+            <content:encoded><![CDATA[<h2>怎么这么难啊</h2>
+<p>在C语言的基础上继续学习CPP</p>
+<br/><p>访问 <a href="https://yurin.cc/posts/gccSimpleLearn" target="_blank">https://yurin.cc/posts/gccSimpleLearn</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+        <item>
+            <title><![CDATA[零碎的知识点]]></title>
+            <link>https://yurin.cc/posts/0suiKnowledge</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/0suiKnowledge</guid>
+            <pubDate>Mon, 05 Jan 2026 16:07:13 GMT</pubDate>
+            <content:encoded><![CDATA[<p>零散的知识点，看两眼回忆死去的记忆</p>
+<br/><p>访问 <a href="https://yurin.cc/posts/0suiKnowledge" target="_blank">https://yurin.cc/posts/0suiKnowledge</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+        <item>
+            <title><![CDATA[图]]></title>
+            <link>https://yurin.cc/posts/图</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/图</guid>
+            <pubDate>Sat, 20 Sep 2025 09:21:39 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>图</h1>
+<p>图分为有向图和无向图。</p>
+<ol>
+<li>有向图：
+<ul>
+<li>简写为 <strong>digraph</strong>，和树的区别是有向图不需要指定一个根节点，并且一个节点到另一个节点之间可能存有好几条（或者没有）路径。</li>
+<li>有向图是由一个 <strong>有限的称为顶点（vertices）的元素集合以及一个有限的连接每对顶点的有向弧或有向边的集合构成</strong>。<br>
+<img src="https://pic.yurin.cc/20250919151806182.webp" alt=""></li>
+</ul>
+</li>
+<li>无向图：
+<ul>
+<li>边没有出向边和入向边的区分。</li>
+<li>顶点没有到达自己顶点位置的边。</li>
+<li>有向图是由一个 <strong>有限的称为顶点（vertices）的元素集合以及有限的无向弧或无向边的集合构成</strong>。<br>
+<img src="https://pic.yurin.cc/20250919151825282.webp" alt=""></li>
+</ul>
+</li>
+</ol>
+<p>图有两种存储的方式：</p>
+<ul>
+<li>邻接矩阵</li>
+<li>邻接表</li>
+</ul>
+<br/><p>访问 <a href="https://yurin.cc/posts/图" target="_blank">https://yurin.cc/posts/图</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+        <item>
+            <title><![CDATA[回溯算法]]></title>
+            <link>https://yurin.cc/posts/回溯算法</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/回溯算法</guid>
+            <pubDate>Thu, 11 Sep 2025 23:39:13 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>回溯算法</h1>
+<p>回溯算法（Backtracking）是一种通过试探并在失败时回退的搜索算法，常用于解决组合、排列、子集、图遍历、约束满足等问题。它的核心思想是：</p>
+<ol>
+<li>选择：尝试某个候选解。</li>
+<li>约束：判断当前选择是否满足条件。</li>
+<li>回溯：若不满足条件，撤销选择（回退一步），继续尝试其他可能。</li>
+</ol>
+<p>可以理解为在一棵“状态树”上进行 深度优先搜索（DFS），遇到死胡同时就回到上一步继续探索。</p>
+<p>有两种解空间：</p>
+<ul>
+<li>子集树</li>
+<li>排列数</li>
+</ul>
+<br/><p>访问 <a href="https://yurin.cc/posts/回溯算法" target="_blank">https://yurin.cc/posts/回溯算法</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+        <item>
+            <title><![CDATA[B树]]></title>
+            <link>https://yurin.cc/posts/B树</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/B树</guid>
+            <pubDate>Fri, 05 Sep 2025 22:30:00 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>B树 (B-Tree)</h1>
+<p>B 树（Balance Tree / 多路平衡查找树）是一种<strong>多路自平衡搜索树</strong>，广泛应用于数据库与文件系统的索引结构。它通过<strong>把大量有序关键字集中在节点中并尽量减少树高度</strong>，在磁盘 / SSD 的块（page）为单位读取场景下显著降低 I/O 次数。</p>
+<p>核心目标：在保持有序字典操作 O(log n) 的同时，把树的高度压低，使得一次查询只需极少磁盘访问。</p>
+<br/><p>访问 <a href="https://yurin.cc/posts/B树" target="_blank">https://yurin.cc/posts/B树</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+        <item>
+            <title><![CDATA[红黑树]]></title>
+            <link>https://yurin.cc/posts/红黑树</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/红黑树</guid>
+            <pubDate>Fri, 05 Sep 2025 21:03:10 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>红黑树</h1>
+<p>红黑树不是一颗平衡树，节点到左右子树的高度差， <strong>长的不超过短的2倍。</strong> 比AVL旋转的次数要少很多。</p>
+<p>红黑树通过给节点增加**颜色属性（红/黑）**并遵循一组规则，保证树的高度始终接近 O(log n)，从而在最坏情况下也能高效完成查找、插入和删除操作。</p>
+<p>如果主要使用查询操作，那就还是AVL树的效率更高一点。但是如果插入、删除、查询都很频繁，这个时候使用红黑树就比较好了。</p>
+<blockquote>
+<p>由于红黑树要频繁访问祖父节点和舅舅节点，主流都采用非递归的形式。</p>
+</blockquote>
+<br/><p>访问 <a href="https://yurin.cc/posts/红黑树" target="_blank">https://yurin.cc/posts/红黑树</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+        <item>
+            <title><![CDATA[AVL树]]></title>
+            <link>https://yurin.cc/posts/AVL树</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/AVL树</guid>
+            <pubDate>Wed, 03 Sep 2025 02:52:02 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>AVL树</h1>
+<p>AVL树是一种自平衡二叉查找树（BST），由Adelson-Velsky和Landis提出，在任意一个节点上，左子树和右子树的高度差不超过1，从而保证整棵树的高度始终维持在 O(log n) 级别。</p>
+<p>相比普通二叉查找树，AVL树在最坏情况下也能高效完成查找、插入和删除操作，但由于需要频繁旋转，它在插入/删除频繁的场景下性能可能不如红黑树。</p>
+<br/><p>访问 <a href="https://yurin.cc/posts/AVL树" target="_blank">https://yurin.cc/posts/AVL树</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+        <item>
+            <title><![CDATA[九个二叉树常见问题]]></title>
+            <link>https://yurin.cc/posts/九个二叉树常见问题</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/九个二叉树常见问题</guid>
+            <pubDate>Mon, 01 Sep 2025 01:28:12 GMT</pubDate>
+            <content:encoded><![CDATA[<p>一些经典的关于二叉树的算法问题。</p>
+<h1>我脑子不转了，有什么头猪吗。</h1>
+<br/><p>访问 <a href="https://yurin.cc/posts/九个二叉树常见问题" target="_blank">https://yurin.cc/posts/九个二叉树常见问题</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+        <item>
+            <title><![CDATA[二叉树]]></title>
+            <link>https://yurin.cc/posts/二叉树</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/二叉树</guid>
+            <pubDate>Sun, 31 Aug 2025 23:18:11 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>二叉树</h1>
+<p>二叉树（Binary Tree）是一种 树形数据结构，它的每个节点最多有 两个子节点，通常称为：</p>
+<ul>
+<li>左子节点（Left Child）</li>
+<li>右子节点（Right Child）<br>
+所以，二叉树的每个节点最多分叉 2 个，而不是任意多个。</li>
+</ul>
+<br/><p>访问 <a href="https://yurin.cc/posts/二叉树" target="_blank">https://yurin.cc/posts/二叉树</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+        <item>
+            <title><![CDATA[一致性哈希算法]]></title>
+            <link>https://yurin.cc/posts/一致性哈希算法</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/一致性哈希算法</guid>
+            <pubDate>Wed, 27 Aug 2025 16:25:45 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>一致性哈希算法</h1>
+<p><strong>一致性哈希（Consistent Hashing）</strong> ：是一种特殊的哈希算法，用于解决 <strong>分布式系统中的数据分布与动态伸缩问题。</strong></p>
+<ul>
+<li>当 <strong>节点</strong>（机器/缓存服务器）数量发生变化（增加或减少）时，尽可能减少需要重新映射的数据量。</li>
+<li>避免传统哈希算法带来的大规模数据迁移问题。</li>
+</ul>
+<br/><p>访问 <a href="https://yurin.cc/posts/一致性哈希算法" target="_blank">https://yurin.cc/posts/一致性哈希算法</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+        <item>
+            <title><![CDATA[大数据topk问题]]></title>
+            <link>https://yurin.cc/posts/大数据topk问题</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/大数据topk问题</guid>
+            <pubDate>Wed, 27 Aug 2025 00:20:34 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>大数据topk</h1>
+<p>大数据topk问题就是 <strong>求大量数据的前k个最大/最小的数据</strong>。</p>
+<p>有两种方法解决：</p>
+<ul>
+<li>大小根堆</li>
+<li>快排分割</li>
+</ul>
+<br/><p>访问 <a href="https://yurin.cc/posts/大数据topk问题" target="_blank">https://yurin.cc/posts/大数据topk问题</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+        <item>
+            <title><![CDATA[大数据查重]]></title>
+            <link>https://yurin.cc/posts/大数据查重</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/大数据查重</guid>
+            <pubDate>Tue, 26 Aug 2025 00:20:34 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>大数据查重</h1>
+<p>这里的大数据不是java那种大数据分析，而是数据量很庞大的数据。</p>
+<p>这种大数据查重有几种算法：</p>
+<ul>
+<li>哈希表查重</li>
+<li>位图算法</li>
+<li>布隆过滤器</li>
+</ul>
+<p>类似问题有：一亿个数据，哪些元素重复了，谁是第一个重复的，谁是第一个不重复的……且内存限制100M。</p>
+<br/><p>访问 <a href="https://yurin.cc/posts/大数据查重" target="_blank">https://yurin.cc/posts/大数据查重</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+        <item>
+            <title><![CDATA[哈希表]]></title>
+            <link>https://yurin.cc/posts/哈希表</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/哈希表</guid>
+            <pubDate>Mon, 25 Aug 2025 19:41:37 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>哈</h1>
+<br/><p>访问 <a href="https://yurin.cc/posts/哈希表" target="_blank">https://yurin.cc/posts/哈希表</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+        <item>
+            <title><![CDATA[栈与队列]]></title>
+            <link>https://yurin.cc/posts/栈与队列</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/栈与队列</guid>
+            <pubDate>Fri, 22 Aug 2025 01:17:08 GMT</pubDate>
+            <content:encoded><![CDATA[<blockquote>
+<p>栈与队列需要依赖数组或者链表，且都不是一个单独的数据结构。</p>
+</blockquote>
+<br/><p>访问 <a href="https://yurin.cc/posts/栈与队列" target="_blank">https://yurin.cc/posts/栈与队列</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+        <item>
+            <title><![CDATA[基础排序]]></title>
+            <link>https://yurin.cc/posts/基础排序</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/基础排序</guid>
+            <pubDate>Thu, 21 Aug 2025 00:58:53 GMT</pubDate>
+            <content:encoded><![CDATA[<p>一大堆排序，简要记录中心思想。</p>
+<br/><p>访问 <a href="https://yurin.cc/posts/基础排序" target="_blank">https://yurin.cc/posts/基础排序</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+        <item>
+            <title><![CDATA[高级排序]]></title>
+            <link>https://yurin.cc/posts/高级排序</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/高级排序</guid>
+            <pubDate>Thu, 21 Aug 2025 00:58:53 GMT</pubDate>
+            <content:encoded><![CDATA[<p>简要记录一系列高级排序的中心思想。</p>
+<br/><p>访问 <a href="https://yurin.cc/posts/高级排序" target="_blank">https://yurin.cc/posts/高级排序</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+        <item>
+            <title><![CDATA[数字信号处理Matlab编程]]></title>
+            <link>https://yurin.cc/posts/数字信号处理Matlab</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/数字信号处理Matlab</guid>
+            <pubDate>Fri, 28 Mar 2025 22:54:31 GMT</pubDate>
+            <content:encoded><![CDATA[<p>记录数字信号处理有关的Matlab代码</p>
+<br/><p>访问 <a href="https://yurin.cc/posts/数字信号处理Matlab" target="_blank">https://yurin.cc/posts/数字信号处理Matlab</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+        <item>
+            <title><![CDATA[信号的Matlab编程]]></title>
+            <link>https://yurin.cc/posts/信号Matlab</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/信号Matlab</guid>
+            <pubDate>Fri, 28 Mar 2025 19:32:11 GMT</pubDate>
+            <content:encoded><![CDATA[<p>记录基于Matlab的有关信号的编程</p>
+<br/><p>访问 <a href="https://yurin.cc/posts/信号Matlab" target="_blank">https://yurin.cc/posts/信号Matlab</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+        <item>
+            <title><![CDATA[51单片机编程]]></title>
+            <link>https://yurin.cc/posts/51microcopmuter</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/51microcopmuter</guid>
+            <pubDate>Sat, 22 Mar 2025 11:02:04 GMT</pubDate>
+            <content:encoded><![CDATA[<p>51单片机主要使用的函数</p>
+<br/><p>访问 <a href="https://yurin.cc/posts/51microcopmuter" target="_blank">https://yurin.cc/posts/51microcopmuter</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+        <item>
+            <title><![CDATA[数字信号处理简记]]></title>
+            <link>https://yurin.cc/posts/数字信号处理</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/数字信号处理</guid>
+            <pubDate>Thu, 20 Mar 2025 21:24:43 GMT</pubDate>
+            <content:encoded><![CDATA[<p>主要记录数字信号处理Matlab代码及相关知识</p>
+<p>:::warning</p>
+<p>默认已学习完信号与系统</p>
+<p>:::</p>
+<br/><p>访问 <a href="https://yurin.cc/posts/数字信号处理" target="_blank">https://yurin.cc/posts/数字信号处理</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+        <item>
+            <title><![CDATA[通信原理简记]]></title>
+            <link>https://yurin.cc/posts/通信原理</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/通信原理</guid>
+            <pubDate>Tue, 11 Mar 2025 11:42:15 GMT</pubDate>
+            <content:encoded><![CDATA[<p>记录通信原理的一些知识，重点记录数字通信系统</p>
+<br/><p>访问 <a href="https://yurin.cc/posts/通信原理" target="_blank">https://yurin.cc/posts/通信原理</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+        <item>
+            <title><![CDATA[Zen Browser默认打开卡顿]]></title>
+            <link>https://yurin.cc/posts/zenbrowser</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/zenbrowser</guid>
+            <pubDate>Fri, 21 Feb 2025 00:02:15 GMT</pubDate>
+            <content:encoded><![CDATA[<p><strong>Zen浏览器在全屏使用的时候总有卡顿，最后发现每次启动时，核显的占用率都会达到99%，而Chrome不会</strong></p>
+<h2>解决方案</h2>
+<ul>
+<li>等待Zen Browser的后续优化</li>
+<li>启动Zen Browser时使用高性能（独立显卡启动）：</li>
+</ul>
+<p><img src="https://pub-3f9780acd0d54f9dabe63c0a1ab77225.r2.dev/20250221164427234.png" alt=""></p>
+<br/><p>访问 <a href="https://yurin.cc/posts/zenbrowser" target="_blank">https://yurin.cc/posts/zenbrowser</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+        <item>
+            <title><![CDATA[Japan计划！]]></title>
+            <link>https://yurin.cc/posts/JapanTravel</link>
+            <guid isPermaLink="false">https://yurin.cc/posts/JapanTravel</guid>
+            <pubDate>Sat, 01 Feb 2025 00:11:24 GMT</pubDate>
+            <content:encoded><![CDATA[<p>去霓虹准备的东西以及大致路线、要去圣地巡礼的地点。具体路线根据住宿的位置来决定</p>
+<br/><p>访问 <a href="https://yurin.cc/posts/JapanTravel" target="_blank">https://yurin.cc/posts/JapanTravel</a> 阅读全文。</p>]]></content:encoded>
+            <author>i@valaxy.site (yurin)</author>
+        </item>
+    </channel>
+</rss>
