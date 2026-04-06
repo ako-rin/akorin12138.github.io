@@ -36,11 +36,71 @@ end: true
 
 虚函数表存放的位置在 **内存的只读数据段(.rodata)** 即 **静态存储区** 中。
 
+`vtable` 中不仅存储了虚函数的地址，还存储了 RTTI（Run-Time Type Information，运行时类型信息）相关的数据，以及 偏移量。
+**RTTI 和 偏移量 用于 `dynamic_cast` 和 `typeid` 等运行时类型识别机制。**
+
+
+```mermaid
+flowchart LR
+    classDef instance fill:#f0f8ff,stroke:#4a90e2,stroke-width:2px;
+    classDef vtable fill:#fff8dc,stroke:#f5a623,stroke-width:2px;
+    classDef rtti fill:#e8f5e9,stroke:#4caf50,stroke-width:2px;
+    classDef highlight fill:#ffebee,stroke:#f44336,stroke-width:2px,stroke-dasharray: 5 5;
+
+    subgraph Object_Instance ["对象实例内存 (Object Instance)"]
+        direction TB
+        vptr["vptr (虚表指针)"]:::highlight
+        mem1["普通成员变量 1"]
+        mem2["普通成员变量 2"]
+    end
+
+    subgraph VTable ["类的虚函数表 (vtable)"]
+        direction TB
+        offset["vptr[-2] : offset_to_top (用于多重继承)"]
+        rtti_ptr["vptr[-1] : RTTI type_info 指针"]:::highlight
+        vf1["vptr[0] : 虚函数 1 的地址"]
+        vf2["vptr[1] : 虚函数 2 的地址"]
+        vfn["vptr[n] : ..."]
+    end
+
+    subgraph RTTI_Data ["RTTI 数据段 (只读)"]
+        direction TB
+        type_info["type_info 对象<br/>(包含类名字符串、继承图等)"]
+    end
+
+    %% 连线关系
+    vptr -->|"指向虚函数列表起点"| vf1
+    rtti_ptr -->|"指向类型的 RTTI"| type_info
+
+    %% 为子图应用样式
+    class Object_Instance instance;
+    class VTable vtable;
+    class RTTI_Data rtti;
+```
+
+对于 **次基类** （非头部的父类），在其对应的虚表中，存放的不是真正的子类虚函数地址，而是一小段被称为 **Thunk** 的特殊代码的地址。当调用发生时，这段 Thunk 代码会把当前指向对象中间的 this 指针减去一个偏移量，使其重新指向子类对象的头部，然后直接跳转（jmp）去执行子类真正的虚函数代码。
+
+假如有两个父类 `A` 和 `B`，子类同时继承了 `A` 和 `B`，此时子类 `D` 的虚函数表其实是直接占了 子对象 `A` 的虚函数表的位置。同时父类 `B` 有一个虚函数 `funcB()` ，假设这样访问： `pb->funcB();` 其中 `pb` 是父类 `B` 的指针，调用路径是这样的：
+
+1. 查表：用当前的 `pb` 指针（此时指向内存中间），找到 `B` 子对象的次级 `vptr`，访问次级虚表。
+2. 获取地址：在次级中，获取到 **Thunk 代码的地址。**
+3. 执行 Thunk 汇编代码：`this = this - offset; jmp funcB;`
+
+:::info 注
+此时这里的偏移量不用从虚表中查，在编译阶段是直接硬编码进 Thunk 代码中的。
+:::
+
+如果是重写的 `A` （头部的父亲）的虚函数，并用 `A` 的指针访问，则直接拿到虚表中真实的虚函数地址，而不用执行 Thunk 代码。（因为 `A` 在子对象空间中偏移量为 0）
+
 ### 虚表指针（vptr）
 
 虚表指针是一个隐藏的指针，只有类中有虚函数才会有这个指针。虚表指针始终放在类内存空间的头部，指向该类的虚函数表。
 
 `vptr` 只在构造函数中被初始化，将虚表地址赋值给 `vptr`，在对象的生命周期内保持不变。当子类派生父类时，在子类的构造函数中，会将 `vptr` 重新指向子类的虚函数表，以实现多态调用。
+
+:::warning
+`vptr` 并不是直接指向了 `vtable` 的首地址，而是指向 `vtable` 中的第一个函数的地址。
+:::
 
 虚表指针本质是一个指向指针（函数地址）的指针，假设有一个对象 `p` ，可以通过强制转换获得 `vptr` 指针：
 ```cpp
